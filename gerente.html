@@ -5764,6 +5764,603 @@ telaLogin=function(){document.getElementById("dock")?.remove();fecharLancador();
 
 init();
 </script>
+<style>
+.xseg{display:flex;gap:6px;overflow-x:auto;padding:2px 2px 6px;margin:0 0 14px;scrollbar-width:none}
+.xseg::-webkit-scrollbar{display:none}
+.xseg button{flex:none;border:1px solid var(--line);background:var(--panel);color:var(--ink);font-weight:600;font-size:13px;padding:8px 14px;border-radius:999px;cursor:pointer;white-space:nowrap}
+.xseg button.on{background:var(--green);border-color:var(--green);color:#fff}
+.xgrid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:820px){.xgrid2{grid-template-columns:1fr}}
+.xkpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;margin-bottom:12px}
+@media(max-width:820px){.xkpis{grid-template-columns:1fr 1fr}}
+.xb{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:20px;white-space:nowrap}
+.xb-late{background:var(--clay-soft,#F9E1DE);color:var(--clay)}
+.xb-soon{background:#F7ECD2;color:#8A6410}
+.xb-ok{background:var(--green-soft,#E2F0F8);color:var(--green-dark)}
+.xb-mut{background:transparent;color:var(--muted);padding-left:0}
+html[data-tema="noite"] .xb-soon{background:#3A2E12;color:#F5C76B}
+.xtbl{width:100%;border-collapse:collapse;font-size:13.5px}
+.xtbl th{font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);white-space:nowrap}
+.xtbl td{padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+.xtbl tr:last-child td{border-bottom:0}
+.xtbl .r{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.xtbl tr.g td{font-weight:700;background:color-mix(in srgb,var(--green) 6%,transparent)}
+.xtbl tr.t td{font-weight:800;border-top:2px solid var(--line)}
+.xtbl tr.s td:first-child{padding-left:26px;color:var(--muted)}
+.xtbl tr.s td{font-size:12.5px}
+.xact{display:flex;gap:4px;justify-content:flex-end}
+.xmini{font-size:12px;color:var(--muted)}
+.xchart{width:100%;height:auto;display:block}
+@media(max-width:560px){html[data-tema] .xkpis .kpi b{font-size:16px;white-space:nowrap;letter-spacing:-.3px}}
+.xkan{display:grid;grid-template-columns:repeat(5,minmax(185px,1fr));gap:10px;overflow-x:auto;padding-bottom:6px}
+.xcol{background:color-mix(in srgb,var(--line) 35%,transparent);border-radius:14px;padding:10px;min-height:160px}
+.xcol h4{margin:2px 4px 10px;font-size:13px;display:flex;justify-content:space-between}
+.xcard{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:11px 12px;margin-bottom:8px;cursor:pointer}
+.xcard:hover{border-color:var(--green)}
+.xcard b{display:block;font-size:13.5px;margin:2px 0}
+.xcard .xv{font-family:var(--mono);font-weight:700;font-size:15px;margin-top:4px}
+.xtg{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid var(--line)}
+.xtg:last-child{border-bottom:0}
+.xtg small{display:block;color:var(--muted);font-size:12px}
+.xsw{position:relative;width:44px;height:26px;flex:none;border-radius:13px;border:0;background:var(--line);cursor:pointer}
+.xsw::after{content:"";position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:#fff;transition:left .15s;box-shadow:0 1px 3px rgba(0,0,0,.25)}
+.xsw.on{background:var(--green)}.xsw.on::after{left:21px}
+.xperm select{width:auto;min-width:86px;padding:5px 6px;font-size:12.5px}
+.xperm td{white-space:nowrap}
+.xnote{font-size:12.5px;color:var(--muted);background:color-mix(in srgb,var(--green) 6%,transparent);border-radius:10px;padding:10px 12px;margin:10px 0}
+.xsteps{display:flex;gap:4px;margin:8px 0 12px;flex-wrap:wrap}
+.xsteps span{font-size:11.5px;font-weight:600;padding:4px 9px;border-radius:999px;background:var(--line);color:var(--muted)}
+.xsteps span.on{background:var(--green);color:#fff}
+.xsteps span.done{background:var(--green-soft,#E2F0F8);color:var(--green-dark)}
+</style>
+<script>
+/* =====================================================================
+   ERP: financeiro completo, compras, usuários e permissões, histórico
+   ===================================================================== */
+let finAba="lanc", xState="", xEdit=null, compraFiltro="Todas", logFiltroU="Todos", logFiltroM="Todos", logBusca="";
+let XC={compras:[],log:[],users:[],perm:null,regras:null,saldo:2300000,seq:142};
+const KX="fr-erp";
+const salvarX=()=>stSet(KX,XC);
+const MIN_SEG=800000;
+const quem=()=>USR.nome||(USR.perfil==="gestao"?"Gestão":"Operação");
+function xlog(m,a,d){XC.log.unshift({t:new Date().toISOString(),u:quem(),p:PERFIS[USR.perfil]?.nome||"",m,a,d:d||""});if(XC.log.length>600)XC.log.length=600;salvarX()}
+const vencDe=l=>l.venc||addDias(l.data,l.tipo==="Entrada"?30:15);
+const dCurta=s=>{const[a,m,d]=s.split("-");return `${d}/${m}`};
+function badgeV(d){if(d<0)return `<span class="xb xb-late">vencida há ${-d} dia${d===-1?"":"s"}</span>`;if(d===0)return `<span class="xb xb-soon">vence hoje</span>`;if(d<=7)return `<span class="xb xb-soon">em ${d} dia${d===1?"":"s"}</span>`;return `<span class="xb xb-mut">em ${d} dias</span>`}
+
+/* ---------- dados de exemplo ---------- */
+function seedX(){
+  const H=hoje(),D=n=>addDias(H,n),fn=(EQ.funcionarios||[]).filter(f=>f.status!=="Inativo");
+  if(!F.some(l=>l.xdemo)){
+    [["Saída","Mão de obra e encargos","Fazenda",186400,"Folha de outubro + encargos",D(28)],
+     ["Saída","Nutrição animal","Pecuária",96400,"Ração para bezerras · Nutri Sertão",D(9)],
+     ["Saída","Combustível","Máquinas e Equipamentos",42800,"Diesel S10 · 7.000 L",D(4)],
+     ["Saída","Insumos agrícolas","Limão",118900,"Adubo e corretivo do pomar",D(18)],
+     ["Saída","Administrativo e financeiro","Máquinas e Equipamentos",74250,"Parcela 7/10 financiamento do trator",D(25)],
+     ["Saída","Água e energia","Sede",18700,"Energia elétrica · setembro",D(-2)],
+     ["Saída","Sanidade e reprodução","Pecuária",23600,"Vacinas aftosa e clostridiose (compra #0138)",D(32)],
+     ["Saída","Serviços e fretes","Limão",12300,"Frete do limão para o Ceasa",D(11)],
+     ["Saída","Administrativo e financeiro","Fazenda",9800,"Honorários do contador",D(6)],
+     ["Entrada","Venda de animais","Pecuária",851800,"Lote B-14 descarte · Frigorífico A",D(28)],
+     ["Entrada","Venda de produção","Limão",184800,"66 t de limão Tahiti · 2ª parcela",D(15)],
+     ["Entrada","Venda de produção","Pecuária",142600,"Leite de setembro · laticínio",D(12)],
+     ["Entrada","Venda de produção","Silagem",36000,"Silagem para fazenda vizinha",D(40)]
+    ].forEach(([tipo,cat,cc,v,desc,venc])=>F.push({id:uid(),data:H,cc,categoria:cat,tipo,valor:v,descricao:desc,status:"Pendente",venc,xdemo:true}));
+    salvarF();
+  }
+  if(!XC.compras.length){
+    const c=(num,st,d,item,q,u,cc,cat,cot,esc,aprov,extra)=>Object.assign({id:uid(),num,status:st,data:D(d),solic:"Matheus Batista Santos",itens:[{d:item,q,u}],cc,cat,cot,esc,aprov:aprov||[]},extra||{});
+    XC.compras=[
+      c("0142","sol",-1,"Arame liso ovalado (rolo de 1.000 m)",5,"rolos","Pecuária","Manutenção e peças",[],null),
+      c("0141","cot",-3,"Óleo de motor 15W40",200,"L","Máquinas e Equipamentos","Manutenção e peças",[{f:"Agropecuária Jequié",v:4380,prazo:"2 dias",pg:"28 dias"},{f:"Lubrificantes do Sertão",v:4120,prazo:"5 dias",pg:"30 dias"}],null),
+      c("0140","apr",-5,"Sal mineral e ração",40,"t","Pecuária","Nutrição animal",[{f:"Nutri Sertão Rações",v:98700,prazo:"7 dias",pg:"30 dias"},{f:"Casa do Fazendeiro Maracás",v:96400,prazo:"5 dias",pg:"30 dias"},{f:"Coop. Agrícola do Vale",v:101200,prazo:"10 dias",pg:"45 dias"}],1),
+      c("0139","apr",-6,"Adubo NPK 20-05-20",12,"t","Limão","Insumos agrícolas",[{f:"Coop. Agrícola do Vale",v:46800,prazo:"6 dias",pg:"30 dias"},{f:"Agropecuária Jequié",v:49300,prazo:"3 dias",pg:"28 dias"}],0),
+      c("0138","ped",-9,"Vacina aftosa e clostridiose",2000,"doses","Pecuária","Sanidade e reprodução",[{f:"Casa do Fazendeiro Maracás",v:23600,prazo:"4 dias",pg:"30 dias"}],0,["Eurico"]),
+      c("0137","rec",-16,"Pneu 18.4-30 do trator MF 4292",2,"un.","Máquinas e Equipamentos","Manutenção e peças",[{f:"Pneus Bahia",v:11900,prazo:"3 dias",pg:"à vista"},{f:"Agropecuária Jequié",v:12650,prazo:"1 dia",pg:"à vista"}],0,["Eurico"],{recEm:D(-11)})
+    ];
+    XC.seq=142;
+  }
+  if(!XC.users.length){
+    XC.users=[
+      {id:uid(),nome:"Eurico",perfil:"Dono",faz:"Bugalhau e Rio Bonito",ult:D(0)+"T07:42",fa2:true,ativo:true},
+      {id:uid(),nome:"Matheus Batista Santos",perfil:"Gerente",faz:"Bugalhau e Rio Bonito",ult:D(0)+"T06:15",fa2:true,ativo:true},
+      ...fn.filter(f=>!/matheus/i.test(f.nome)).slice(0,3).map((f,i)=>({id:uid(),nome:f.nome,perfil:"Operador",faz:i===2?"Rio Bonito":"Bugalhau",ult:D(-i)+"T0"+(5+i)+":30",fa2:false,ativo:true})),
+      {id:uid(),nome:"Escritório de contabilidade",perfil:"Contador",faz:"Bugalhau e Rio Bonito",ult:D(-3)+"T14:05",fa2:true,ativo:true}
+    ];
+  }
+  if(!XC.perm){
+    XC.perm={
+      "Dashboard dos donos":["Total","Ver","—","—","—"],
+      "Rebanho e GTA":["Total","Total","Editar","Lançar","Ver"],
+      "Leite":["Total","Total","Editar","Lançar","Ver"],
+      "Agricultura e pomar":["Total","Total","Editar","Lançar","Ver"],
+      "Estoque":["Total","Total","Editar","Lançar","Ver"],
+      "Compras":["Aprovar","Aprovar","Lançar","Lançar","Ver"],
+      "Financeiro":["Total","Total","Lançar","—","Ver"],
+      "Folha e equipe":["Total","Total","Ver","—","Ver"],
+      "Documentos":["Total","Total","Ver","—","Ver"],
+      "Usuários e permissões":["Total","Ver","—","—","—"],
+      "Histórico (log)":["Ver","Ver","—","—","—"]
+    };
+  }
+  if(!XC.regras){
+    XC.regras=[
+      {k:"apr2",t:"Compras e vendas acima de R$ 50.000 precisam do sim de 2 sócios",s:"Vale para compras, vendas de animais e de produção",on:true},
+      {k:"exc",t:"Só a gestão pode excluir lançamentos",s:"Os outros perfis podem pedir a correção",on:true},
+      {k:"val",t:"Operadores não veem valores em reais",s:"Eles lançam quantidades: cabeças, litros, quilos, caixas",on:true},
+      {k:"2fa",t:"Verificação em duas etapas para donos, gestão e contador",s:"Código pelo celular a cada novo aparelho",on:true},
+      {k:"ses",t:"Sair sozinho depois de 30 minutos sem uso",s:"No computador da sede e nos tablets",on:true},
+      {k:"bkp",t:"Cópia de segurança automática todo dia",s:"Guardada por 90 dias, com restauração em um clique",on:true},
+      {k:"dev",t:"Acesso só de aparelhos autorizados",s:"Um aparelho novo precisa ser liberado pela gestão",on:false}
+    ];
+  }
+  if(!XC.log.length){
+    const t=(d,h)=>D(d)+"T"+h+":00";
+    const op=fn.find(f=>!/matheus/i.test(f.nome))?.nome||"Operador";
+    XC.log=[
+      [t(0,"07:42"),"Eurico","Dono","Acesso","Entrou no sistema","iPhone · Salvador-BA"],
+      [t(0,"06:52"),op,"Operador","Leite","Registrou ordenha","Ordenha da manhã · 1.184 L"],
+      [t(0,"06:15"),"Matheus Batista Santos","Gerente","Chuvas","Registrou chuva","Bugalhau · 12 mm"],
+      [t(-1,"17:20"),"Matheus Batista Santos","Gerente","Compras","Pediu compra #0142","Arame liso ovalado · 5 rolos"],
+      [t(-1,"16:02"),"Escritório de contabilidade","Contador","Financeiro","Exportou lançamentos","Setembro · arquivo para o LCDPR"],
+      [t(-2,"10:31"),"Matheus Batista Santos","Gerente","Financeiro","Editou lançamento","Diesel S10 · valor de R$ 41.900,00 para R$ 42.800,00"],
+      [t(-3,"15:47"),"Matheus Batista Santos","Gerente","Compras","Adicionou cotação na compra #0141","Lubrificantes do Sertão · R$ 4.120,00"],
+      [t(-4,"09:12"),"Matheus Batista Santos","Gerente","Compras","Enviou compra #0140 para aprovação","Sal mineral e ração · R$ 96.400,00 · acima de R$ 50 mil, 2 sócios aprovam"],
+      [t(-5,"18:05"),"Matheus Batista Santos","Gerente","Rebanho","Registrou saída de animal","Lote R-03 · 24 cabeças · GTA 29.431.907"],
+      [t(-6,"11:40"),"Eurico","Dono","Usuários","Alterou permissão","Contador: Financeiro de Lançar para Ver"],
+      [t(-8,"08:03"),op,"Operador","Rebanho","Registrou nascimento","Bezerra 1.204 · Rio Bonito"],
+      [t(-9,"14:22"),"Eurico","Dono","Compras","Aprovou compra #0138","Vacinas · R$ 23.600,00"],
+      [t(-11,"10:10"),"Matheus Batista Santos","Gerente","Compras","Recebeu compra #0137","2 pneus · conta a pagar gerada"],
+      [t(-12,"22:48"),"—","","Segurança","Tentativa de acesso bloqueada","Senha errada 3 vezes · aparelho desconhecido"]
+    ].map(([t,u,p,m,a,d])=>({t,u,p,m,a,d}));
+  }
+  salvarX();
+}
+function ensureX(){
+  if(xState==="ok")return true;
+  if(xState||!USR.perfil)return false;
+  xState="loading";
+  stGet(KX).then(v=>{if(v)XC=Object.assign(XC,v);seedX();xState="ok";render()}).catch(()=>{seedX();xState="ok";render()});
+  return false;
+}
+
+/* ---------- FINANCEIRO ---------- */
+const vFinBase=vFin;
+vFin=function(){
+  if(!ensureX())return `<h2>Financeiro</h2><div class="empty">Carregando…</div>`;
+  const abas=[["lanc","Lançamentos"],["contas","Contas a pagar e a receber"],["fluxo","Fluxo de caixa"],["dre","DRE"],["plano","Plano de contas e centros"]];
+  const nav=`<div class="xseg" role="tablist">${abas.map(([k,n])=>`<button role="tab" aria-selected="${finAba===k}" class="${finAba===k?"on":""}" onclick="finAba='${k}';render()">${n}</button>`).join("")}</div>`;
+  let body;
+  if(finAba==="lanc"){
+    body=vFinBase().replace("<h2>Financeiro</h2>","")
+      .replace(/<button class="btn ghost" onclick="excluirLanc\('([^']+)'\)" aria-label="Excluir">✕<\/button>/g,(m,id)=>`<span class="xact"><button class="btn ghost" onclick="formLancamento('${id}')" aria-label="Editar" title="Editar">✎</button>${m}</span>`);
+  } else body={contas:vContas,fluxo:vFluxo,dre:vDRE,plano:vPlano}[finAba]();
+  return `<h2>Financeiro</h2>${nav}${body}`;
+};
+formLancamento=function(id){
+  const l=id?F.find(x=>x.id===id):null;xEdit=l?l.id:null;
+  const tipo=l?l.tipo:"Saída",cats=tipo==="Entrada"?CAT_ENTRADA:CAT_SAIDA;
+  const auto=l&&(l.animalId||(l.animalIds&&l.animalIds.length)||l.colheitaId||l.diariaId||l.manutId||l.movSiloId||l.folhaRef||l.compraId);
+  abrirModal(`${cab(l?"Editar lançamento":"Novo lançamento")}
+  ${auto?`<div class="xnote">⛓ Este lançamento foi gerado por outra tela. A alteração fica registrada no histórico.</div>`:""}
+  <div class="row2">
+    <div class="field"><label>Tipo</label><select id="l-tipo" onchange="document.getElementById('l-cat').innerHTML=opt(this.value==='Entrada'?CAT_ENTRADA:CAT_SAIDA)">${opt(["Saída","Entrada"],tipo)}</select></div>
+    <div class="field"><label>Data (competência)</label><input id="l-data" type="date" value="${l?l.data:hoje()}"></div>
+  </div>
+  <div class="row2">
+    <div class="field"><label>Centro de custo</label><select id="l-cc">${opt(ccList(),l?l.cc:"Pecuária")}</select></div>
+    <div class="field"><label>Categoria</label><select id="l-cat">${opt(cats,l?l.categoria:cats[0])}</select></div>
+  </div>
+  <div class="row2">
+    <div class="field"><label>Valor (R$)</label><input id="l-valor" type="number" step="0.01" value="${l?(+l.valor).toFixed(2):""}"></div>
+    <div class="field"><label>Situação</label><select id="l-status">${opt(["Pago","Pendente"],l?l.status||"Pago":"Pago")}</select></div>
+  </div>
+  <div class="row2">
+    <div class="field"><label>Vencimento</label><input id="l-venc" type="date" value="${l?vencDe(l):addDias(hoje(),30)}"></div>
+    <div class="field"><label>Descrição</label><input id="l-desc" value="${esc(l?l.descricao||"":"")}" placeholder="Ex.: Diarista poda / Pneu trator 14.9-24"></div>
+  </div>
+  <div class="m-actions"><button class="btn" onclick="salvarLanc()">${l?"Salvar alterações":"Salvar lançamento"}</button></div>`);
+};
+salvarLanc=function(){
+  const v=+val("l-valor");
+  if(!v||v<=0){toast("Informe um valor maior que zero.");return}
+  const novo={data:val("l-data"),cc:val("l-cc"),categoria:val("l-cat"),tipo:val("l-tipo"),valor:v,descricao:val("l-desc"),status:val("l-status"),venc:val("l-venc")};
+  if(xEdit){
+    const l=F.find(x=>x.id===xEdit);
+    const nomes={data:"data",cc:"centro",categoria:"categoria",tipo:"tipo",valor:"valor",descricao:"descrição",status:"situação",venc:"vencimento"};
+    const mud=Object.keys(novo).filter(k=>String(l[k]??"")!==String(novo[k]??"")&&!(k==="valor"&&+l.valor===+novo.valor)&&!(k==="venc"&&!l.venc&&novo.venc===vencDe(l)))
+      .map(k=>`${nomes[k]} de ${k==="valor"?brl(+l.valor):k==="data"||k==="venc"?dBR(l[k]||vencDe(l)):l[k]||"—"} para ${k==="valor"?brl(v):k==="data"||k==="venc"?dBR(novo[k]):novo[k]}`);
+    Object.assign(l,novo);
+    if(mud.length)xlog("Financeiro","Editou lançamento",`${l.descricao||l.categoria} · ${mud.join("; ")}`);
+    toast("Lançamento atualizado.");
+  } else {
+    F.push(Object.assign({id:uid()},novo));
+    xlog("Financeiro","Criou lançamento",`${novo.tipo} · ${novo.descricao||novo.categoria} · ${brl(v)}`);
+    toast("Lançamento salvo.");
+  }
+  xEdit=null;salvarF();fecharModal();render();
+};
+const excluirLancBase=excluirLanc;
+excluirLanc=function(id){
+  const l=F.find(x=>x.id===id);if(!l)return;
+  if(XC.regras&&XC.regras.find(r=>r.k==="exc")?.on&&!ehGestao()){toast("Só a gestão pode excluir lançamentos.");return}
+  const n=F.length;excluirLancBase(id);
+  if(F.length<n)xlog("Financeiro","Excluiu lançamento",`${l.tipo} · ${l.descricao||l.categoria} · ${brl(+l.valor)}`);
+};
+function baixarLanc(id){
+  const l=F.find(x=>x.id===id);if(!l)return;
+  l.status="Pago";l.pagoEm=hoje();salvarF();
+  xlog("Financeiro",l.tipo==="Entrada"?"Confirmou recebimento":"Confirmou pagamento",`${l.descricao||l.categoria} · ${brl(+l.valor)}`);
+  render();toast(l.tipo==="Entrada"?"Recebimento confirmado.":"Pagamento confirmado.");
+}
+function vContas(){
+  const pend=F.filter(l=>l.status==="Pendente").map(l=>({l,v:vencDe(l),d:diasAte(vencDe(l))})).sort((a,b)=>a.v<b.v?-1:a.v>b.v?1:0);
+  const rec=pend.filter(x=>x.l.tipo==="Entrada"),pag=pend.filter(x=>x.l.tipo==="Saída");
+  const tot=a=>a.reduce((s,x)=>s+ +x.l.valor,0);
+  const venc=pend.filter(x=>x.d<0),sete=pag.filter(x=>x.d>=0&&x.d<=7);
+  const lista=(arr,rotulo)=>arr.length?`<div class="tbl-wrap" style="border:none"><table class="xtbl"><thead><tr><th>Vencimento</th><th>Descrição</th><th class="r">Valor</th><th></th></tr></thead><tbody>${arr.map(x=>`<tr>
+      <td style="white-space:nowrap">${dBR(x.v)}<br>${badgeV(x.d)}</td>
+      <td><b>${esc(x.l.descricao||x.l.categoria)}</b><br><span class="xmini">${esc(x.l.categoria)} · ${esc(x.l.cc)}</span></td>
+      <td class="r ${x.l.tipo==="Entrada"?"pos":"neg"}">${brl(+x.l.valor)}</td>
+      <td><div class="xact"><button class="btn sm sec" onclick="baixarLanc('${x.l.id}')">${x.l.tipo==="Entrada"?"Recebido":"Pago"}</button><button class="btn ghost" onclick="formLancamento('${x.l.id}')" aria-label="Editar">✎</button></div></td></tr>`).join("")}</tbody></table></div>`
+    :`<div class="empty">Nada ${rotulo}.</div>`;
+  return `<div class="xkpis">
+    <div class="kpi"><span>A receber</span><b class="pos">${brl(tot(rec))}</b><div class="xmini">${rec.length} conta${rec.length===1?"":"s"}</div></div>
+    <div class="kpi"><span>A pagar</span><b class="neg">${brl(tot(pag))}</b><div class="xmini">${pag.length} conta${pag.length===1?"":"s"}</div></div>
+    <div class="kpi"><span>Vencidas</span><b class="${venc.length?"neg":""}">${brl(tot(venc))}</b><div class="xmini">${venc.length} em atraso</div></div>
+    <div class="kpi"><span>A pagar em 7 dias</span><b>${brl(tot(sete))}</b><div class="xmini">${sete.length} conta${sete.length===1?"":"s"}</div></div>
+  </div>
+  <div class="xgrid2">
+    <div class="card"><h3 style="margin-top:0">A pagar</h3>${lista(pag,"a pagar")}</div>
+    <div class="card"><h3 style="margin-top:0">A receber</h3>${lista(rec,"a receber")}</div>
+  </div>
+  <div class="criterio">Toda conta lançada como "Pendente" aparece aqui pelo vencimento. Compras recebidas e vendas a prazo entram sozinhas. Ao marcar como pago ou recebido, o valor sai desta lista e entra no fluxo de caixa realizado.</div>`;
+}
+function fluxoSemanas(){
+  const H=hoje();
+  const REC=["Mão de obra e encargos","Nutrição animal","Combustível","Água e energia","Manutenção e peças","Sanidade e reprodução"];
+  const ult=F.filter(l=>l.tipo==="Saída"&&!l.xdemo&&REC.includes(l.categoria)&&diasAte(l.data)<0&&diasAte(l.data)>=-90);
+  const recSem=ult.reduce((s,l)=>s+ +l.valor,0)/13*0.6;
+  const leiteSem=F.filter(l=>l.tipo==="Entrada"&&!l.xdemo&&/leite/i.test(l.descricao||"")&&diasAte(l.data)<0&&diasAte(l.data)>=-90).reduce((s,l)=>s+ +l.valor,0)/13;
+  const pend=F.filter(l=>l.status==="Pendente");
+  let saldo=XC.saldo;const out=[];
+  for(let i=0;i<13;i++){
+    const ini=addDias(H,7*i),fim=addDias(H,7*i+6);
+    const noPer=l=>{const v=vencDe(l);return i===0?v<=fim:(v>=ini&&v<=fim)};
+    const pe=pend.filter(l=>l.tipo==="Entrada"&&noPer(l)).reduce((s,l)=>s+ +l.valor,0);
+    const ps=pend.filter(l=>l.tipo==="Saída"&&noPer(l)).reduce((s,l)=>s+ +l.valor,0);
+    const e=pe+leiteSem,s=ps+recSem;saldo+=e-s;
+    out.push({ini,fim,pe,ps,rec:leiteSem,des:recSem,e,s,saldo});
+  }
+  return out;
+}
+function vFluxo(){
+  const W=fluxoSemanas(),mn=W.reduce((a,w)=>w.saldo<a.saldo?w:a,W[0]);
+  const vals=[XC.saldo,...W.map(w=>w.saldo),MIN_SEG];
+  const lo=Math.min(...vals)*0.85,hi=Math.max(...vals)*1.08;
+  const X=i=>48+i*(660/13),Y=v=>196-(v-lo)/(hi-lo)*176;
+  const pts=[[X(0),Y(XC.saldo)],...W.map((w,i)=>[X(i+1),Y(w.saldo)])];
+  const ticks=[0,0.25,0.5,0.75,1].map(f=>lo+(hi-lo)*f);
+  const kk=v=>v>=1e6?(v/1e6).toLocaleString("pt-BR",{maximumFractionDigits:1})+" mi":Math.round(v/1e3)+" mil";
+  const svg=`<svg class="xchart" viewBox="0 0 720 230" role="img" aria-label="Saldo de caixa previsto nas próximas 13 semanas">
+    ${ticks.map(v=>`<line x1="48" x2="708" y1="${Y(v)}" y2="${Y(v)}" stroke="var(--line)" stroke-width="1"/><text x="42" y="${Y(v)+4}" text-anchor="end" font-size="10.5" fill="var(--muted)">${kk(v)}</text>`).join("")}
+    <line x1="48" x2="708" y1="${Y(MIN_SEG)}" y2="${Y(MIN_SEG)}" stroke="#F2C230" stroke-width="2" stroke-dasharray="6 5"/>
+    <text x="706" y="${Y(MIN_SEG)-6}" text-anchor="end" font-size="11" font-weight="700" fill="#B8860B">mínimo seguro ${kk(MIN_SEG)}</text>
+    <path d="M${pts.map(p=>p.join(",")).join(" L")} L${pts[pts.length-1][0]},196 L48,196 Z" fill="var(--green)" opacity=".10"/>
+    <path d="M${pts.map(p=>p.join(",")).join(" L")}" fill="none" stroke="var(--green)" stroke-width="2.5" stroke-linejoin="round"/>
+    ${pts.map((p,i)=>`<circle cx="${p[0]}" cy="${p[1]}" r="${i===0?4:3}" fill="var(--green)"><title>${i===0?"Hoje":"Semana de "+dCurta(W[i-1].ini)}: ${brl(i===0?XC.saldo:W[i-1].saldo)}</title></circle>`).join("")}
+    ${W.map((w,i)=>i%2===0?`<text x="${X(i+1)}" y="216" text-anchor="middle" font-size="10.5" fill="var(--muted)">${dCurta(w.ini)}</text>`:"").join("")}
+    <text x="${X(0)}" y="216" text-anchor="middle" font-size="10.5" fill="var(--muted)">hoje</text>
+  </svg>`;
+  const abaixo=W.filter(w=>w.saldo<MIN_SEG);
+  return `<div class="xkpis">
+    <div class="kpi"><span>Saldo em conta hoje</span><b>${brl(XC.saldo)}</b><div class="xmini"><a href="#" onclick="formSaldo();return false">ajustar</a></div></div>
+    <div class="kpi"><span>Entradas previstas · 90 dias</span><b class="pos">${brl(W.reduce((s,w)=>s+w.e,0))}</b></div>
+    <div class="kpi"><span>Saídas previstas · 90 dias</span><b class="neg">${brl(W.reduce((s,w)=>s+w.s,0))}</b></div>
+    <div class="kpi"><span>Menor saldo previsto</span><b class="${mn.saldo<MIN_SEG?"neg":"pos"}">${brl(mn.saldo)}</b><div class="xmini">semana de ${dCurta(mn.ini)}</div></div>
+  </div>
+  <div class="card"><h3 style="margin-top:0">Saldo previsto nas próximas 13 semanas</h3>${svg}
+    <div class="criterio">${abaixo.length?`⚠ O saldo fica abaixo do mínimo seguro em ${abaixo.length} semana${abaixo.length===1?"":"s"}. Vale segurar uma compra ou antecipar uma venda.`:"O saldo fica acima do mínimo seguro em todas as semanas."}</div></div>
+  <div class="tbl-wrap"><table class="xtbl"><thead><tr><th>Semana</th><th class="r">A receber</th><th class="r">Leite (média)</th><th class="r">A pagar</th><th class="r">Gastos fixos (média)</th><th class="r">Saldo no fim</th></tr></thead><tbody>
+    ${W.map(w=>`<tr><td style="white-space:nowrap">${dCurta(w.ini)} a ${dCurta(w.fim)}</td><td class="r pos">${w.pe?brl(w.pe):"—"}</td><td class="r pos">${brl(w.rec)}</td><td class="r neg">${w.ps?brl(w.ps):"—"}</td><td class="r neg">${brl(w.des)}</td><td class="r ${w.saldo<MIN_SEG?"neg":""}"><b>${brl(w.saldo)}</b></td></tr>`).join("")}
+  </tbody></table></div>
+  <div class="criterio">Como é calculado: contas a pagar e a receber pelo vencimento, mais a média semanal do leite e dos gastos que se repetem (folha, ração, diesel, energia, manutenção e sanidade) dos últimos 90 dias.</div>`;
+}
+function formSaldo(){
+  abrirModal(`${cab("Saldo em conta hoje")}
+  <div class="field"><label>Saldo somado das contas da fazenda (R$)</label><input id="x-saldo" type="number" step="0.01" value="${XC.saldo}"></div>
+  <div class="criterio">No sistema completo, o saldo vem direto do banco pela conciliação bancária.</div>
+  <div class="m-actions"><button class="btn" onclick="salvarSaldo()">Salvar</button></div>`);
+}
+function salvarSaldo(){const v=+val("x-saldo");const a=XC.saldo;XC.saldo=v;xlog("Financeiro","Ajustou saldo em conta",`de ${brl(a)} para ${brl(v)}`);fecharModal();render()}
+const GRUPOS_DRE=[
+  {n:"Custos de produção",cats:["Mão de obra e encargos","Insumos agrícolas","Nutrição animal","Sanidade e reprodução","Combustível","Manutenção e peças","Serviços e fretes","Água e energia","Irrigação","Compra de animais"]},
+  {n:"Despesas administrativas e financeiras",cats:["Administrativo e financeiro","Outros"]}
+];
+function vDRE(){
+  const anos=[...new Set(F.map(l=>+l.data.slice(0,4)))].sort();
+  let ls=F.filter(l=>+l.data.slice(0,4)===anoFin);
+  if(mesFin>0)ls=ls.filter(l=>+l.data.slice(5,7)===mesFin);
+  const cols=[...ccProdutivos(),"Compartilhado"];
+  const colDe=l=>ccProdutivos().includes(l.cc)?l.cc:"Compartilhado";
+  const soma=(f)=>{const r={T:0};cols.forEach(c=>r[c]=0);ls.filter(f).forEach(l=>{r.T+= +l.valor;r[colDe(l)]+= +l.valor});return r};
+  const op=(a,b,sg)=>{const r={};["T",...cols].forEach(k=>r[k]=a[k]+sg*b[k]);return r};
+  const rec=soma(l=>l.tipo==="Entrada"),recC=CAT_ENTRADA.map(c=>[c,soma(l=>l.tipo==="Entrada"&&l.categoria===c)]);
+  const vendas=soma(l=>l.tipo==="Entrada"&&(l.categoria==="Venda de animais"||l.categoria==="Venda de produção"));
+  const fun={};["T",...cols].forEach(k=>fun[k]=vendas[k]*0.015);
+  const liq=op(rec,fun,-1);
+  const gr=GRUPOS_DRE.map(g=>({n:g.n,t:soma(l=>l.tipo==="Saída"&&g.cats.includes(l.categoria)),sub:g.cats.map(c=>[c,soma(l=>l.tipo==="Saída"&&l.categoria===c)])}));
+  const lb=op(liq,gr[0].t,-1),ro=op(lb,gr[1].t,-1);
+  const inv=soma(l=>l.tipo==="Saída"&&l.categoria==="Investimentos e benfeitorias");
+  const cx=op(ro,inv,-1);
+  const pc=v=>rec.T?Math.round(v/rec.T*1000)/10+"%":"—";
+  const cel=(r,neg)=>`<td class="r"><b>${neg&&r.T?"−":""}${brl(Math.abs(r.T))}</b></td><td class="r xmini">${pc(r.T)}</td>${cols.map(c=>`<td class="r">${r[c]?(neg?"−":"")+brl(Math.abs(r[c])).replace(",00",""):"—"}</td>`).join("")}`;
+  const celS=(r,neg)=>`<td class="r">${neg?"−":""}${brl(r.T)}</td><td class="r xmini">${pc(r.T)}</td>${cols.map(c=>`<td class="r">${r[c]?(neg?"−":"")+brl(r[c]).replace(",00",""):"—"}</td>`).join("")}`;
+  const celT=r=>`<td class="r ${r.T<0?"neg":"pos"}">${brl(r.T)}</td><td class="r xmini">${pc(r.T)}</td>${cols.map(c=>`<td class="r ${r[c]<0?"neg":""}">${brl(r[c]).replace(",00","")}</td>`).join("")}`;
+  const per=mesFin>0?`${MESES[mesFin-1]} de ${anoFin}`:`${anoFin} (ano todo)`;
+  return `<div class="toolbar">
+    <select onchange="anoFin=+this.value;render()">${(anos.includes(anoFin)?anos:[...anos,anoFin]).map(y=>`<option ${y===anoFin?"selected":""}>${y}</option>`).join("")}</select>
+    <select onchange="mesFin=+this.value;render()"><option value="0">Ano todo</option>${MESES.map((m,i)=>`<option value="${i+1}" ${i+1===mesFin?"selected":""}>${m}</option>`).join("")}</select>
+  </div>
+  <div class="xkpis">
+    <div class="kpi"><span>Receita bruta</span><b class="pos">${brl(rec.T)}</b></div>
+    <div class="kpi"><span>Lucro bruto</span><b class="${lb.T<0?"neg":"pos"}">${brl(lb.T)}</b><div class="xmini">margem ${pc(lb.T)}</div></div>
+    <div class="kpi"><span>Resultado operacional</span><b class="${ro.T<0?"neg":"pos"}">${brl(ro.T)}</b><div class="xmini">margem ${pc(ro.T)}</div></div>
+    <div class="kpi"><span>Geração de caixa</span><b class="${cx.T<0?"neg":"pos"}">${brl(cx.T)}</b><div class="xmini">depois dos investimentos</div></div>
+  </div>
+  <div class="card" style="padding:0"><div style="padding:14px 14px 4px"><h3 style="margin:0">DRE · ${per}</h3><div class="xmini">Demonstração do resultado por atividade, pela data de competência</div></div>
+  <div class="tbl-wrap" style="border:none;border-radius:0 0 12px 12px"><table class="xtbl"><thead><tr><th></th><th class="r">Total</th><th class="r">%</th>${cols.map(c=>`<th class="r">${esc(c)}</th>`).join("")}</tr></thead><tbody>
+    <tr class="g"><td>Receita bruta</td>${cel(rec)}</tr>
+    ${recC.filter(([,r])=>r.T).map(([c,r])=>`<tr class="s"><td>${esc(c)}</td>${celS(r)}</tr>`).join("")}
+    <tr class="g"><td>(−) Funrural sobre vendas · 1,5% estimado</td>${cel(fun,true)}</tr>
+    <tr class="t"><td>= Receita líquida</td>${celT(liq)}</tr>
+    <tr class="g"><td>(−) ${gr[0].n}</td>${cel(gr[0].t,true)}</tr>
+    ${gr[0].sub.filter(([,r])=>r.T).map(([c,r])=>`<tr class="s"><td>${esc(c)}</td>${celS(r,true)}</tr>`).join("")}
+    <tr class="t"><td>= Lucro bruto</td>${celT(lb)}</tr>
+    <tr class="g"><td>(−) ${gr[1].n}</td>${cel(gr[1].t,true)}</tr>
+    ${gr[1].sub.filter(([,r])=>r.T).map(([c,r])=>`<tr class="s"><td>${esc(c)}</td>${celS(r,true)}</tr>`).join("")}
+    <tr class="t"><td>= Resultado operacional</td>${celT(ro)}</tr>
+    <tr class="g"><td>(−) Investimentos e benfeitorias</td>${cel(inv,true)}</tr>
+    <tr class="t"><td>= Geração de caixa do período</td>${celT(cx)}</tr>
+  </tbody></table></div></div>
+  <div class="criterio">"Compartilhado" junta Máquinas e Equipamentos, Sede e Fazenda. O rateio desses custos entre as atividades está em Lançamentos, na Análise integrada. O Funrural é uma estimativa; o valor exato vem das notas de venda.</div>`;
+}
+function vPlano(){
+  const fa=F.filter(l=>+l.data.slice(0,4)===anoFin);
+  const st=(f)=>{const ls=fa.filter(f);return [ls.length,ls.reduce((s,l)=>s+ +l.valor,0)]};
+  const G=[
+    ["1","Receitas","Entrada",CAT_ENTRADA],
+    ["2","Custos de produção","Saída",GRUPOS_DRE[0].cats],
+    ["3","Despesas administrativas e financeiras","Saída",GRUPOS_DRE[1].cats],
+    ["4","Investimentos","Saída",["Investimentos e benfeitorias"]]
+  ];
+  const linhas=G.map(([cod,n,tipo,cats])=>{
+    const [q,t]=st(l=>l.tipo===tipo&&cats.includes(l.categoria));
+    return `<tr class="g"><td>${cod}</td><td>${n}</td><td class="r">${q}</td><td class="r ${tipo==="Entrada"?"pos":"neg"}">${brl(t)}</td></tr>`+
+      cats.map((c,i)=>{const [q2,t2]=st(l=>l.tipo===tipo&&l.categoria===c);return `<tr class="s"><td>${cod}.${String(i+1).padStart(2,"0")}</td><td>${esc(c)}</td><td class="r">${q2||"—"}</td><td class="r">${t2?brl(t2):"—"}</td></tr>`}).join("");
+  }).join("");
+  const ccs=ccList().map(c=>{const prod=ccProdutivos().includes(c);const [,e]=st(l=>l.cc===c&&l.tipo==="Entrada");const [n,s]=st(l=>l.cc===c&&l.tipo==="Saída");
+    return `<tr><td><b>${esc(c)}</b></td><td>${prod?`<span class="xb xb-ok">Produtivo</span>`:`<span class="xb xb-soon">Compartilhado</span>`}</td><td class="xmini">${prod?"Tem receita própria e resultado próprio":"Custo dividido entre as atividades pelas horas de máquina"}</td><td class="r pos">${e?brl(e):"—"}</td><td class="r neg">${s?brl(s):"—"}</td><td><button class="btn sm sec" onclick="ccFin='${c.replace(/'/g,"\\'")}';finAba='lanc';render()">Ver</button></td></tr>`}).join("");
+  return `<div class="card" style="padding:0"><div style="padding:14px 14px 4px"><h3 style="margin:0">Plano de contas · ${anoFin}</h3><div class="xmini">Adaptado ao produtor rural e ao Livro Caixa Digital (LCDPR). Pode ser ajustado junto com o contador.</div></div>
+    <div class="tbl-wrap" style="border:none"><table class="xtbl"><thead><tr><th>Código</th><th>Conta</th><th class="r">Lançamentos</th><th class="r">Total no ano</th></tr></thead><tbody>${linhas}</tbody></table></div></div>
+  <div class="card" style="padding:0"><div style="padding:14px 14px 4px"><h3 style="margin:0">Centros de custo</h3><div class="xmini">Cada lançamento vai para um centro. É assim que o sistema mostra quanto cada atividade dá de resultado.</div></div>
+    <div class="tbl-wrap" style="border:none"><table class="xtbl"><thead><tr><th>Centro</th><th>Tipo</th><th>Como entra no resultado</th><th class="r">Receitas</th><th class="r">Despesas</th><th></th></tr></thead><tbody>${ccs}</tbody></table></div></div>`;
+}
+
+/* ---------- COMPRAS ---------- */
+const ETAPAS=[["sol","Pedido do campo"],["cot","Em cotação"],["apr","Aguardando aprovação"],["ped","Pedido feito"],["rec","Recebido"]];
+const valorCompra=c=>c.esc!=null&&c.cot[c.esc]?+c.cot[c.esc].v:(c.cot.length?Math.min(...c.cot.map(x=>+x.v)):0);
+const precisa=c=>(XC.regras?.find(r=>r.k==="apr2")?.on&&valorCompra(c)>=50000)?2:1;
+const resumoItens=c=>c.itens.map(i=>`${num(i.q)} ${i.u} de ${i.d.charAt(0).toLowerCase()+i.d.slice(1)}`).join(", ");
+function vCompras(){
+  if(!ensureX())return `<h2>Compras</h2><div class="empty">Carregando…</div>`;
+  const G=ehGestao(),C=XC.compras;
+  const ab=C.filter(c=>c.status!=="rec"&&c.status!=="rej");
+  const aprov=C.filter(c=>c.status==="apr");
+  const mes=hoje().slice(0,7),recMes=C.filter(c=>c.status==="rec"&&(c.recEm||"").startsWith(mes));
+  const eco=C.filter(c=>c.cot.length>1&&c.esc!=null).reduce((s,c)=>s+Math.max(...c.cot.map(x=>+x.v))-+c.cot[c.esc].v,0);
+  const card=c=>`<div class="xcard" role="button" tabindex="0" onclick="verCompra('${c.id}')" onkeydown="if(event.key==='Enter')verCompra('${c.id}')">
+      <span class="xmini">#${c.num} · ${dBR(c.data)}</span><b>${esc(c.itens[0].d)}</b>
+      <span class="xmini">${num(c.itens[0].q)} ${esc(c.itens[0].u)} · ${esc(c.cc)}</span>
+      ${G&&valorCompra(c)?`<div class="xv">${brl(valorCompra(c))}</div>`:""}
+      <div style="margin-top:6px">${c.status==="cot"||c.status==="sol"?`<span class="xb xb-mut">${c.cot.length} cotaç${c.cot.length===1?"ão":"ões"}</span>`:""}${c.status==="apr"?`<span class="xb xb-soon">${c.aprov.length} de ${precisa(c)} aprovaç${precisa(c)>1?"ões":"ão"}</span>`:""}${c.status==="rec"?`<span class="xb xb-ok">recebido ${c.recEm?dCurta(c.recEm):""}</span>`:""}${c.status==="ped"?`<span class="xb xb-mut">${esc(c.cot[c.esc]?.f||"")}</span>`:""}</div>
+    </div>`;
+  return `<h2>Compras</h2>
+  <div class="toolbar"><button class="btn" onclick="formCompra()">+ Pedido de compra</button><div class="xmini" style="margin-left:auto">${G?"Do pedido do campo até a conta a pagar, sem papel e sem pedido esquecido.":"Peça o que está faltando. A gestão cota, aprova e avisa quando chegar."}</div></div>
+  ${G?`<div class="xkpis">
+    <div class="kpi"><span>Em andamento</span><b>${ab.length}</b><div class="xmini">pedidos</div></div>
+    <div class="kpi"><span>Esperando aprovação</span><b>${brl(aprov.reduce((s,c)=>s+valorCompra(c),0))}</b><div class="xmini">${aprov.length} pedido${aprov.length===1?"":"s"}</div></div>
+    <div class="kpi"><span>Recebidas no mês</span><b>${recMes.length}</b><div class="xmini">${brl(recMes.reduce((s,c)=>s+valorCompra(c),0))}</div></div>
+    <div class="kpi"><span>Economia nas cotações</span><b class="pos">${brl(eco)}</b><div class="xmini">mais cara × escolhida</div></div>
+  </div>`:""}
+  <div class="xkan">${ETAPAS.map(([k,n])=>{const ls=C.filter(c=>c.status===k).sort((a,b)=>a.num<b.num?1:-1);return `<div class="xcol"><h4><span>${n}</span><span class="xmini">${ls.length}</span></h4>${ls.map(card).join("")||`<div class="xmini" style="padding:6px">Nenhum</div>`}</div>`}).join("")}</div>
+  <div class="criterio">Fluxo: o campo pede → a gestão cota com fornecedores → ${XC.regras?.find(r=>r.k==="apr2")?.on?"acima de R$ 50 mil, 2 sócios aprovam":"a gestão aprova"} → o pedido é feito → ao receber, o item entra no estoque e a conta a pagar é criada sozinha.</div>`;
+}
+function formCompra(){
+  abrirModal(`${cab("Novo pedido de compra")}
+  <div class="field"><label>O que precisa</label><input id="c-item" placeholder="Ex.: Arame liso, vermífugo, óleo 15W40"></div>
+  <div class="row2"><div class="field"><label>Quantidade</label><input id="c-q" type="number" step="0.01"></div><div class="field"><label>Unidade</label><input id="c-u" value="un." list="c-uns"><datalist id="c-uns"><option>un.</option><option>kg</option><option>t</option><option>L</option><option>sacos</option><option>doses</option><option>rolos</option><option>caixas</option></datalist></div></div>
+  <div class="row2"><div class="field"><label>Centro de custo</label><select id="c-cc">${opt(ccList(),"Pecuária")}</select></div><div class="field"><label>Categoria</label><select id="c-cat">${opt(CAT_SAIDA,"Manutenção e peças")}</select></div></div>
+  <div class="field"><label>Para quando / observação</label><input id="c-obs" placeholder="Ex.: urgente, acabou no curral da Bugalhau"></div>
+  <div class="m-actions"><button class="btn" onclick="salvarCompra()">Enviar pedido</button></div>`);
+}
+function salvarCompra(){
+  const d=val("c-item"),q=+val("c-q");if(!d||!q){toast("Informe o item e a quantidade.");return}
+  XC.seq=(XC.seq||142)+1;const numC=String(XC.seq).padStart(4,"0");
+  XC.compras.push({id:uid(),num:numC,status:"sol",data:hoje(),solic:quem(),itens:[{d,q,u:val("c-u")||"un."}],cc:val("c-cc"),cat:val("c-cat"),cot:[],esc:null,aprov:[],obs:val("c-obs")});
+  xlog("Compras",`Pediu compra #${numC}`,`${d} · ${num(q)} ${val("c-u")}`);fecharModal();render();toast("Pedido enviado para a gestão.");
+}
+function verCompra(id){
+  const c=XC.compras.find(x=>x.id===id);if(!c)return;const G=ehGestao(),i=ETAPAS.findIndex(e=>e[0]===c.status),nec=precisa(c);
+  const jaAprovou=c.aprov.includes(quem());
+  const hist=XC.log.filter(l=>(l.a+" "+l.d).includes("#"+c.num)).slice(0,6);
+  let acoes="";
+  if(G){
+    if(c.status==="sol"||c.status==="cot")acoes=`<button class="btn sec" onclick="formCotacao('${c.id}')">+ Cotação</button>${c.cot.length?`<button class="btn" onclick="enviarAprovacao('${c.id}')">Enviar para aprovação</button>`:""}`;
+    else if(c.status==="apr")acoes=`<button class="btn sec" onclick="recusarCompra('${c.id}')">Recusar</button><button class="btn" ${jaAprovou?"disabled":""} onclick="aprovarCompra('${c.id}')">${jaAprovou?"Você já aprovou":`Aprovar (${c.aprov.length+1} de ${nec})`}</button>`;
+    else if(c.status==="ped")acoes=`<button class="btn" onclick="receberCompra('${c.id}')">Marcar como recebido</button>`;
+  }
+  abrirModal(`${cab("Compra #"+c.num)}
+  <div class="xsteps">${ETAPAS.map(([k,n],j)=>`<span class="${j<i?"done":j===i?"on":""}">${n}</span>`).join("")}</div>
+  <div style="font-weight:700;font-size:16px">${esc(resumoItens(c))}</div>
+  <div class="xmini">Pedido por ${esc(c.solic)} em ${dBR(c.data)} · ${esc(c.cc)} · ${esc(c.cat)}${c.obs?" · "+esc(c.obs):""}</div>
+  ${G?(c.cot.length?`<div class="tbl-wrap" style="margin-top:12px"><table class="xtbl"><thead><tr><th></th><th>Fornecedor</th><th class="r">Valor</th><th>Entrega</th><th>Pagamento</th></tr></thead><tbody>${c.cot.map((q,j)=>{const menor=+q.v===Math.min(...c.cot.map(x=>+x.v));return `<tr><td><input type="radio" name="c-esc" ${c.esc===j?"checked":""} ${c.status==="sol"||c.status==="cot"?"":"disabled"} onchange="escolherCot('${c.id}',${j})" aria-label="Escolher ${esc(q.f)}"></td><td><b>${esc(q.f)}</b>${menor&&c.cot.length>1?` <span class="xb xb-ok">menor preço</span>`:""}</td><td class="r">${brl(+q.v)}</td><td>${esc(q.prazo)}</td><td>${esc(q.pg)}</td></tr>`}).join("")}</tbody></table></div>`:`<div class="xnote">Ainda sem cotação. Adicione pelo menos uma para enviar para aprovação.</div>`):`<div class="xnote">Situação: <b>${ETAPAS[i]?.[1]||"Recusado"}</b>. A gestão avisa quando chegar.</div>`}
+  ${c.status==="apr"?`<div class="xnote">${nec>1?"Acima de R$ 50 mil: precisa do sim de 2 sócios.":"Precisa de 1 aprovação."} ${c.aprov.length?"Já aprovou: "+c.aprov.map(esc).join(", ")+".":""}</div>`:""}
+  ${c.status==="rec"?`<div class="xnote">Recebido em ${dBR(c.recEm)}. ${c.lancId?"Conta a pagar criada no financeiro.":""}</div>`:""}
+  ${hist.length?`<h3 style="font-size:14px;margin:14px 0 4px">Histórico</h3>${hist.map(l=>`<div class="xmini">${dBR(l.t.slice(0,10))} ${l.t.slice(11,16)} · ${esc(l.u)} · ${esc(l.a)}</div>`).join("")}`:""}
+  ${acoes?`<div class="m-actions">${acoes}</div>`:""}`);
+}
+function formCotacao(id){
+  const c=XC.compras.find(x=>x.id===id);
+  abrirModal(`${cab("Cotação · compra #"+c.num)}
+  <div class="field"><label>Fornecedor</label><input id="q-f" placeholder="Ex.: Casa do Fazendeiro Maracás"></div>
+  <div class="row2"><div class="field"><label>Valor total (R$)</label><input id="q-v" type="number" step="0.01"></div><div class="field"><label>Prazo de entrega</label><input id="q-p" placeholder="Ex.: 5 dias"></div></div>
+  <div class="field"><label>Pagamento</label><select id="q-pg">${opt(["à vista","28 dias","30 dias","45 dias","30/60/90"],"30 dias")}</select></div>
+  <div class="m-actions"><button class="btn sec" onclick="verCompra('${id}')">Voltar</button><button class="btn" onclick="salvarCotacao('${id}')">Salvar cotação</button></div>`);
+}
+function salvarCotacao(id){
+  const c=XC.compras.find(x=>x.id===id),f=val("q-f"),v=+val("q-v");if(!f||!v){toast("Informe o fornecedor e o valor.");return}
+  c.cot.push({f,v,prazo:val("q-p")||"—",pg:val("q-pg")});c.status="cot";
+  const mi=c.cot.reduce((b,x,j)=>+x.v<+c.cot[b].v?j:b,0);c.esc=mi;
+  xlog("Compras",`Adicionou cotação na compra #${c.num}`,`${f} · ${brl(v)}`);verCompra(id);render();
+}
+function escolherCot(id,j){const c=XC.compras.find(x=>x.id===id);c.esc=j;salvarX();render()}
+function enviarAprovacao(id){
+  const c=XC.compras.find(x=>x.id===id);if(c.esc==null)c.esc=0;c.status="apr";c.aprov=[];
+  xlog("Compras",`Enviou compra #${c.num} para aprovação`,`${c.cot[c.esc].f} · ${brl(+c.cot[c.esc].v)}`);fecharModal();render();toast("Enviada para aprovação dos sócios.");
+}
+function aprovarCompra(id){
+  const c=XC.compras.find(x=>x.id===id);if(c.aprov.includes(quem()))return;c.aprov.push(quem());
+  const ok=c.aprov.length>=precisa(c);if(ok)c.status="ped";
+  xlog("Compras",`Aprovou compra #${c.num}`,`${esc(c.itens[0].d)} · ${brl(valorCompra(c))}${ok?" · pedido liberado":" · falta "+(precisa(c)-c.aprov.length)+" sócio"}`);
+  fecharModal();render();toast(ok?"Aprovada. O pedido pode ser feito ao fornecedor.":"Aprovação registrada. Falta mais um sócio.");
+}
+function recusarCompra(id){
+  const c=XC.compras.find(x=>x.id===id);c.status="cot";c.aprov=[];
+  xlog("Compras",`Devolveu compra #${c.num} para nova cotação`,c.itens[0].d);fecharModal();render();toast("Compra devolvida para cotação.");
+}
+function receberCompra(id){
+  const c=XC.compras.find(x=>x.id===id),q=c.cot[c.esc]||{f:"",v:valorCompra(c),pg:"30 dias"};
+  const dias=/à vista/.test(q.pg)?0:(+(q.pg.match(/\d+/)||[30])[0]);
+  const l={id:uid(),data:hoje(),cc:c.cc,categoria:c.cat,tipo:"Saída",valor:+q.v,descricao:`Compra #${c.num} · ${c.itens[0].d} · ${q.f}`,status:dias?"Pendente":"Pago",venc:addDias(hoje(),dias),compraId:c.id};
+  F.push(l);salvarF();
+  const it=c.itens[0],ex=S.find(s=>s.nome&&s.nome.toLowerCase()===it.d.toLowerCase());
+  if(ex){ex.qtd=(+ex.qtd||0)+ +it.q}else{S.push({id:uid(),nome:it.d,tipo:"Outro",cc:c.cc,qtd:+it.q,preco:Math.round(+q.v/ +it.q*100)/100,min:0,obs:`Compra #${c.num}`})}
+  try{stSet(KEYS.S,S)}catch(e){}
+  c.status="rec";c.recEm=hoje();c.lancId=l.id;
+  xlog("Compras",`Recebeu compra #${c.num}`,`${num(it.q)} ${it.u} no estoque · conta a pagar de ${brl(+q.v)}${dias?" para "+dBR(l.venc):" paga à vista"}`);
+  fecharModal();render();toast("Recebido: estoque atualizado e conta a pagar criada.");
+}
+
+/* ---------- USUÁRIOS E PERMISSÕES ---------- */
+const PERFIS_X=["Dono","Gestor","Gerente","Operador","Contador"];
+const NIVEIS=["—","Ver","Lançar","Editar","Aprovar","Total"];
+function vAcessos(){
+  if(!ensureX())return `<h2>Usuários e permissões</h2><div class="empty">Carregando…</div>`;
+  const U=XC.users;
+  return `<h2>Usuários e permissões</h2>
+  <div class="toolbar"><button class="btn" onclick="formUsuario()">+ Convidar pessoa</button><div class="xmini" style="margin-left:auto">${U.filter(u=>u.ativo).length} pessoas com acesso</div></div>
+  <div class="card" style="padding:0"><div style="padding:14px 14px 4px"><h3 style="margin:0">Quem tem acesso</h3></div>
+  <div class="tbl-wrap" style="border:none"><table class="xtbl"><thead><tr><th>Nome</th><th>Perfil</th><th>Fazendas</th><th>Último acesso</th><th>2 etapas</th><th>Acesso</th></tr></thead><tbody>
+  ${U.map(u=>`<tr><td><b>${esc(u.nome)}</b>${u.convite?`<br><span class="xb xb-soon">convite enviado</span>`:""}</td>
+    <td><select onchange="mudarPerfil('${u.id}',this.value)" aria-label="Perfil de ${esc(u.nome)}">${opt(PERFIS_X,u.perfil)}</select></td>
+    <td class="xmini">${esc(u.faz)}</td><td class="xmini">${u.ult?dBR(u.ult.slice(0,10))+" "+u.ult.slice(11,16):"—"}</td>
+    <td>${u.fa2?`<span class="xb xb-ok">ativa</span>`:`<span class="xb xb-mut">não</span>`}</td>
+    <td><button class="xsw ${u.ativo?"on":""}" role="switch" aria-checked="${u.ativo}" aria-label="Acesso de ${esc(u.nome)}" onclick="mudarAtivo('${u.id}')"></button></td></tr>`).join("")}
+  </tbody></table></div></div>
+  <div class="card" style="padding:0"><div style="padding:14px 14px 4px"><h3 style="margin:0">O que cada perfil pode fazer</h3><div class="xmini">Ver: só consulta · Lançar: registra o dia a dia · Editar: corrige registros · Aprovar: libera compras e vendas · Total: tudo, inclusive excluir</div></div>
+  <div class="tbl-wrap xperm" style="border:none"><table class="xtbl"><thead><tr><th>Tela</th>${PERFIS_X.map(p=>`<th>${p}</th>`).join("")}</tr></thead><tbody>
+  ${Object.entries(XC.perm).map(([m,arr])=>`<tr><td><b>${esc(m)}</b></td>${arr.map((v,j)=>`<td><select onchange="mudarPerm('${m}',${j},this.value)" aria-label="${esc(m)} para ${PERFIS_X[j]}">${opt(NIVEIS,v)}</select></td>`).join("")}</tr>`).join("")}
+  </tbody></table></div></div>
+  <div class="card"><h3 style="margin-top:0">Regras e segurança</h3>
+  ${XC.regras.map(r=>`<div class="xtg"><div>${esc(r.t)}<small>${esc(r.s)}</small></div><button class="xsw ${r.on?"on":""}" role="switch" aria-checked="${r.on}" aria-label="${esc(r.t)}" onclick="mudarRegra('${r.k}')"></button></div>`).join("")}
+  </div>
+  <div class="criterio">Nesta demonstração os acessos são simulados. No sistema real cada pessoa entra com o próprio login, e toda mudança aqui fica registrada no Histórico.</div>`;
+}
+function mudarPerfil(id,p){const u=XC.users.find(x=>x.id===id);const a=u.perfil;u.perfil=p;xlog("Usuários","Alterou perfil",`${u.nome}: de ${a} para ${p}`);render();toast("Perfil alterado.")}
+function mudarAtivo(id){const u=XC.users.find(x=>x.id===id);u.ativo=!u.ativo;xlog("Usuários",u.ativo?"Liberou acesso":"Bloqueou acesso",u.nome);render()}
+function mudarPerm(m,j,v){const a=XC.perm[m][j];XC.perm[m][j]=v;xlog("Usuários","Alterou permissão",`${PERFIS_X[j]}: ${m} de ${a} para ${v}`);toast("Permissão alterada.")}
+function mudarRegra(k){const r=XC.regras.find(x=>x.k===k);r.on=!r.on;xlog("Segurança",r.on?"Ligou regra":"Desligou regra",r.t);render()}
+function formUsuario(){
+  abrirModal(`${cab("Convidar pessoa")}
+  <div class="field"><label>Nome</label><input id="u-nome"></div>
+  <div class="field"><label>Celular ou e-mail</label><input id="u-cont" placeholder="O convite chega com o link para criar a senha"></div>
+  <div class="row2"><div class="field"><label>Perfil</label><select id="u-perfil">${opt(PERFIS_X,"Operador")}</select></div><div class="field"><label>Fazendas</label><select id="u-faz">${opt(["Bugalhau e Rio Bonito","Bugalhau","Rio Bonito"],"Bugalhau e Rio Bonito")}</select></div></div>
+  <div class="m-actions"><button class="btn" onclick="salvarUsuario()">Enviar convite</button></div>`);
+}
+function salvarUsuario(){const n=val("u-nome");if(!n){toast("Informe o nome.");return}XC.users.push({id:uid(),nome:n,perfil:val("u-perfil"),faz:val("u-faz"),ult:"",fa2:false,ativo:true,convite:true});xlog("Usuários","Convidou pessoa",`${n} como ${val("u-perfil")}`);fecharModal();render();toast("Convite enviado.")}
+
+/* ---------- HISTÓRICO ---------- */
+function vLog(){
+  if(!ensureX())return `<h2>Histórico</h2><div class="empty">Carregando…</div>`;
+  const us=[...new Set(XC.log.map(l=>l.u))].sort(),ms=[...new Set(XC.log.map(l=>l.m))].sort();
+  const b=logBusca.toLowerCase();
+  const ls=XC.log.filter(l=>(logFiltroU==="Todos"||l.u===logFiltroU)&&(logFiltroM==="Todos"||l.m===logFiltroM)&&(!b||(l.a+" "+l.d+" "+l.u).toLowerCase().includes(b)));
+  return `<h2>Histórico</h2>
+  <div class="toolbar">
+    <select onchange="logFiltroU=this.value;render()" aria-label="Pessoa">${opt(["Todos",...us],logFiltroU)}</select>
+    <select onchange="logFiltroM=this.value;render()" aria-label="Área">${opt(["Todos",...ms],logFiltroM)}</select>
+    <input placeholder="Buscar: lote, valor, compra…" value="${esc(logBusca)}" onchange="logBusca=this.value;render()" aria-label="Buscar">
+    <button class="btn sec" onclick="exportarLog()" style="flex:none">Exportar</button>
+  </div>
+  <div class="tbl-wrap"><table class="xtbl"><thead><tr><th>Quando</th><th>Quem</th><th>Área</th><th>O que fez</th></tr></thead><tbody>
+  ${ls.slice(0,200).map(l=>`<tr><td style="white-space:nowrap">${dBR(l.t.slice(0,10))}<br><span class="xmini">${l.t.slice(11,16)}</span></td><td><b>${esc(l.u)}</b>${l.p?`<br><span class="xmini">${esc(l.p)}</span>`:""}</td><td>${esc(l.m)}</td><td>${esc(l.a)}${l.d?`<br><span class="xmini">${esc(l.d)}</span>`:""}</td></tr>`).join("")||`<tr><td colspan="4" class="xmini">Nada encontrado.</td></tr>`}
+  </tbody></table></div>
+  <div class="criterio">O histórico não pode ser apagado nem alterado, nem pela gestão. Ele mostra quem fez cada registro, edição, exclusão, aprovação e acesso, com data e hora.</div>`;
+}
+function exportarLog(){
+  const linhas=[["Data","Hora","Pessoa","Perfil","Área","Ação","Detalhe"],...XC.log.map(l=>[dBR(l.t.slice(0,10)),l.t.slice(11,16),l.u,l.p,l.m,l.a,l.d])];
+  const csv=linhas.map(r=>r.map(x=>`"${String(x).replace(/"/g,'""')}"`).join(";")).join("\n");
+  const a=document.createElement("a");a.href=URL.createObjectURL(new Blob(["\ufeff"+csv],{type:"text/csv"}));a.download="historico-etta-agro.csv";a.click();
+  xlog("Histórico","Exportou o histórico",`${XC.log.length} registros`);
+}
+
+/* ---------- registro automático das ações das outras telas ---------- */
+(function(){
+  const NOMES={Animal:["Rebanho","animal"],Area:["Áreas","área"],Chuva:["Chuvas","chuva"],Colheita:["Agricultura","colheita"],Cultura:["Agricultura","cultura"],Diarista:["Equipe","diária"],Doc:["Documentos","documento"],Evento:["Calendário","atividade"],Func:["Equipe","funcionário"],GTA:["Rebanho","GTA"],Manut:["Máquinas","manutenção"],Maquina:["Máquinas","máquina"],MovSilo:["Silagem","movimentação de silo"],Nota:["Agenda","anotação"],PagtoDoc:["Documentos","pagamento de documento"],Silo:["Silagem","silo"],Supl:["Áreas","suplementação"],Item:["Estoque","item de estoque"],Lactacao:["Leite","lactação"],Nascimento:["Rebanho","nascimento"],Ordenha:["Leite","ordenha"],Presenca:["Equipe","presença"],Saida:["Rebanho","saída de animal"],Secagem:["Leite","secagem"],Uso:["Máquinas","uso de máquina"],VendaLeite:["Leite","venda de leite"],Alocacao:["Equipe","alocação de equipe"],Atividade:["Calendário","atividade"]};
+  const VERBO={salvar:"Registrou",excluir:"Excluiu",concluir:"Concluiu"};
+  const sig=()=>{try{return [A,F,E,S,R,GT,NT,AR,DOC].map(x=>x.length).join()+JSON.stringify([AG,MQ,EQ,LT,E]).length}catch(e){return ""}};
+  Object.keys(NOMES).forEach(n=>Object.keys(VERBO).forEach(v=>{
+    const k=v+n;if(typeof window[k]!=="function")return;
+    const orig=window[k];
+    window[k]=function(){
+      const ov=document.getElementById("overlay"),aberto=ov&&ov.classList.contains("on"),s0=sig();
+      const r=orig.apply(this,arguments);
+      const ok=(aberto&&!ov.classList.contains("on"))||sig()!==s0;
+      if(ok&&USR.perfil&&xState==="ok")xlog(NOMES[n][0],`${VERBO[v]} ${NOMES[n][1]}`,"");
+      return r;
+    };
+  }));
+})();
+
+/* ---------- abas novas no menu ---------- */
+(function(){
+  const iFin=TODAS_ABAS.findIndex(x=>x[0]==="fin");
+  TODAS_ABAS.splice(iFin+1,0,["compras","Compras"]);
+  TODAS_ABAS.push(["acessos","Usuários"],["log","Histórico"]);
+  const g=PERFIS.gestao.abas;g.splice(g.indexOf("fin")+1,0,"compras");g.push("acessos","log");
+  PERFIS.operacao.abas.push("compras");
+  if(typeof ABA_INFO!=="undefined"){
+    ABA_INFO.fin.d="Lançamentos, contas a pagar e receber, fluxo de caixa e DRE";
+    ABA_INFO.compras={ico:"🛒",g:["#F2C230","#B8860B"],d:"Pedido do campo, cotação, aprovação e recebimento"};
+    ABA_INFO.acessos={ico:"🔐",g:["#0C6FA0","#022C44"],d:"Quem acessa o quê, regras e segurança"};
+    ABA_INFO.log={ico:"🕘",g:["#5CC6EE","#0A5A85"],d:"Quem fez o quê e quando"};
+  }
+  const renderERP=render;
+  render=function(){
+    if(USR.perfil)ensureX();
+    if(USR.perfil&&["compras","acessos","log"].includes(tab)&&abasPerfil().includes(tab)){
+      const v=document.getElementById("view");
+      v.innerHTML=tab==="compras"?vCompras():tab==="acessos"?vAcessos():vLog();
+      atualizarHeader();montarNav();return;
+    }
+    renderERP();
+  };
+  /* registra entrada e saída de perfil */
+  const entrarBase=typeof entrarPerfil==="function"?entrarPerfil:null;
+})();
+</script>
+
 <div class="dfloat"><a class="dhome" href="./">‹ Início da demonstração</a><div class="thm" role="group" aria-label="Tema"><button type="button" data-t="light">☀️ <span>Claro</span></button><button type="button" data-t="dark">🌙 <span>Escuro</span></button></div></div>
 <script>(function(){var r=document.documentElement,bs=document.querySelectorAll(".thm button");function cur(){return r.getAttribute("data-theme")||(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light")}function sync(){var c=cur();bs.forEach(function(b){b.setAttribute("aria-pressed",b.dataset.t===c)})}bs.forEach(function(b){b.addEventListener("click",function(){r.setAttribute("data-theme",b.dataset.t);try{localStorage.setItem("etta-theme",b.dataset.t)}catch(e){}try{aplicarTema(b.dataset.t==="dark"?"noite":"safra",true);render()}catch(e){}sync()})});try{matchMedia("(prefers-color-scheme: dark)").addEventListener("change",sync)}catch(e){}sync()})();</script>
 </body>
