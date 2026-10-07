@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#023855">
+<title>ETTA Agro · Demonstração</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Public+Sans:wght@400;500;600&display=swap">
+<style>
+:root{--bg:#EEF2F5;--ink:#1B222A;--ink2:#45515B;--card:#fff;--line:#D6E1E8;--grad:linear-gradient(125deg,#023855 0%,#04507A 55%,#0C6FA0 100%)}
+@media (prefers-color-scheme:dark){:root{--bg:#0B1720;--ink:#E8F0F5;--ink2:#B3C3CE;--card:#11212C;--line:#23394A}}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(1200px 500px at 85% -10%,rgba(12,111,160,.16),transparent 70%),var(--bg);color:var(--ink);font:15px/1.5 "Public Sans","Segoe UI",Roboto,sans-serif;min-height:100vh}
+.wrap{max-width:1080px;margin:0 auto;padding:28px 20px 40px}
+@media (max-width:520px){.wrap{padding:16px 16px 32px}}
+.hero{position:relative;overflow:hidden;border-radius:22px;padding:40px 36px 36px;color:#fff;background:radial-gradient(70% 120% at 100% 0%,rgba(242,194,48,.22),transparent 60%),var(--grad);box-shadow:0 20px 44px rgba(2,56,85,.3)}
+.hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:4px;background:linear-gradient(90deg,#0C6FA0,#F2C230)}
+.kick{font:800 12px "Bricolage Grotesque",sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#F2C230}
+h1{font:800 clamp(32px,5.5vw,56px)/1.02 "Bricolage Grotesque",sans-serif;letter-spacing:-.02em;margin:10px 0 12px}
+.hero p{margin:0;max-width:56ch;color:rgba(255,255,255,.86);font-size:16px}
+.note{display:inline-block;margin-top:18px;font-size:12.5px;padding:6px 11px;border-radius:999px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2)}
+.cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin:20px 0}
+@media (max-width:700px){.cards{grid-template-columns:1fr}.hero{padding:28px 22px}}
+a.card{display:flex;gap:16px;align-items:center;text-decoration:none;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px;box-shadow:0 1px 2px rgba(2,56,85,.06),0 10px 28px rgba(2,56,85,.08);transition:transform .2s,box-shadow .2s}
+a.card:hover{transform:translateY(-2px);box-shadow:0 14px 34px rgba(2,56,85,.16)}
+a.card:focus-visible{outline:3px solid #F2C230;outline-offset:3px}
+.ic{flex:none;width:72px;height:72px;border-radius:22px;display:grid;place-items:center;font-size:34px;background:radial-gradient(120% 90% at 30% 15%,rgba(255,255,255,.3),transparent 55%),linear-gradient(150deg,var(--g1),var(--g2));box-shadow:0 10px 22px rgba(2,56,85,.25)}
+a.card b{display:block;color:var(--ink);font:700 20px "Bricolage Grotesque",sans-serif;margin-bottom:2px}
+a.card span{font-size:14px;color:var(--ink2)}
+a.card .ic{font-size:34px}
+a.card .go{margin-left:auto;font-size:22px;color:#0C6FA0}
+.sig{border-radius:16px;padding:18px 22px;background:linear-gradient(125deg,#011E2E,#023855 60%,#04507A);color:#fff;display:flex;flex-wrap:wrap;gap:14px 28px;align-items:center;justify-content:space-between}
+.sig img{height:42px;width:auto;display:block}
+.sig div{text-align:right;font-size:13px;color:rgba(255,255,255,.8)}.sig div b{display:block;font:700 16px "Bricolage Grotesque",sans-serif;color:#fff}
+@media (max-width:520px){.sig{justify-content:center}.sig div{text-align:center}}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <section class="hero">
+    <div class="kick">ETTA Agro · Fazendas Reunidas</div>
+    <h1>Olá, Eurico</h1>
+    <p>Uma prévia do sistema que junta lavoura, pomar, pecuária de corte e leite, ERP e o Dashboard dos donos num lugar só. Explore à vontade: dá para tocar, simular e trocar de tela.</p>
+    <span class="note">Demonstração com dados fictícios</span>
+  </section>
+  <div class="cards">
+    <a class="card" href="painel.html"><span class="ic" style="--g1:#01A2D9;--g2:#023855">💻</span><span><b>Painel no computador</b><span>Dashboard, E se...?, vender ou segurar, pomar, passaporte do animal, clima e mais.</span></span><span class="go" aria-hidden="true">→</span></a>
+    <a class="card" href="app.html"><span class="ic" style="--g1:#F2C230;--g2:#B8860B">📱</span><span><b>App no celular e no tablet</b><span>Avisos, aprovações, perguntas, menu em cartões e quatro telas de tablet.</span></span><span class="go" aria-hidden="true">→</span></a>
+  </div>
+  <footer class="sig"><img src="logo-americaapps.png" alt="AmericaApps · Desenvolvimento web e mobile"><div><b>Allan Chaves</b>Co-founder · AmericaApps</div></footer>
+</main>
+</body>
+</html>
