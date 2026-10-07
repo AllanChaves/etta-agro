@@ -5817,7 +5817,7 @@ html[data-tema="noite"] .xb-soon{background:#3A2E12;color:#F5C76B}
 /* =====================================================================
    ERP: financeiro completo, compras, usuários e permissões, histórico
    ===================================================================== */
-let finAba="lanc", xState="", xEdit=null, compraFiltro="Todas", logFiltroU="Todos", logFiltroM="Todos", logBusca="";
+let dreRateio=true, finAba="lanc", xState="", xEdit=null, compraFiltro="Todas", logFiltroU="Todos", logFiltroM="Todos", logBusca="";
 let XC={compras:[],log:[],users:[],perm:null,regras:null,saldo:2300000,seq:142};
 const KX="fr-erp";
 const salvarX=()=>stSet(KX,XC);
@@ -6081,9 +6081,13 @@ function vDRE(){
   const anos=[...new Set(F.map(l=>+l.data.slice(0,4)))].sort();
   let ls=F.filter(l=>+l.data.slice(0,4)===anoFin);
   if(mesFin>0)ls=ls.filter(l=>+l.data.slice(5,7)===mesFin);
-  const cols=[...ccProdutivos(),"Compartilhado"];
-  const colDe=l=>ccProdutivos().includes(l.cc)?l.cc:"Compartilhado";
-  const soma=(f)=>{const r={T:0};cols.forEach(c=>r[c]=0);ls.filter(f).forEach(l=>{r.T+= +l.valor;r[colDe(l)]+= +l.valor});return r};
+  const prods=ccProdutivos(),cols=dreRateio?[...prods]:[...prods,"Compartilhado"];
+  const colDe=l=>prods.includes(l.cc)?l.cc:"Compartilhado";
+  const dir={};let dirT=0;prods.forEach(c=>dir[c]=0);ls.forEach(l=>{if(l.tipo==="Entrada"&&prods.includes(l.cc)){dir[l.cc]+= +l.valor;dirT+= +l.valor}});
+  const peso=c=>dirT?dir[c]/dirT:1/prods.length;
+  const soma=(f)=>{const r={T:0,Compartilhado:0};prods.forEach(c=>r[c]=0);ls.filter(f).forEach(l=>{r.T+= +l.valor;r[colDe(l)]+= +l.valor});
+    if(dreRateio){prods.forEach(c=>r[c]+=r.Compartilhado*peso(c));r.Compartilhado=0}return r};
+  const compT=ls.filter(l=>l.tipo==="Saída"&&l.categoria!=="Investimentos e benfeitorias"&&!prods.includes(l.cc)).reduce((t,l)=>t+ +l.valor,0);
   const op=(a,b,sg)=>{const r={};["T",...cols].forEach(k=>r[k]=a[k]+sg*b[k]);return r};
   const rec=soma(l=>l.tipo==="Entrada"),recC=CAT_ENTRADA.map(c=>[c,soma(l=>l.tipo==="Entrada"&&l.categoria===c)]);
   const vendas=soma(l=>l.tipo==="Entrada"&&(l.categoria==="Venda de animais"||l.categoria==="Venda de produção"));
@@ -6102,6 +6106,8 @@ function vDRE(){
     <select onchange="anoFin=+this.value;render()">${(anos.includes(anoFin)?anos:[...anos,anoFin]).map(y=>`<option ${y===anoFin?"selected":""}>${y}</option>`).join("")}</select>
     <select onchange="mesFin=+this.value;render()"><option value="0">Ano todo</option>${MESES.map((m,i)=>`<option value="${i+1}" ${i+1===mesFin?"selected":""}>${m}</option>`).join("")}</select>
   </div>
+  <div class="xseg" role="group" aria-label="Rateio" style="margin-bottom:8px"><button class="${dreRateio?"on":""}" onclick="dreRateio=true;render()">Com rateio</button><button class="${dreRateio?"":"on"}" onclick="dreRateio=false;render()">Sem rateio</button></div>
+  <p class="xmini" style="margin:0 0 14px">${dreRateio?`Os gastos compartilhados (máquinas, sede, contador e equipe geral${compT?", "+brl(compT).replace(",00","")+" no período":""}) foram divididos entre as atividades na proporção do faturamento de cada uma: ${prods.map(c=>esc(c)+" "+Math.round(peso(c)*100)+"%").join(", ")}. Assim cada coluna mostra o resultado real da atividade.`:`Sem rateio, a coluna Compartilhado reúne os gastos que não pertencem a uma atividade só (máquinas, sede, contador e equipe geral). Ela não tem vendas, por isso fica negativa.`}</p>
   <div class="xkpis">
     <div class="kpi"><span>Receita bruta</span><b class="pos">${brl(rec.T)}</b></div>
     <div class="kpi"><span>Lucro bruto</span><b class="${lb.T<0?"neg":"pos"}">${brl(lb.T)}</b><div class="xmini">margem ${pc(lb.T)}</div></div>

@@ -38,6 +38,7 @@ a.card .go{margin-left:auto;font-size:22px;color:#0C6FA0}
 .sig img{height:42px;width:auto;display:block}
 .sig div{text-align:right;font-size:13px;color:rgba(255,255,255,.8)}.sig div b{display:block;font:700 16px "Bricolage Grotesque",sans-serif;color:#fff}
 @media (max-width:520px){.sig{justify-content:center}.sig div{text-align:center}}
+.signature.mini,.sig.mini{background:none;padding:4px 0 0;margin-top:22px;justify-content:center;box-shadow:none;border:0}.signature.mini::after,.signature.mini::before{display:none}.signature.mini span,.sig.mini span{display:inline-flex;padding:7px 13px;border-radius:999px;background:#023855}.signature.mini img,.sig.mini img{height:22px;width:auto;opacity:.9}
 </style>
 <style>
 .topbar{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:0 0 12px}
@@ -64,7 +65,7 @@ a.card .go{margin-left:auto;font-size:22px;color:#0C6FA0}
     <a class="card" href="app.html"><span class="ic" style="--g1:#F2C230;--g2:#B8860B">📱</span><span><b>App no celular e no tablet</b><span>Avisos, aprovações, perguntas, menu em cartões e quatro telas de tablet.</span></span><span class="go" aria-hidden="true">→</span></a>
     <a class="card" href="gerente.html"><span class="ic" style="--g1:#38B6E6;--g2:#0C6FA0">📋</span><span><b>Sistema do gerente</b><span>Gestão e operação: o Matheus e a equipe de campo cuidam de rebanho, pomar, silagem, máquinas, estoque e financeiro.</span></span><span class="go" aria-hidden="true">→</span></a>
   </div>
-  <footer class="sig"><img src="logo-americaapps.png" alt="AmericaApps · Desenvolvimento web e mobile"><div><b>Allan Chaves</b>Co-founder · AmericaApps</div></footer>
+  <footer class="sig mini"><span><img src="logo-americaapps.png" alt="AmericaApps · Desenvolvimento web e mobile"></span></footer>
 </main>
 <div class="thm thm-float" role="group" aria-label="Tema"><button type="button" data-t="light">☀️ <span>Claro</span></button><button type="button" data-t="dark">🌙 <span>Escuro</span></button></div>
 <script>(function(){var r=document.documentElement,bs=document.querySelectorAll(".thm button");function cur(){return r.getAttribute("data-theme")||(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light")}function sync(){var c=cur();bs.forEach(function(b){b.setAttribute("aria-pressed",b.dataset.t===c)})}bs.forEach(function(b){b.addEventListener("click",function(){r.setAttribute("data-theme",b.dataset.t);try{localStorage.setItem("etta-theme",b.dataset.t)}catch(e){}sync()})});try{matchMedia("(prefers-color-scheme: dark)").addEventListener("change",sync)}catch(e){}sync()})();</script>
