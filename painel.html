@@ -2,6 +2,8 @@
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8">
+<script>try{var t=localStorage.getItem("etta-theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
 <meta name="theme-color" content="#023855">
@@ -328,10 +330,19 @@ html.slides body:not([data-tab="socio"]) .demo{display:none}
 </style>
 
 <style>.backhome{display:inline-block;margin:0 0 12px;font:600 13px/1 -apple-system,BlinkMacSystemFont,"Inter","Segoe UI",sans-serif;color:#fff;background:rgba(2,56,85,.82);backdrop-filter:blur(10px);padding:9px 13px;border-radius:999px;text-decoration:none;box-shadow:0 6px 16px rgba(2,56,85,.25)}@media (max-width:520px){.delta{white-space:normal}}</style>
+<style>
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:0 0 12px}
+.topbar .backhome{margin:0}
+.thm{display:inline-flex;padding:3px;border-radius:999px;background:rgba(2,56,85,.82);backdrop-filter:blur(10px);box-shadow:0 6px 16px rgba(2,56,85,.25);margin-left:auto}
+.thm button{all:unset;cursor:pointer;font:600 13px/1 -apple-system,BlinkMacSystemFont,"Inter","Segoe UI",sans-serif;color:rgba(255,255,255,.78);padding:7px 12px;border-radius:999px;white-space:nowrap}
+.thm button[aria-pressed="true"]{background:#F2C230;color:#023855}
+.thm button:focus-visible{outline:2px solid #F2C230;outline-offset:2px}
+@media (max-width:420px){.thm button span{display:none}}
+</style>
 </head>
 <body>
 <div class="wrap">
-<a class="backhome" href="./">‹ Início da demonstração</a>
+<div class="topbar"><a class="backhome" href="./">‹ Início da demonstração</a><div class="thm" role="group" aria-label="Tema"><button type="button" data-t="light">☀️ <span>Claro</span></button><button type="button" data-t="dark">🌙 <span>Escuro</span></button></div></div>
   <div class="demo" role="note"><b>Maquete</b> Telas propostas para o ETTA Agro. Todos os números são de exemplo, não são dados das fazendas.</div>
 
   <div class="mini" id="mini">ETTA Agro · Fazendas Reunidas</div>
@@ -1088,5 +1099,6 @@ setScen("plano");setLote();openTab(start);
 })();
 </script>
 
+<script>(function(){var r=document.documentElement,bs=document.querySelectorAll(".thm button");function cur(){return r.getAttribute("data-theme")||(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light")}function sync(){var c=cur();bs.forEach(function(b){b.setAttribute("aria-pressed",b.dataset.t===c)})}bs.forEach(function(b){b.addEventListener("click",function(){r.setAttribute("data-theme",b.dataset.t);try{localStorage.setItem("etta-theme",b.dataset.t)}catch(e){}sync()})});try{matchMedia("(prefers-color-scheme: dark)").addEventListener("change",sync)}catch(e){}sync()})();</script>
 </body>
 </html>

@@ -2,6 +2,8 @@
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8">
+<script>try{var t=localStorage.getItem("etta-theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
 <meta name="theme-color" content="#023855">
@@ -10,7 +12,8 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Public+Sans:wght@400;500;600&display=swap">
 <style>
 :root{--bg:#EEF2F5;--ink:#1B222A;--ink2:#45515B;--card:#fff;--line:#D6E1E8;--grad:linear-gradient(125deg,#023855 0%,#04507A 55%,#0C6FA0 100%)}
-@media (prefers-color-scheme:dark){:root{--bg:#0B1720;--ink:#E8F0F5;--ink2:#B3C3CE;--card:#11212C;--line:#23394A}}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0B1720;--ink:#E8F0F5;--ink2:#B3C3CE;--card:#11212C;--line:#23394A}}
+:root[data-theme="dark"]{--bg:#0B1720;--ink:#E8F0F5;--ink2:#B3C3CE;--card:#11212C;--line:#23394A}
 *{box-sizing:border-box}
 body{margin:0;background:radial-gradient(1200px 500px at 85% -10%,rgba(12,111,160,.16),transparent 70%),var(--bg);color:var(--ink);font:15px/1.5 "Public Sans","Segoe UI",Roboto,sans-serif;min-height:100vh}
 .wrap{max-width:1080px;margin:0 auto;padding:28px 20px 40px}
@@ -36,9 +39,19 @@ a.card .go{margin-left:auto;font-size:22px;color:#0C6FA0}
 .sig div{text-align:right;font-size:13px;color:rgba(255,255,255,.8)}.sig div b{display:block;font:700 16px "Bricolage Grotesque",sans-serif;color:#fff}
 @media (max-width:520px){.sig{justify-content:center}.sig div{text-align:center}}
 </style>
+<style>
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:0 0 12px}
+.topbar .backhome{margin:0}
+.thm{display:inline-flex;padding:3px;border-radius:999px;background:rgba(2,56,85,.82);backdrop-filter:blur(10px);box-shadow:0 6px 16px rgba(2,56,85,.25);margin-left:auto}
+.thm button{all:unset;cursor:pointer;font:600 13px/1 -apple-system,BlinkMacSystemFont,"Inter","Segoe UI",sans-serif;color:rgba(255,255,255,.78);padding:7px 12px;border-radius:999px;white-space:nowrap}
+.thm button[aria-pressed="true"]{background:#F2C230;color:#023855}
+.thm button:focus-visible{outline:2px solid #F2C230;outline-offset:2px}
+@media (max-width:420px){.thm button span{display:none}}
+</style>
 </head>
 <body>
 <main class="wrap">
+  <div class="topbar"><div class="thm" role="group" aria-label="Tema"><button type="button" data-t="light">☀️ <span>Claro</span></button><button type="button" data-t="dark">🌙 <span>Escuro</span></button></div></div>
   <section class="hero">
     <div class="kick">ETTA Agro · Fazendas Reunidas</div>
     <h1>Olá, Eurico</h1>
@@ -51,5 +64,6 @@ a.card .go{margin-left:auto;font-size:22px;color:#0C6FA0}
   </div>
   <footer class="sig"><img src="logo-americaapps.png" alt="AmericaApps · Desenvolvimento web e mobile"><div><b>Allan Chaves</b>Co-founder · AmericaApps</div></footer>
 </main>
+<script>(function(){var r=document.documentElement,bs=document.querySelectorAll(".thm button");function cur(){return r.getAttribute("data-theme")||(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light")}function sync(){var c=cur();bs.forEach(function(b){b.setAttribute("aria-pressed",b.dataset.t===c)})}bs.forEach(function(b){b.addEventListener("click",function(){r.setAttribute("data-theme",b.dataset.t);try{localStorage.setItem("etta-theme",b.dataset.t)}catch(e){}sync()})});try{matchMedia("(prefers-color-scheme: dark)").addEventListener("change",sync)}catch(e){}sync()})();</script>
 </body>
 </html>
