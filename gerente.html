@@ -6085,8 +6085,13 @@ function vDRE(){
   const colDe=l=>prods.includes(l.cc)?l.cc:"Compartilhado";
   const dir={};let dirT=0;prods.forEach(c=>dir[c]=0);ls.forEach(l=>{if(l.tipo==="Entrada"&&prods.includes(l.cc)){dir[l.cc]+= +l.valor;dirT+= +l.valor}});
   const peso=c=>dirT?dir[c]/dirT:1/prods.length;
-  const soma=(f)=>{const r={T:0,Compartilhado:0};prods.forEach(c=>r[c]=0);ls.filter(f).forEach(l=>{r.T+= +l.valor;r[colDe(l)]+= +l.valor});
-    if(dreRateio){prods.forEach(c=>r[c]+=r.Compartilhado*peso(c));r.Compartilhado=0}return r};
+  const MAQ="Máquinas e Equipamentos";
+  let usoP=(MQ.uso||[]).filter(u=>+u.data.slice(0,4)===anoFin&&(!mesFin||+u.data.slice(5,7)===mesFin)&&prods.includes(u.cc));
+  const hrs={};let hrsT=0;prods.forEach(c=>hrs[c]=0);usoP.forEach(u=>{hrs[u.cc]+= +u.horas||0;hrsT+= +u.horas||0});
+  const pesoDe=(src,c)=>src===MAQ&&hrsT?hrs[c]/hrsT:peso(c);
+  const soma=(f)=>{const r={T:0,Compartilhado:0},sh={};prods.forEach(c=>r[c]=0);ls.filter(f).forEach(l=>{r.T+= +l.valor;const k=colDe(l);r[k]+= +l.valor;if(k==="Compartilhado")sh[l.cc]=(sh[l.cc]||0)+ +l.valor});
+    if(dreRateio){Object.entries(sh).forEach(([src,v])=>prods.forEach(c=>r[c]+=v*pesoDe(src,c)));r.Compartilhado=0}return r};
+  const shT={};ls.filter(l=>l.tipo==="Saída"&&l.categoria!=="Investimentos e benfeitorias"&&!prods.includes(l.cc)).forEach(l=>shT[l.cc]=(shT[l.cc]||0)+ +l.valor);
   const compT=ls.filter(l=>l.tipo==="Saída"&&l.categoria!=="Investimentos e benfeitorias"&&!prods.includes(l.cc)).reduce((t,l)=>t+ +l.valor,0);
   const op=(a,b,sg)=>{const r={};["T",...cols].forEach(k=>r[k]=a[k]+sg*b[k]);return r};
   const rec=soma(l=>l.tipo==="Entrada"),recC=CAT_ENTRADA.map(c=>[c,soma(l=>l.tipo==="Entrada"&&l.categoria===c)]);
@@ -6107,7 +6112,10 @@ function vDRE(){
     <select onchange="mesFin=+this.value;render()"><option value="0">Ano todo</option>${MESES.map((m,i)=>`<option value="${i+1}" ${i+1===mesFin?"selected":""}>${m}</option>`).join("")}</select>
   </div>
   <div class="xseg" role="group" aria-label="Rateio" style="margin-bottom:8px"><button class="${dreRateio?"on":""}" onclick="dreRateio=true;render()">Com rateio</button><button class="${dreRateio?"":"on"}" onclick="dreRateio=false;render()">Sem rateio</button></div>
-  <p class="xmini" style="margin:0 0 14px">${dreRateio?`Os gastos compartilhados (máquinas, sede, contador e equipe geral${compT?", "+brl(compT).replace(",00","")+" no período":""}) foram divididos entre as atividades na proporção do faturamento de cada uma: ${prods.map(c=>esc(c)+" "+Math.round(peso(c)*100)+"%").join(", ")}. Assim cada coluna mostra o resultado real da atividade.`:`Sem rateio, a coluna Compartilhado reúne os gastos que não pertencem a uma atividade só (máquinas, sede, contador e equipe geral). Ela não tem vendas, por isso fica negativa.`}</p>
+  <p class="xmini" style="margin:0 0 14px">${dreRateio?`Os gastos que servem a mais de uma atividade foram divididos entre elas. Cada um tem a sua regra:`:`Sem rateio, a coluna Compartilhado reúne os gastos que não pertencem a uma atividade só (máquinas, sede, contador e equipe geral). Ela não tem vendas, por isso fica negativa.`}</p>
+  ${dreRateio&&Object.keys(shT).length?`<div class="card" style="padding:0;margin-bottom:14px"><div class="tbl-wrap" style="border:none"><table class="xtbl"><thead><tr><th>Gasto compartilhado</th><th class="r">Valor</th><th>Regra de divisão</th>${prods.map(c=>`<th class="r">${esc(c)}</th>`).join("")}</tr></thead><tbody>
+    ${Object.entries(shT).sort((a,b)=>b[1]-a[1]).map(([src,v])=>`<tr><td><b>${esc(src)}</b></td><td class="r">${brl(v).replace(",00","")}</td><td class="xmini">${src===MAQ&&hrsT?`Horas de uso registradas pelos operadores (${num(hrsT)} h)`:"Faturamento de cada atividade"}</td>${prods.map(c=>`<td class="r">${Math.round(pesoDe(src,c)*100)}%<div class="xmini">${brl(v*pesoDe(src,c)).replace(",00","")}</div></td>`).join("")}</tr>`).join("")}
+  </tbody></table></div><div class="xmini" style="padding:8px 14px 12px">Quem controla: o operador registra no app, ao usar a máquina, em qual atividade trabalhou. O Matheus confere no fim do mês e a regra pode ser mudada no plano de contas.</div></div>`:""}
   <div class="xkpis">
     <div class="kpi"><span>Receita bruta</span><b class="pos">${brl(rec.T)}</b></div>
     <div class="kpi"><span>Lucro bruto</span><b class="${lb.T<0?"neg":"pos"}">${brl(lb.T)}</b><div class="xmini">margem ${pc(lb.T)}</div></div>
