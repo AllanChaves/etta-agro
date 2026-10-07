@@ -4422,6 +4422,7 @@ function telaLogin(){
         <button class="btn sec" onclick="entrar('operacao')">Entrar como operação</button>
       </div>
     </div>
+    ${!CFG.demo?`<div class="criterio" style="margin-top:16px;text-align:center">Quer ver o sistema com dados de exemplo? <a href="#" onclick="event.preventDefault();carregarDemo(false)"><b>Carregar a fazenda de demonstração</b></a></div>`:""}
   </div>`;
 }
 function entrar(p){
@@ -4469,7 +4470,7 @@ async function init(){
     LT=Object.assign({med:[],lact:[],vendas:[]},await stGet(KEYS.L)||{});
     USR=Object.assign({perfil:null,nome:"",funcId:""},await stGet(KEYS.U)||{});
   }
-  if(!semStorage&&((!A.length&&!E.length&&!F.length&&!CFG.demoRecusada)||(CFG.demo&&CFG.demoVer!==4)))aplicarDados(gerarDemo());
+  if(!semStorage&&((!A.length&&!E.length&&!F.length&&!CFG.demoRecusada)||(CFG.demo&&CFG.demoVer!==4)||/[?&#]demo\b/.test(location.search+location.hash)))aplicarDados(gerarDemo());
   migrar();
   if(!CFG.acesso)CFG.acesso={pin:""};
   if(!CFG.suplementos)CFG.suplementos=[];
