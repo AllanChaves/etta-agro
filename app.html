@@ -317,16 +317,43 @@ body{background:radial-gradient(1200px 500px at 85% -10%,color-mix(in srgb,var(-
 <style>
 .topbar{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:0 0 12px}
 .topbar .backhome{margin:0}
+.thm-float{position:fixed;right:16px;bottom:18px;z-index:9999}@media (max-width:700px){.thm-float{bottom:92px}}
 .thm{display:inline-flex;padding:3px;border-radius:999px;background:rgba(2,56,85,.82);backdrop-filter:blur(10px);box-shadow:0 6px 16px rgba(2,56,85,.25);margin-left:auto}
 .thm button{all:unset;cursor:pointer;font:600 13px/1 -apple-system,BlinkMacSystemFont,"Inter","Segoe UI",sans-serif;color:rgba(255,255,255,.78);padding:7px 12px;border-radius:999px;white-space:nowrap}
 .thm button[aria-pressed="true"]{background:#F2C230;color:#023855}
 .thm button:focus-visible{outline:2px solid #F2C230;outline-offset:2px}
 @media (max-width:420px){.thm button span{display:none}}
 </style>
+<style>
+.tablet{position:relative}.tablet .tv:not(.on){display:none}.tablet .tv .tbody{overflow:auto;min-height:0}
+.tablet .tv.on{animation:tvin .25s ease}@keyframes tvin{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.tablet .tv.on{animation:none}}
+.tdock span,.tbar .back{cursor:pointer}.tdock span:focus-visible,.tbar .back:focus-visible{outline:2px solid #F2C230;outline-offset:2px}
+.tjump{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 14px}
+.tjump button{font:600 13px -apple-system,BlinkMacSystemFont,"Inter","Segoe UI",sans-serif;padding:8px 13px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}
+.tjump button[aria-pressed="true"]{background:linear-gradient(125deg,#023855,#0C6FA0);color:#fff;border-color:transparent}
+.scn.scn2{grid-template-columns:1fr 1fr;gap:6px}.scn2 button{padding:9px 10px}.scn2 button b{font-size:13px}
+.sl{display:block;margin:9px 0 0}.sl .r{display:flex;justify-content:space-between;font-size:12.5px;color:var(--ink-2)}.sl .r b{color:var(--ink);font-variant-numeric:tabular-nums}
+.sl input{width:100%;margin:4px 0 0;accent-color:#0C6FA0;cursor:pointer}
+.cust{font:700 10px var(--f-body);letter-spacing:.04em;text-transform:uppercase;color:#023855;background:#F2C230;padding:2px 7px;border-radius:999px;vertical-align:2px;margin-left:4px}
+.ap3 .done{margin-top:10px;font-weight:600;font-size:13px}
+.chat{display:flex;flex-direction:column;height:430px}.tablet .tbar,.tablet .ttop{flex-shrink:0}
+.msgs{flex:1;overflow:auto;display:flex;flex-direction:column;gap:8px;padding:2px}
+.bub{max-width:82%;padding:10px 14px;border-radius:16px;font-size:13.5px;line-height:1.45}
+.bub.me{align-self:flex-end;background:linear-gradient(125deg,#023855,#0C6FA0);color:#fff;border-bottom-right-radius:4px}
+.bub.ai{align-self:flex-start;background:color-mix(in srgb,#01A2D9 10%,var(--card));border:1px solid var(--line);border-bottom-left-radius:4px}
+.bub.ai button{display:block;margin-top:8px;font:600 12.5px var(--f-body);padding:7px 12px;border-radius:999px;border:0;background:#F2C230;color:#023855;cursor:pointer}
+.askf{display:flex;gap:8px;margin-top:10px}.askf input{flex:1;font:14px var(--f-body);padding:10px 14px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--ink)}
+.askf button{font:600 13px var(--f-body);padding:10px 18px;border-radius:999px;border:0;background:linear-gradient(125deg,#023855,#0C6FA0);color:#fff;cursor:pointer}
+.qs{display:grid;gap:8px}.qs button{text-align:left;font:500 13.5px/1.35 var(--f-body);padding:11px 13px;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}
+.qs button:hover{border-color:#0C6FA0}
+.ttoast{position:absolute;left:50%;bottom:110px;transform:translateX(-50%);background:rgba(2,24,38,.92);color:#fff;font:600 13px -apple-system,BlinkMacSystemFont,"Inter",sans-serif;padding:10px 16px;border-radius:999px;opacity:0;pointer-events:none;transition:opacity .2s;white-space:nowrap}
+.ttoast.show{opacity:1}
+</style>
 </head>
 <body>
 <div class="wrap">
-<div class="topbar"><a class="backhome" href="./">‹ Início da demonstração</a><div class="thm" role="group" aria-label="Tema"><button type="button" data-t="light">☀️ <span>Claro</span></button><button type="button" data-t="dark">🌙 <span>Escuro</span></button></div></div>
+<div class="topbar"><a class="backhome" href="./">‹ Início da demonstração</a></div>
   <div class="demo"><b>Maquete</b> Como o app dos sócios apareceria no celular. Todos os números são de exemplo.</div>
   <div class="hero"><div class="brand">ETTA Agro · Dashboard no celular</div>
   <div class="owner" style="margin:10px 0 12px"><div><h1 class="name">Olá, Eurico<small>Fazendas Reunidas · Bugalhau e Rio Bonito</small></h1></div></div>
@@ -506,8 +533,9 @@ body{background:radial-gradient(1200px 500px at 85% -10%,color-mix(in srgb,var(-
 
   </div>
   <section class="tabsec">
-    <div class="cap"><h2>Tablet · Início</h2><p>A mesma visão do Eurico em tela grande: os cartões do menu no alto, como na tela inicial de um videogame, e o resumo das fazendas logo abaixo. Toque nos ícones.</p></div>
-    <div class="tabwrap" id="tabwrap"><div class="tablet" id="tablet"><div class="tscr">
+    <div class="cap"><h2>Tablet · navegue à vontade</h2><p>Funciona como no aparelho: escolha um cartão e toque em Abrir, ou use a barra de baixo para trocar de tela. No E se...?, arraste os controles e veja o ano mudar na hora.</p></div>
+    <div class="tjump" role="group" aria-label="Ir para a tela"><button type="button" data-go="home">🏠 Início</button><button type="button" data-go="sim">📈 E se...?</button><button type="button" data-go="reb">🐄 Rebanho</button><button type="button" data-go="faz">🗺 Fazendas</button><button type="button" data-go="apr">✅ Aprovar</button><button type="button" data-go="ask">✦ Perguntar</button></div>
+    <div class="tabwrap" id="tabwrap"><div class="tablet" id="tablet"><div class="tscr tv on" data-v="home">
       <div class="ttop" id="tb-launch">
         <div class="tsb"><span>9:41</span><span>Wi-Fi ▮▮▮ 100%</span></div>
         <div class="thead"><div><b>Olá, Eurico</b><span>Fazendas Reunidas · Bugalhau e Rio Bonito</span></div><div class="tr"><span class="pill">Fechamento de setembro</span><span class="pill">🔔 2</span></div></div>
@@ -534,28 +562,19 @@ body{background:radial-gradient(1200px 500px at 85% -10%,color-mix(in srgb,var(-
         </div>
       </div>
       
-    </div></div></div>
-    <div class="tsec"><div class="cap"><h2>Tablet · E se...?</h2><p>O Eurico toca num cenário e vê o ano inteiro mudar: resultado, caixa, rebanho e de onde vem cada diferença.</p></div>
-    <div class="tabwrap"><div class="tablet"><div class="tscr" id="tb-sim">
-      <div class="tbar"><div class="tsb"><span>9:41</span><span>Wi-Fi ▮▮▮ 100%</span></div><div class="tt"><div class="back">‹ Menu</div><h3>E se...?</h3><p>Simule o ano antes de decidir, com os números das duas fazendas</p></div><span class="pill">Orçado do ano R$ 7,1 mi</span></div>
+    </div><div class="tscr tv" data-v="sim" id="tb-sim">
+      <div class="tbar"><div class="tsb"><span>9:41</span><span>Wi-Fi ▮▮▮ 100%</span></div><div class="tt"><div class="back" role="button" tabindex="0" data-go="home">‹ Menu</div><h3>E se...?</h3><p>Simule o ano antes de decidir, com os números das duas fazendas</p></div><span class="pill">Orçado do ano R$ 7,1 mi</span></div>
       <div class="tbody pb">
-        <div class="tc s4"><h4>Escolha um cenário</h4><div class="scn">
-          <button type="button" data-k="plano"><b>Plano do ano</b><span>Arroba R$ 310, chuva normal, custos do orçamento</span></button>
-          <button type="button" data-k="seca"><b>Seca forte</b><span>Chuva 62% da média, ração e insumos 12% mais caros</span></button>
-          <button type="button" data-k="alta"><b>Arroba e limão em alta</b><span>Arroba R$ 345, limão Tahiti a R$ 3.300/t</span></button>
-          <button type="button" data-k="ruim"><b>Ano difícil</b><span>Arroba R$ 275, limão R$ 1.900/t, chuva 70%</span></button>
-        </div></div>
+        <div class="tc s4"><h4>Cenários prontos</h4><div class="scn scn2"><button type="button" data-k="plano"><b>Plano do ano</b></button><button type="button" data-k="seca"><b>Seca forte</b></button><button type="button" data-k="alta"><b>Arroba e limão em alta</b></button><button type="button" data-k="ruim"><b>Ano difícil</b></button></div><h4 style="margin-top:14px">Ajuste ao vivo <span class="cust" data-o="cust" hidden>personalizado</span></h4><label class="sl"><span class="r"><span>Arroba do boi</span><b data-sv="arr"></b></span><input type="range" data-s="arr" min="250" max="360" step="5"></label><label class="sl"><span class="r"><span>Limão Tahiti</span><b data-sv="lim"></b></span><input type="range" data-s="lim" min="1500" max="3600" step="100"></label><label class="sl"><span class="r"><span>Chuva no ano</span><b data-sv="chu"></b></span><input type="range" data-s="chu" min="50" max="120" step="2"></label><label class="sl"><span class="r"><span>Ração e insumos</span><b data-sv="ins"></b></span><input type="range" data-s="ins" min="-10" max="25" step="1"></label><label class="sl"><span class="r"><span>Prenhez na IATF</span><b data-sv="pre"></b></span><input type="range" data-s="pre" min="45" max="70" step="1"></label></div>
         <div class="tc s8" style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;align-content:start;background:none;border:0;box-shadow:none;padding:0">
           <div class="tc hero2" style="grid-column:span 2"><div class="lab">Resultado em 12 meses</div><div class="kv" data-o="res" style="font-size:36px"></div><span class="delta" data-o="d"></span></div>
           <div class="tc"><div class="lab">Caixa mínimo</div><div class="kv" data-o="cx" style="font-size:24px"></div><div class="small" data-o="cxs"></div></div>
           <div class="tc"><div class="lab">Valor do rebanho</div><div class="kv" data-o="reb" style="font-size:24px"></div><div class="small">arroba a R$ <span data-o="arr"></span></div></div>
           <div class="tc" style="grid-column:span 4"><h4>De onde vem a diferença</h4><div data-o="bars"></div></div>
         </div></div>
-      <div class="tdock"><span class=""><i>🏠</i>Início</span><span class="on"><i>📈</i>E se</span><span class=""><i>🐄</i>Rebanho</span><span class=""><i>🗺</i>Fazendas</span><span class=""><i>✅</i>Aprovar<b class="db">1</b></span><span class=""><i>✦</i>Perguntar</span><span class=""><i><svg viewBox="0 0 24 24" width="21" height="21" fill="currentColor"><rect x="4" y="4" width="7" height="7" rx="2"/><rect x="13" y="4" width="7" height="7" rx="2"/><rect x="4" y="13" width="7" height="7" rx="2"/><rect x="13" y="13" width="7" height="7" rx="2"/></svg></i>Menu</span></div>
-    </div></div></div></div>
-    <div class="tsec"><div class="cap"><h2>Tablet · Rebanho</h2><p>Qual lote vender agora e qual segurar, com as propostas dos frigoríficos lado a lado.</p></div>
-    <div class="tabwrap"><div class="tablet"><div class="tscr" id="tb-reb">
-      <div class="tbar"><div class="tsb"><span>9:41</span><span>Wi-Fi ▮▮▮ 100%</span></div><div class="tt"><div class="back">‹ Menu</div><h3>Rebanho</h3><p>4.150 cabeças nas duas fazendas · fechamento de setembro</p></div><span class="pill">🔎 Buscar brinco</span></div>
+      <div class="tdock"><span role="button" tabindex="0" data-go="home"><i>🏠</i>Início</span><span class="on" role="button" tabindex="0" data-go="sim"><i>📈</i>E se</span><span role="button" tabindex="0" data-go="reb"><i>🐄</i>Rebanho</span><span role="button" tabindex="0" data-go="faz"><i>🗺</i>Fazendas</span><span role="button" tabindex="0" data-go="apr"><i>✅</i>Aprovar<b class="db" data-o="apn">3</b></span><span role="button" tabindex="0" data-go="ask"><i>✦</i>Perguntar</span><span role="button" tabindex="0" data-go="home"><i><svg viewBox="0 0 24 24" width="21" height="21" fill="currentColor"><rect x="4" y="4" width="7" height="7" rx="2"/><rect x="13" y="4" width="7" height="7" rx="2"/><rect x="4" y="13" width="7" height="7" rx="2"/><rect x="13" y="13" width="7" height="7" rx="2"/></svg></i>Menu</span></div>
+    </div><div class="tscr tv" data-v="reb" id="tb-reb">
+      <div class="tbar"><div class="tsb"><span>9:41</span><span>Wi-Fi ▮▮▮ 100%</span></div><div class="tt"><div class="back" role="button" tabindex="0" data-go="home">‹ Menu</div><h3>Rebanho</h3><p>4.150 cabeças nas duas fazendas · fechamento de setembro</p></div><span class="pill">🔎 Buscar brinco</span></div>
       <div class="tbody pb">
         <div class="tc s3"><div class="lab">Cabeças</div><div class="kv">4.150</div><div class="small">2.850 Bugalhau · 1.300 Rio Bonito</div></div>
         <div class="tc s3"><div class="lab">Ganho de peso médio</div><div class="kv">0,66 kg</div><div class="small">por dia, últimos 90 dias</div></div>
@@ -581,11 +600,9 @@ body{background:radial-gradient(1200px 500px at 85% -10%,color-mix(in srgb,var(-
             <tr><td>18/09</td><td>Venda do lote B-07</td><td>Bugalhau</td><td>Frigorífico Regional</td><td class="n">240</td><td><span class="chip g">GTA 3301-BA</span></td></tr>
           </tbody></table>
         </div></div>
-      <div class="tdock"><span class=""><i>🏠</i>Início</span><span class=""><i>📈</i>E se</span><span class="on"><i>🐄</i>Rebanho</span><span class=""><i>🗺</i>Fazendas</span><span class=""><i>✅</i>Aprovar<b class="db">1</b></span><span class=""><i>✦</i>Perguntar</span><span class=""><i><svg viewBox="0 0 24 24" width="21" height="21" fill="currentColor"><rect x="4" y="4" width="7" height="7" rx="2"/><rect x="13" y="4" width="7" height="7" rx="2"/><rect x="4" y="13" width="7" height="7" rx="2"/><rect x="13" y="13" width="7" height="7" rx="2"/></svg></i>Menu</span></div>
-    </div></div></div></div>
-    <div class="tsec"><div class="cap"><h2>Tablet · Fazendas</h2><p>As duas fazendas comparadas e os pastos vistos pelo satélite, com o alerta de quando o capim vai acabar.</p></div>
-    <div class="tabwrap"><div class="tablet"><div class="tscr" id="tb-faz">
-      <div class="tbar"><div class="tsb"><span>9:41</span><span>Wi-Fi ▮▮▮ 100%</span></div><div class="tt"><div class="back">‹ Menu</div><h3>Fazendas</h3><p>Bugalhau e Rio Bonito lado a lado · ▲ melhor no indicador</p></div><span class="pill">Últimos 12 meses</span></div>
+      <div class="tdock"><span role="button" tabindex="0" data-go="home"><i>🏠</i>Início</span><span role="button" tabindex="0" data-go="sim"><i>📈</i>E se</span><span class="on" role="button" tabindex="0" data-go="reb"><i>🐄</i>Rebanho</span><span role="button" tabindex="0" data-go="faz"><i>🗺</i>Fazendas</span><span role="button" tabindex="0" data-go="apr"><i>✅</i>Aprovar<b class="db" data-o="apn">3</b></span><span role="button" tabindex="0" data-go="ask"><i>✦</i>Perguntar</span><span role="button" tabindex="0" data-go="home"><i><svg viewBox="0 0 24 24" width="21" height="21" fill="currentColor"><rect x="4" y="4" width="7" height="7" rx="2"/><rect x="13" y="4" width="7" height="7" rx="2"/><rect x="4" y="13" width="7" height="7" rx="2"/><rect x="13" y="13" width="7" height="7" rx="2"/></svg></i>Menu</span></div>
+    </div><div class="tscr tv" data-v="faz" id="tb-faz">
+      <div class="tbar"><div class="tsb"><span>9:41</span><span>Wi-Fi ▮▮▮ 100%</span></div><div class="tt"><div class="back" role="button" tabindex="0" data-go="home">‹ Menu</div><h3>Fazendas</h3><p>Bugalhau e Rio Bonito lado a lado · ▲ melhor no indicador</p></div><span class="pill">Últimos 12 meses</span></div>
       <div class="tbody pb">
         <div class="tc s6 fm"><div style="display:flex;justify-content:space-between;align-items:baseline"><h4>Bugalhau</h4><span class="small">2.850 cabeças · 3.400 ha</span></div>
           <div class="r"><span>Margem por hectare</span><b>R$ 1.240</b></div><div class="r"><span>Custo da arroba</span><b>R$ 176 ▲</b></div><div class="r"><span>Ganho de peso diário</span><b>0,61 kg</b></div><div class="r"><span>Prenhez na IATF</span><b>58%</b></div></div>
@@ -593,8 +610,22 @@ body{background:radial-gradient(1200px 500px at 85% -10%,color-mix(in srgb,var(-
           <div class="r"><span>Margem por hectare</span><b>R$ 1.610 ▲</b></div><div class="r"><span>Custo da arroba</span><b>R$ 191</b></div><div class="r"><span>Ganho de peso diário</span><b>0,74 kg ▲</b></div><div class="r"><span>Leite por vaca/dia</span><b>18,6 L</b></div></div>
         <div class="tc s12"><div style="display:flex;justify-content:space-between;align-items:baseline"><h4>Pastos da Bugalhau por satélite</h4><span class="small">Imagem de 03/10 · quanto mais verde, mais capim · ⚠ acaba em até 12 dias</span></div>
           <div class="pads2"><div class="pd" style="background:#6fae55;color:#0d160f"><b>P01</b><span>3.100 kg/ha</span><span><b style="font-size:12px">90 dias</b></span></div><div class="pd" style="background:#3d8a35;color:#fff"><b>P02</b><span>3.900 kg/ha</span><span><b style="font-size:12px">142 dias</b></span></div><div class="pd" style="background:#a3cd88;color:#16201a"><b>P03</b><span>2.400 kg/ha</span><span><b style="font-size:12px">56 dias</b></span></div><div class="pd" style="background:#cfe5bd;color:#16201a"><b>P04</b><span>1.700 kg/ha</span><span><b style="font-size:12px">37 dias</b></span></div><div class="pd" style="background:#6fae55;color:#0d160f"><b>P05</b><span>2.900 kg/ha</span><span><b style="font-size:12px">78 dias</b></span></div><div class="pd" style="background:#3d8a35;color:#fff"><b>P06</b><span>3.500 kg/ha</span><span><b style="font-size:12px">110 dias</b></span></div><div class="pd al" style="background:#eef5e6;color:#1B222A"><b>P07</b><span>900 kg/ha</span><span><b style="font-size:12px">⚠ 9 dias</b></span></div><div class="pd" style="background:#a3cd88;color:#16201a"><b>P08</b><span>2.100 kg/ha</span><span><b style="font-size:12px">45 dias</b></span></div><div class="pd" style="background:#215f22;color:#fff"><b>P09</b><span>4.300 kg/ha</span><span><b style="font-size:12px">186 dias</b></span></div><div class="pd" style="background:#cfe5bd;color:#16201a"><b>P10</b><span>1.500 kg/ha</span><span><b style="font-size:12px">27 dias</b></span></div></div></div></div>
-      <div class="tdock"><span class=""><i>🏠</i>Início</span><span class=""><i>📈</i>E se</span><span class=""><i>🐄</i>Rebanho</span><span class="on"><i>🗺</i>Fazendas</span><span class=""><i>✅</i>Aprovar<b class="db">1</b></span><span class=""><i>✦</i>Perguntar</span><span class=""><i><svg viewBox="0 0 24 24" width="21" height="21" fill="currentColor"><rect x="4" y="4" width="7" height="7" rx="2"/><rect x="13" y="4" width="7" height="7" rx="2"/><rect x="4" y="13" width="7" height="7" rx="2"/><rect x="13" y="13" width="7" height="7" rx="2"/></svg></i>Menu</span></div>
-    </div></div></div></div>
+      <div class="tdock"><span role="button" tabindex="0" data-go="home"><i>🏠</i>Início</span><span role="button" tabindex="0" data-go="sim"><i>📈</i>E se</span><span role="button" tabindex="0" data-go="reb"><i>🐄</i>Rebanho</span><span class="on" role="button" tabindex="0" data-go="faz"><i>🗺</i>Fazendas</span><span role="button" tabindex="0" data-go="apr"><i>✅</i>Aprovar<b class="db" data-o="apn">3</b></span><span role="button" tabindex="0" data-go="ask"><i>✦</i>Perguntar</span><span role="button" tabindex="0" data-go="home"><i><svg viewBox="0 0 24 24" width="21" height="21" fill="currentColor"><rect x="4" y="4" width="7" height="7" rx="2"/><rect x="13" y="4" width="7" height="7" rx="2"/><rect x="4" y="13" width="7" height="7" rx="2"/><rect x="13" y="13" width="7" height="7" rx="2"/></svg></i>Menu</span></div>
+    </div><div class="tscr tv" data-v="apr" id="tb-apr">
+      <div class="tbar"><div class="tsb"><span>9:41</span><span>Wi-Fi ▮▮▮ 100%</span></div><div class="tt"><div class="back" role="button" tabindex="0" data-go="home">‹ Menu</div><h3>Aprovar</h3><p>Vendas e compras acima de R$ 50 mil esperam o sim de dois sócios</p></div><span class="pill"><span data-o="apn">3</span> aguardando você</span></div>
+      <div class="tbody pb">
+        <div class="tc s4 ap ap3"><span class="chip w">Venda</span><div style="font-weight:600;margin-top:8px">66 t de limão Tahiti</div><div class="amt" style="font-size:24px">R$ 184.800</div><div class="small">R$ 2.800/t · 3 propostas, esta é a maior</div><div class="small" style="margin-top:4px">Pedido por Matheus (gerente) · hoje</div><div class="btns"><button type="button" data-ok="0">Recusar</button><button type="button" class="ok" data-ok="1">Aprovar</button></div><div class="done" hidden></div></div><div class="tc s4 ap ap3"><span class="chip w">Compra</span><div style="font-weight:600;margin-top:8px">40 t de sal mineral e ração</div><div class="amt" style="font-size:24px">R$ 96.400</div><div class="small">Para os lotes B-11 e R-03 na seca · 3% abaixo da última compra</div><div class="small" style="margin-top:4px">Pedido por Matheus (gerente) · ontem</div><div class="btns"><button type="button" data-ok="0">Recusar</button><button type="button" class="ok" data-ok="1">Aprovar</button></div><div class="done" hidden></div></div><div class="tc s4 ap ap3"><span class="chip w">Venda</span><div style="font-weight:600;margin-top:8px">Lote B-14 (descarte), 180 cabeças</div><div class="amt" style="font-size:24px">R$ 851.800</div><div class="small">2.730 arrobas a R$ 312 · Frigorífico A, à vista</div><div class="small" style="margin-top:4px">Recomendado pelo ETTA · ontem</div><div class="btns"><button type="button" data-ok="0">Recusar</button><button type="button" class="ok" data-ok="1">Aprovar</button></div><div class="done" hidden></div></div>
+        <div class="tc s12"><h4>Decididos nos últimos 30 dias</h4><table class="ltab"><thead><tr><th>Data</th><th>Pedido</th><th class="n">Valor</th><th>Decisão</th></tr></thead><tbody><tr><td>28/09</td><td>Venda de 240 bois do lote B-07</td><td class="n">R$ 1.204.000</td><td><span class="chip g">Aprovada pelos 2 sócios</span></td></tr><tr><td>21/09</td><td>Conserto do trator MF 4292</td><td class="n">R$ 58.300</td><td><span class="chip g">Aprovada pelos 2 sócios</span></td></tr><tr><td>12/09</td><td>Compra de 2 touros Nelore</td><td class="n">R$ 64.000</td><td><span class="chip c">Recusada · pedir novo orçamento</span></td></tr></tbody></table></div>
+      </div>
+      <div class="tdock"><span role="button" tabindex="0" data-go="home"><i>🏠</i>Início</span><span role="button" tabindex="0" data-go="sim"><i>📈</i>E se</span><span role="button" tabindex="0" data-go="reb"><i>🐄</i>Rebanho</span><span role="button" tabindex="0" data-go="faz"><i>🗺</i>Fazendas</span><span class="on" role="button" tabindex="0" data-go="apr"><i>✅</i>Aprovar<b class="db" data-o="apn">3</b></span><span role="button" tabindex="0" data-go="ask"><i>✦</i>Perguntar</span><span role="button" tabindex="0" data-go="home"><i><svg viewBox="0 0 24 24" width="21" height="21" fill="currentColor"><rect x="4" y="4" width="7" height="7" rx="2"/><rect x="13" y="4" width="7" height="7" rx="2"/><rect x="4" y="13" width="7" height="7" rx="2"/><rect x="13" y="13" width="7" height="7" rx="2"/></svg></i>Menu</span></div>
+    </div><div class="tscr tv" data-v="ask" id="tb-ask">
+      <div class="tbar"><div class="tsb"><span>9:41</span><span>Wi-Fi ▮▮▮ 100%</span></div><div class="tt"><div class="back" role="button" tabindex="0" data-go="home">‹ Menu</div><h3>Perguntar</h3><p>Pergunte em português. A resposta vem com os números das duas fazendas</p></div><span class="pill">✦ Assistente ETTA</span></div>
+      <div class="tbody pb">
+        <div class="tc s8 chat"><div class="msgs" data-o="msgs"><div class="bub ai">Olá, Eurico. O que você quer saber das fazendas hoje?</div></div><form class="askf" data-o="form"><input type="text" placeholder="Escreva sua pergunta" aria-label="Sua pergunta"><button type="submit">Enviar</button></form></div>
+        <div class="tc s4"><h4>Sugestões</h4><div class="qs"><button type="button" data-q="0">Quanto gastamos com ração em setembro?</button><button type="button" data-q="1">Qual lote vale vender agora?</button><button type="button" data-q="2">Como está o pasto da Bugalhau?</button><button type="button" data-q="3">Quanto o limão rendeu este ano?</button><button type="button" data-q="4">O caixa aguenta uma seca forte?</button></div></div>
+      </div>
+      <div class="tdock"><span role="button" tabindex="0" data-go="home"><i>🏠</i>Início</span><span role="button" tabindex="0" data-go="sim"><i>📈</i>E se</span><span role="button" tabindex="0" data-go="reb"><i>🐄</i>Rebanho</span><span role="button" tabindex="0" data-go="faz"><i>🗺</i>Fazendas</span><span role="button" tabindex="0" data-go="apr"><i>✅</i>Aprovar<b class="db" data-o="apn">3</b></span><span class="on" role="button" tabindex="0" data-go="ask"><i>✦</i>Perguntar</span><span role="button" tabindex="0" data-go="home"><i><svg viewBox="0 0 24 24" width="21" height="21" fill="currentColor"><rect x="4" y="4" width="7" height="7" rx="2"/><rect x="13" y="4" width="7" height="7" rx="2"/><rect x="4" y="13" width="7" height="7" rx="2"/><rect x="13" y="13" width="7" height="7" rx="2"/></svg></i>Menu</span></div>
+    </div><div class="ttoast" role="status" aria-live="polite"></div></div></div>
 
   </section>
 
@@ -654,19 +685,67 @@ body{background:radial-gradient(1200px 500px at 85% -10%,color-mix(in srgb,var(-
   const wraps=[...document.querySelectorAll(".tabwrap")];
   function fit(){wraps.forEach(w=>{const t=w.querySelector(".tablet"),s=Math.min(1,w.clientWidth/1100);t.style.transform=`scale(${s})`;w.style.height=(770*s)+"px"})}
   fit();addEventListener("resize",fit);
-  /* E se no tablet */
-  const SC={plano:{res:7.7,d:0,cx:1.4,reb:18.4,arr:310,f:[0,0,0,0,0]},seca:{res:5.0,d:-2.7,cx:0.4,reb:16.5,arr:300,f:[-300,-257,-1292,-648,-252]},alta:{res:9.6,d:1.9,cx:2.1,reb:20.5,arr:345,f:[1050,772,60,0,42]},ruim:{res:3.2,d:-4.5,cx:-0.2,reb:15.7,arr:275,f:[-1050,-1084,-1020,-972,-378]}};
-  const N=["Arroba","Limão","Chuva no pasto","Insumos","Prenhez"],tb=document.getElementById("tb-sim"),o=k=>tb.querySelector(`[data-o="${k}"]`);
-  const f1=v=>v.toFixed(1).replace(".",","),mi=v=>(v<-.05?"−":"")+"R$ "+f1(Math.abs(v))+" mi";
-  function go(k){const c=SC[k];tb.querySelectorAll(".scn button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.k===k));
-    o("res").textContent=mi(c.res);o("d").textContent=c.d===0?"plano aprovado do ano":(c.d>0?"+":"−")+"R$ "+f1(Math.abs(c.d))+" mi vs plano";
-    o("cx").textContent=mi(c.cx);o("cxs").textContent=c.cx<.8?"abaixo do mínimo seguro":"acima do mínimo seguro";o("reb").textContent=mi(c.reb);o("arr").textContent=c.arr;
-    o("bars").innerHTML=c.f.map((v,i)=>{const w=Math.min(50,Math.abs(v)/1300*50);return `<div class="fbar"><span>${N[i]}</span><div class="tr"><span style="${v>=0?"left:50%":"right:50%"};width:${w}%;background:${v>=0?"#0C6FA0":"#F2C230"}"></span></div><b>${Math.abs(v)<1?"0":(v>0?"+":"−")+"R$ "+Math.abs(v).toLocaleString("pt-BR")+" mil"}</b></div>`}).join("")}
-  tb.querySelectorAll(".scn button").forEach(b=>b.addEventListener("click",()=>go(b.dataset.k)));
-  go("seca");
+  /* E se no tablet: novo bloco no fim */
 })();
 </script>
 
+<div class="thm thm-float" role="group" aria-label="Tema"><button type="button" data-t="light">☀️ <span>Claro</span></button><button type="button" data-t="dark">🌙 <span>Escuro</span></button></div>
 <script>(function(){var r=document.documentElement,bs=document.querySelectorAll(".thm button");function cur(){return r.getAttribute("data-theme")||(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light")}function sync(){var c=cur();bs.forEach(function(b){b.setAttribute("aria-pressed",b.dataset.t===c)})}bs.forEach(function(b){b.addEventListener("click",function(){r.setAttribute("data-theme",b.dataset.t);try{localStorage.setItem("etta-theme",b.dataset.t)}catch(e){}sync()})});try{matchMedia("(prefers-color-scheme: dark)").addEventListener("change",sync)}catch(e){}sync()})();</script>
+<script>
+(function(){
+  const tab=document.getElementById("tablet"),views=[...tab.querySelectorAll(".tv")],toast=tab.querySelector(".ttoast"),jump=[...document.querySelectorAll(".tjump button")];
+  let tt;function say(t){toast.textContent=t;toast.classList.add("show");clearTimeout(tt);tt=setTimeout(()=>toast.classList.remove("show"),2400)}
+  function show(v){views.forEach(x=>x.classList.toggle("on",x.dataset.v===v));jump.forEach(b=>b.setAttribute("aria-pressed",b.dataset.go===v));const on=tab.querySelector(".tv.on .msgs");if(on)on.scrollTop=on.scrollHeight}
+  window.ettaTab=show;
+  document.addEventListener("click",e=>{const g=e.target.closest("[data-go]");if(g&&(tab.contains(g)||g.closest(".tjump"))){show(g.dataset.go);if(g.closest(".tjump"))return}});
+  tab.addEventListener("keydown",e=>{const g=e.target.closest("[data-go]");if(g&&(e.key==="Enter"||e.key===" ")){e.preventDefault();show(g.dataset.go)}});
+  /* menu em cartões: Abrir, ou tocar de novo no cartão escolhido */
+  const KEYS=["home","sim","apr","pom","reb","faz","cli","ask"],NOTE={pom:"Pomar de limão: veja no painel do computador",cli:"Clima e calor: veja no painel do computador"};
+  const lr=document.getElementById("tb-launch");
+  function open(){const t=lr.querySelector(".ln-tile.sel"),k=KEYS[+t.dataset.i];if(NOTE[k])say(NOTE[k]);else if(k==="home")say("Você já está no Dashboard");else show(k)}
+  lr.querySelector(".ln-open").addEventListener("click",open);
+  lr.querySelector(".ln-row").addEventListener("click",e=>{const t=e.target.closest(".ln-tile");if(t&&t.classList.contains("sel"))open()},true);
+  show("home");
+  /* Aprovar */
+  const apr=document.getElementById("tb-apr");
+  function count(){const n=apr.querySelectorAll(".ap3 .btns:not([hidden])").length;document.querySelectorAll('[data-o="apn"]').forEach(x=>{x.textContent=n;if(x.classList.contains("db"))x.hidden=n===0});const em=document.querySelector('#tb-launch .ln-tile[data-i="2"] em');if(em){em.textContent=n;em.hidden=n===0}}
+  function decide(c,ok){if(c.querySelector(".btns").hidden)return;const d=c.querySelector(".done"),ch=c.querySelector(".chip");c.querySelector(".btns").hidden=true;d.hidden=false;d.style.color=ok?"var(--good)":"var(--crit)";d.textContent=ok?"Aprovada por você agora. Falta 1 sócio.":"Recusada por você agora. O gerente foi avisado.";if(ch){ch.className="chip "+(ok?"g":"c");ch.textContent=ok?"Aprovada por você":"Recusada"}count()}
+  const cards=[...apr.querySelectorAll(".ap3")],home=document.getElementById("ap2");
+  cards.forEach(c=>c.querySelectorAll(".btns button").forEach(b=>b.addEventListener("click",()=>{const ok=b.dataset.ok==="1";decide(c,ok);if(c===cards[0]&&home)decide(home,ok)})));
+  if(home)home.querySelectorAll(".btns button").forEach(b=>b.addEventListener("click",()=>decide(cards[0],b.dataset.ok==="1")));
+  count();
+  /* Perguntar */
+  const ask=document.getElementById("tb-ask"),msgs=ask.querySelector('[data-o="msgs"]'),form=ask.querySelector('[data-o="form"]');
+  const A=["R$ 212 mil nas duas fazendas, 4% abaixo do orçado. Bugalhau gastou R$ 148 mil e Rio Bonito R$ 64 mil. O maior item foi o sal mineral do lote B-11.",
+   "O B-14, de descarte: 180 cabeças com 455 kg, vender agora. Já o R-03 rende R$ 14 mil a mais se ficar 30 dias, e o B-11 R$ 70 mil a mais em 90 dias.",
+   "O pasto P07 acaba em 9 dias. O Matheus já programou a mudança do lote B-11 para o P09, que tem o maior estoque de capim.",
+   "R$ 1,1 milhão em 412 toneladas vendidas, com preço médio de R$ 2.680 por tonelada. Falta aprovar a venda de 66 t por R$ 184.800.",
+   "Aguenta, mas fica apertado. Numa seca forte o caixa mínimo cai para R$ 0,4 mi em novembro, abaixo do mínimo seguro de R$ 0,8 mi."];
+  function bub(cls,t){const d=document.createElement("div");d.className="bub "+cls;d.textContent=t;msgs.appendChild(d);msgs.scrollTop=msgs.scrollHeight;return d}
+  function q(text,ans,extra){bub("me",text);const w=bub("ai","…");setTimeout(()=>{w.textContent=ans;if(extra)w.appendChild(extra);msgs.scrollTop=msgs.scrollHeight},650)}
+  ask.querySelectorAll(".qs button").forEach(b=>b.addEventListener("click",()=>{const n=+b.dataset.q;let x=null;if(n===4){x=document.createElement("button");x.type="button";x.textContent="Ver no E se...?";x.addEventListener("click",()=>{show("sim");window.ettaSim&&window.ettaSim("seca")})}q(b.textContent,A[n],x)}));
+  form.addEventListener("submit",e=>{e.preventDefault();const i=form.querySelector("input"),t=i.value.trim();if(!t)return;i.value="";q(t,"Nesta demonstração eu respondo às sugestões ao lado. No sistema completo, você pergunta o que quiser sobre as fazendas.")});
+  /* E se com controles ao vivo */
+  const tb=document.getElementById("tb-sim"),o=k=>tb.querySelector(`[data-o="${k}"]`),S=k=>tb.querySelector(`[data-s="${k}"]`),K=["arr","lim","chu","ins","pre"];
+  const P={plano:[310,2700,100,0,61],seca:[300,2700,62,12,55],alta:[345,3300,102,0,62],ruim:[275,1900,70,18,52]},N=["Arroba","Limão","Chuva no pasto","Insumos","Prenhez"];
+  const f1=v=>v.toFixed(1).replace(".",","),mi=v=>(v<-.05?"−":"")+"R$ "+f1(Math.abs(v))+" mi",br=v=>v.toLocaleString("pt-BR");
+  const FMT={arr:v=>"R$ "+v+"/@",lim:v=>"R$ "+br(v)+"/t",chu:v=>v+"% da média",ins:v=>v===0?"no orçado":(v>0?"+":"−")+Math.abs(v)+"%",pre:v=>v+"%"};
+  function calc(){const [a,l,c,i,p]=K.map(k=>+S(k).value);
+    const f=[30*(a-310),1.15*(l-2700)+6.76*(Math.min(c,110)-100),34*(Math.min(c,115)-100),-54*i,42*(p-61)].map(Math.round);
+    const d=f.reduce((x,y)=>x+y,0)/1000;return{f,d,res:7.7+d,cx:1.4+.36*d,reb:18.4*a/310+.035*Math.min(0,c-100),a}}
+  function draw(){K.forEach(k=>tb.querySelector(`[data-sv="${k}"]`).textContent=FMT[k](+S(k).value));
+    const c=calc(),v=K.map(k=>+S(k).value),pk=Object.keys(P).find(k=>P[k].every((x,i)=>x===v[i]));
+    tb.querySelectorAll(".scn button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.k===pk));o("cust").hidden=!!pk;
+    o("res").textContent=mi(c.res);o("d").textContent=Math.abs(c.d)<.05?"plano aprovado do ano":(c.d>0?"+":"−")+"R$ "+f1(Math.abs(c.d))+" mi vs plano";
+    o("cx").textContent=mi(c.cx);o("cxs").textContent=c.cx<.8?"abaixo do mínimo seguro":"acima do mínimo seguro";o("reb").textContent=mi(pk?{plano:18.4,seca:16.5,alta:20.5,ruim:15.7}[pk]:c.reb);o("arr").textContent=c.a;
+    const mx=Math.max(1300,...c.f.map(Math.abs));
+    o("bars").innerHTML=c.f.map((x,i)=>{const w=Math.abs(x)/mx*50;return `<div class="fbar"><span>${N[i]}</span><div class="tr"><span style="${x>=0?"left:50%":"right:50%"};width:${w}%;background:${x>=0?"#0C6FA0":"#F2C230"}"></span></div><b>${Math.abs(x)<1?"0":(x>0?"+":"−")+"R$ "+br(Math.abs(x))+" mil"}</b></div>`}).join("")}
+  function preset(k){P[k].forEach((x,i)=>S(K[i]).value=x);draw()}
+  window.ettaSim=preset;
+  tb.querySelectorAll(".scn button").forEach(b=>b.addEventListener("click",()=>preset(b.dataset.k)));
+  K.forEach(k=>S(k).addEventListener("input",draw));
+  preset("seca");
+})();
+</script>
 </body>
 </html>

@@ -42,6 +42,7 @@ a.card .go{margin-left:auto;font-size:22px;color:#0C6FA0}
 <style>
 .topbar{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:0 0 12px}
 .topbar .backhome{margin:0}
+.thm-float{position:fixed;right:16px;bottom:18px;z-index:9999}@media (max-width:700px){.thm-float{bottom:92px}}
 .thm{display:inline-flex;padding:3px;border-radius:999px;background:rgba(2,56,85,.82);backdrop-filter:blur(10px);box-shadow:0 6px 16px rgba(2,56,85,.25);margin-left:auto}
 .thm button{all:unset;cursor:pointer;font:600 13px/1 -apple-system,BlinkMacSystemFont,"Inter","Segoe UI",sans-serif;color:rgba(255,255,255,.78);padding:7px 12px;border-radius:999px;white-space:nowrap}
 .thm button[aria-pressed="true"]{background:#F2C230;color:#023855}
@@ -51,7 +52,7 @@ a.card .go{margin-left:auto;font-size:22px;color:#0C6FA0}
 </head>
 <body>
 <main class="wrap">
-  <div class="topbar"><div class="thm" role="group" aria-label="Tema"><button type="button" data-t="light">☀️ <span>Claro</span></button><button type="button" data-t="dark">🌙 <span>Escuro</span></button></div></div>
+  
   <section class="hero">
     <div class="kick">ETTA Agro · Fazendas Reunidas</div>
     <h1>Olá, Eurico</h1>
@@ -64,6 +65,7 @@ a.card .go{margin-left:auto;font-size:22px;color:#0C6FA0}
   </div>
   <footer class="sig"><img src="logo-americaapps.png" alt="AmericaApps · Desenvolvimento web e mobile"><div><b>Allan Chaves</b>Co-founder · AmericaApps</div></footer>
 </main>
+<div class="thm thm-float" role="group" aria-label="Tema"><button type="button" data-t="light">☀️ <span>Claro</span></button><button type="button" data-t="dark">🌙 <span>Escuro</span></button></div>
 <script>(function(){var r=document.documentElement,bs=document.querySelectorAll(".thm button");function cur(){return r.getAttribute("data-theme")||(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light")}function sync(){var c=cur();bs.forEach(function(b){b.setAttribute("aria-pressed",b.dataset.t===c)})}bs.forEach(function(b){b.addEventListener("click",function(){r.setAttribute("data-theme",b.dataset.t);try{localStorage.setItem("etta-theme",b.dataset.t)}catch(e){}sync()})});try{matchMedia("(prefers-color-scheme: dark)").addEventListener("change",sync)}catch(e){}sync()})();</script>
 </body>
 </html>
