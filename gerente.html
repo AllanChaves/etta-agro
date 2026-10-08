@@ -5766,6 +5766,23 @@ telaLogin=function(){document.getElementById("dock")?.remove();fecharLancador();
 init();
 </script>
 <style>
+.rgmap{display:block;width:100%;height:auto;max-height:520px;border-radius:14px;--rg-bg:var(--paper);--rg-area:var(--green-soft);--rg-ln:var(--green);--rg-ink:var(--ink);--rg-mut:var(--muted);--rg-pin:var(--panel)}
+.rg-bg{fill:var(--rg-bg)}.rg-area{fill:var(--rg-area);opacity:.55}.rg-ring{fill:none;stroke:var(--rg-mut);opacity:.35}.rg-lim{fill:none;stroke:var(--rg-ln)}
+.rg-rt{fill:var(--rg-mut);text-anchor:middle;font-family:var(--body)}.rg-rl{fill:var(--rg-ln);font-weight:700}
+.rg-cid{fill:var(--rg-mut);opacity:.6}.rg-cn{paint-order:stroke;stroke:var(--rg-bg);stroke-width:3px;stroke-linejoin:round;fill:var(--rg-mut);font-family:var(--body)}.rg-cn.has{fill:var(--rg-ink);font-weight:600}
+.rg-casa circle{fill:#023855;stroke:#F2C230}.rg-cl{fill:var(--ink);font-weight:700;font-family:var(--body)}
+.rgpin{cursor:pointer;outline:none}.rgpin circle{fill:var(--rg-pin);filter:drop-shadow(0 1px 2px rgba(2,56,85,.35))}.rgpin:hover circle,.rgpin:focus circle{stroke-width:9}
+.rg-tip rect{fill:#023855}.rg-tip text{fill:#fff;font-weight:700;font-family:var(--body)}
+.fn-grid{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:14px;margin:4px 0 14px}@media(max-width:900px){.fn-grid{grid-template-columns:1fr}}
+.fn-box{background:var(--panel);border:1px solid var(--line);border-radius:var(--r,14px);padding:14px}
+.fn-ctl{display:flex;flex-direction:column;gap:4px;margin-bottom:10px}.fn-ctl label{font-size:13px;color:var(--muted);display:flex;justify-content:space-between}.fn-ctl b{color:var(--green)}.fn-ctl input{width:100%}
+.fn-chips{flex-wrap:wrap;overflow:visible}.fn-chips button{font-size:12.5px;padding:6px 11px}
+.fn-list{display:grid;gap:8px;max-height:620px;overflow-y:auto}
+.fn-it{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border-radius:12px;background:var(--paper);border:1px solid var(--line);cursor:pointer}.fn-it.on{border-color:var(--green);box-shadow:0 0 0 2px var(--green-soft)}
+.fn-it .btn{flex:none;align-self:center}
+.fn-ic{flex:none;width:36px;height:36px;border-radius:11px;display:grid;place-items:center;font-size:18px;background:var(--panel);box-shadow:inset 0 0 0 2px var(--c)}
+.fn-t{flex:1;min-width:0}.fn-t b{display:block;font-size:14px}.fn-t .xmini{display:block}.fn-i{display:block;font-size:12.5px;margin-top:3px}
+@media(max-width:520px){.fn-it{flex-wrap:wrap}.fn-it .btn{margin-left:46px}.fn-list{max-height:none}}
 .xseg{display:flex;gap:6px;overflow-x:auto;padding:2px 2px 6px;margin:0 0 14px;scrollbar-width:none}
 .xseg::-webkit-scrollbar{display:none}
 .xseg button{flex:none;border:1px solid var(--line);background:var(--panel);color:var(--ink);font-weight:600;font-size:13px;padding:8px 14px;border-radius:999px;cursor:pointer;white-space:nowrap}
@@ -6167,9 +6184,94 @@ const ETAPAS=[["sol","Pedido do campo"],["cot","Em cotação"],["apr","Aguardand
 const valorCompra=c=>c.esc!=null&&c.cot[c.esc]?+c.cot[c.esc].v:(c.cot.length?Math.min(...c.cot.map(x=>+x.v)):0);
 const precisa=c=>(XC.regras?.find(r=>r.k==="apr2")?.on&&valorCompra(c)>=50000)?2:1;
 const resumoItens=c=>c.itens.map(i=>`${num(i.q)} ${i.u} de ${i.d.charAt(0).toLowerCase()+i.d.slice(1)}`).join(", ");
+/* ---------- mapa da região (raio a partir da fazenda) ---------- */
+const REG={c0:[-13.00,-40.53],
+  cid:{"Itaberaba":[-12.527,-40.307],"Iaçu":[-12.767,-40.212],"Boa Vista do Tupim":[-12.65,-40.61],"Milagres":[-12.87,-39.86],"Maracás":[-13.44,-40.43],"Jequié":[-13.857,-40.083],"Feira de Santana":[-12.266,-38.966],"Santo Estêvão":[-12.43,-39.25],"Jaguaquara":[-13.53,-39.97],"Ruy Barbosa":[-12.28,-40.49],"Andaraí":[-12.80,-41.33],"Seabra":[-12.42,-41.77],"Vitória da Conquista":[-14.86,-40.84],"Salvador":[-12.97,-38.50],"Amargosa":[-13.03,-39.60],"Santo Antônio de Jesus":[-12.97,-39.26],"Cruz das Almas":[-12.67,-39.10],"Ipirá":[-12.16,-39.74],"Irecê":[-11.30,-41.86],"Livramento de Nossa Senhora":[-13.64,-41.84],"Brumado":[-14.20,-41.66],"Itiruçu":[-13.53,-40.15]},
+  km(a,b){const t=Math.PI/180,x=Math.sin((b[0]-a[0])*t/2)**2+Math.cos(a[0]*t)*Math.cos(b[0]*t)*Math.sin((b[1]-a[1])*t/2)**2;return 2*6371*Math.asin(Math.sqrt(x))},
+  dist(c){return Math.round(REG.km(REG.c0,REG.cid[c]))},
+  xy(p){return[(p[1]-REG.c0[1])*111.32*Math.cos(REG.c0[0]*Math.PI/180),-(p[0]-REG.c0[0])*110.57]},
+  /* pts: [{id,cid,ic,cor,nome}] → SVG em texto, escala em km */
+  svg(pts,R,sel,casa){
+    const m=R*1.12,f=R*.05,e=s=>String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;");
+    let s=`<svg class="rgmap" viewBox="${-m} ${-m} ${2*m} ${2*m}" role="img" aria-label="Mapa com ${pts.length} locais num raio de ${R} km da fazenda">`;
+    s+=`<rect class="rg-bg" x="${-m}" y="${-m}" width="${2*m}" height="${2*m}"/><circle class="rg-area" r="${R}"/>`;
+    [50,100,200,300].filter(r=>r<R*.92).forEach(r=>{s+=`<circle class="rg-ring" r="${r}" stroke-width="${f*.06}"/><text class="rg-rt" x="0" y="${-r-f*.3}" font-size="${f*.8}">${r} km</text>`});
+    s+=`<circle class="rg-lim" r="${R}" stroke-width="${f*.12}" stroke-dasharray="${f*.5} ${f*.35}"/><text class="rg-rt rg-rl" x="0" y="${-R-f*.35}" font-size="${f*.95}">${R} km</text>`;
+    let lab="";const grp={};pts.forEach(p=>(grp[p.cid]=grp[p.cid]||[]).push(p));
+    Object.entries(REG.cid).forEach(([c,ll])=>{const [x,y]=REG.xy(ll);if(Math.abs(x)>m||Math.abs(y)>m)return;
+      const has=grp[c],big=["Salvador","Feira de Santana","Jequié","Vitória da Conquista","Itaberaba"].includes(c),rrc=n=>n>1?f*(n>6?3.1:n>4?2.5:1.55):0,dy=has?(has.length>4?f*.3:rrc(has.length)+f*2.3):f*1.2;
+      s+=`<circle class="rg-cid" cx="${x}" cy="${y}" r="${f*.22}"/>`;lab+=(has||big?`<text class="rg-cn${has?" has":""}" x="${x}" y="${y+dy}" font-size="${f*.8}" text-anchor="middle">${e(c)}</text>`:"")});
+    s+=`<g class="rg-casa"><circle r="${f*1.2}" stroke-width="${f*.18}"/><text font-size="${f*1.2}" text-anchor="middle" dy=".35em">🏠</text><text class="rg-cl" y="${f*2.6}" font-size="${f*.9}" text-anchor="middle">${e(casa)}</text></g>`;
+    let selP=null;
+    Object.entries(grp).forEach(([c,ls])=>{const [cx,cy]=REG.xy(REG.cid[c]);ls.forEach((p,k)=>{
+      const n=ls.length,a=-Math.PI/2+2*Math.PI*k/n,rr=n>1?f*(n>6?3.1:n>4?2.5:1.55):0,x=cx+rr*Math.cos(a),y=cy+rr*Math.sin(a),on=p.id===sel;
+      if(on)selP=[x,y,p];
+      s+=`<g class="rgpin${on?" on":""}" data-id="${p.id}" transform="translate(${x.toFixed(1)} ${y.toFixed(1)})" tabindex="0" role="button" aria-label="${e(p.nome)}"><circle r="${f*(on?1.25:1)}" stroke="${p.cor}" stroke-width="${f*(on?.26:.18)}"/><text font-size="${f*(on?1.2:1)}" text-anchor="middle" dy=".36em">${p.ic}</text></g>`})});
+    s+=lab;
+    if(selP){const [x,y,p]=selP,w=Math.min(R*1.2,p.nome.length*f*.62+f*1.4),bx=Math.max(-m+f*.3,Math.min(m-w-f*.3,x-w/2)),by=y-f*4.1;
+      s+=`<g class="rg-tip" pointer-events="none"><rect x="${bx}" y="${by}" width="${w}" height="${f*2}" rx="${f*.5}"/><text x="${bx+w/2}" y="${by+f*1.35}" font-size="${f*.95}" text-anchor="middle">${e(p.nome)}</text></g>`}
+    return s+`</svg>`;
+  }
+};
+/* ---------- fornecedores na região (Compras) ---------- */
+const FCAT={diesel:["⛽","Diesel e combustível","#0C6FA0"],oficina:["🔧","Oficina de caminhão e trator","#023855"],maq:["🚜","Máquinas e peças","#0A5A85"],quim:["🧪","Defensivos e químicos","#01A2D9"],adubo:["🌱","Adubo e calcário","#38B6E6"],racao:["🧂","Ração e sal mineral","#B8860B"],vet:["💉","Veterinária","#5CC6EE"],irr:["💧","Irrigação e bombas","#01A2D9"],frete:["🚚","Frete e boiadeiro","#F2C230"]};
+const FORN=[
+ {id:"f1",cat:"diesel",nome:"TRR Paraguaçu Combustíveis",cid:"Itaberaba",info:"Diesel S10 entregue na fazenda · pedido mínimo 3.000 L",ref:"R$ 6,19/L",atual:1},
+ {id:"f2",cat:"diesel",nome:"Distribuidora Sertão Diesel",cid:"Jequié",info:"Diesel S10 e S500 · entrega em 48 h",ref:"R$ 6,05/L"},
+ {id:"f3",cat:"diesel",nome:"Auto Posto BR-242",cid:"Iaçu",info:"Abastecimento de caminhão e galão",ref:"R$ 6,29/L"},
+ {id:"f4",cat:"oficina",nome:"Oficina Diesel Itaberaba",cid:"Itaberaba",info:"Caminhão e trator · socorro na fazenda",atual:1},
+ {id:"f5",cat:"oficina",nome:"Retífica e Mecânica Jequié",cid:"Jequié",info:"Motor, bomba injetora e câmbio"},
+ {id:"f6",cat:"maq",nome:"Agro Máquinas Feira",cid:"Feira de Santana",info:"Tratores e implementos · técnico vai à fazenda"},
+ {id:"f7",cat:"maq",nome:"Peças Agrícolas Maracás",cid:"Maracás",info:"Peças de trator, plantadeira e ensiladeira",atual:1},
+ {id:"f8",cat:"quim",nome:"Agro Defensivos Bahia",cid:"Feira de Santana",info:"Inseticida, acaricida e herbicida · com receituário",ref:"Acaricida 12% abaixo"},
+ {id:"f9",cat:"quim",nome:"Casa do Fazendeiro Maracás",cid:"Maracás",info:"Defensivos, arame, ferramentas e EPI",atual:1},
+ {id:"f10",cat:"adubo",nome:"Cooperativa Agro Sertão",cid:"Itaberaba",info:"Adubo, calcário e sementes · preço de cooperado"},
+ {id:"f11",cat:"adubo",nome:"Calcário Chapada",cid:"Seabra",info:"Calcário e gesso agrícola a granel"},
+ {id:"f12",cat:"racao",nome:"Nutri Gado Nordeste",cid:"Feira de Santana",info:"Sal mineral, núcleo e ração em big bag",ref:"Sal mineral R$ 98/saco"},
+ {id:"f13",cat:"racao",nome:"Rações Iaçu",cid:"Iaçu",info:"Ração, farelo e milho moído",atual:1},
+ {id:"f14",cat:"vet",nome:"Vet Agro Itaberaba",cid:"Itaberaba",info:"Vacinas, vermífugos e protocolo de IATF",atual:1},
+ {id:"f15",cat:"vet",nome:"Genética Sertão",cid:"Jequié",info:"Sêmen, hormônios e botijão de nitrogênio"},
+ {id:"f16",cat:"irr",nome:"Irriga Sertão",cid:"Livramento de Nossa Senhora",info:"Gotejamento e microaspersão para pomar"},
+ {id:"f17",cat:"irr",nome:"Bombas e Poços Paraguaçu",cid:"Itaberaba",info:"Bomba, poço artesiano e reparo"},
+ {id:"f18",cat:"frete",nome:"Transportadora Boiadeira Paraguaçu",cid:"Itaberaba",info:"Caminhão boiadeiro · frete de gado com GTA"},
+ {id:"f19",cat:"frete",nome:"Fretes Feira",cid:"Feira de Santana",info:"Carreta para limão e silagem"}
+];
+let compAba="ped",fnR=150,fnCat="todos",fnSel=null;
+function vFornRegiao(){
+  const noR=FORN.filter(f=>REG.dist(f.cid)<=fnR);
+  const vis=noR.filter(f=>fnCat==="todos"||f.cat===fnCat).sort((a,b)=>REG.dist(a.cid)-REG.dist(b.cid));
+  const novos=noR.filter(f=>!f.atual).length;
+  return `<div class="xkpis">
+    <div class="kpi"><span>Fornecedores no raio</span><b>${noR.length}</b><div class="xmini">até ${fnR} km das fazendas</div></div>
+    <div class="kpi"><span>Já compramos</span><b>${noR.filter(f=>f.atual).length}</b><div class="xmini">fornecedores atuais</div></div>
+    <div class="kpi"><span>Novos para cotar</span><b>${novos}</b><div class="xmini">mais opções, preço melhor</div></div>
+    <div class="kpi"><span>Diesel mais barato</span><b class="pos">R$ 6,05/L</b><div class="xmini">Jequié · R$ 0,14 abaixo do atual</div></div>
+  </div>
+  <div class="fn-grid">
+    <div class="fn-box">
+      <div class="fn-ctl"><label for="fn-r">Raio a partir das fazendas <b>${fnR} km</b></label><input id="fn-r" type="range" min="50" max="400" step="25" value="${fnR}" oninput="this.previousElementSibling.querySelector('b').textContent=this.value+' km'" onchange="fnR=+this.value;render()"></div>
+      <div class="xseg fn-chips">${[["todos","Todos"],...Object.entries(FCAT).map(([k,v])=>[k,v[0]+" "+v[1]])].map(([k,t])=>`<button class="${fnCat===k?"on":""}" onclick="fnCat='${k}';render()">${t}</button>`).join("")}</div>
+      <div class="fn-map" onclick="const g=event.target.closest('.rgpin');if(g){fnSel=fnSel===g.dataset.id?null:g.dataset.id;render()}">${REG.svg(vis.map(f=>({id:f.id,cid:f.cid,ic:FCAT[f.cat][0],cor:FCAT[f.cat][2],nome:f.nome})),fnR,fnSel,"Bugalhau · Rio Bonito")}</div>
+    </div>
+    <div class="fn-box"><h3 style="margin:0 0 4px;font-size:15px">Quem está no raio</h3><div class="xmini" style="margin-bottom:10px">Do mais perto para o mais longe. "Pedir cotação" leva o fornecedor para um pedido de compra.</div>
+      <div class="fn-list">${vis.map(f=>{const c=FCAT[f.cat];return `<div class="fn-it${f.id===fnSel?" on":""}" onclick="if(!event.target.closest('button')){fnSel=fnSel==='${f.id}'?null:'${f.id}';render()}"><span class="fn-ic" style="--c:${c[2]}">${c[0]}</span><div class="fn-t"><b>${esc(f.nome)}</b><span class="xmini">${esc(f.cid)} · ${REG.dist(f.cid)} km · ${c[1]}</span><span class="fn-i">${esc(f.info)}</span>${f.ref||f.atual?`<div style="margin-top:5px">${f.atual?`<span class="xb xb-ok">Já compramos</span> `:""}${f.ref?`<span class="xb xb-mut">${esc(f.ref)}</span>`:""}</div>`:""}</div><button class="btn sm sec" onclick="fnCotar('${f.id}')">Pedir cotação</button></div>`}).join("")||`<div class="empty">Nenhum fornecedor desse tipo no raio. Aumente o raio.</div>`}</div>
+    </div>
+  </div>
+  <div class="criterio">No sistema real: o ETTA busca no Google Maps quem está no raio escolhido, completa com o CNPJ da Receita e guarda o histórico de preço de cada fornecedor. Nesta demonstração os nomes das empresas são fictícios; as cidades e as distâncias são reais.</div>`;
+}
+function fnCotar(id){
+  const f=FORN.find(x=>x.id===id),ab=XC.compras.filter(c=>c.status==="sol"||c.status==="cot");
+  abrirModal(`${cab("Pedir cotação · "+f.nome)}
+  <div class="xmini" style="margin-bottom:10px">${esc(f.cid)} · ${REG.dist(f.cid)} km · ${esc(f.info)}. Escolha o pedido de compra que vai receber esta cotação.</div>
+  ${ab.map(c=>`<button class="xcard" style="display:block;width:100%;text-align:left;margin-bottom:8px;cursor:pointer" onclick="fnUsar('${c.id}','${id}')"><span class="xmini">#${c.num} · ${dBR(c.data)} · ${esc(c.cc)}</span><b style="display:block">${esc(resumoItens(c))}</b><span class="xmini">${c.cot.length} cotaç${c.cot.length===1?"ão":"ões"} até agora</span></button>`).join("")||`<div class="empty">Nenhum pedido esperando cotação.</div>`}
+  <div class="m-actions"><button class="btn sec" onclick="fecharModal()">Fechar</button><button class="btn" onclick="formCompra()">+ Novo pedido de compra</button></div>`);
+}
+function fnUsar(cid,fid){formCotacao(cid);const f=FORN.find(x=>x.id===fid),i=document.getElementById("q-f");if(i)i.value=f.nome}
 function vCompras(){
   if(!ensureX())return `<h2>Compras</h2><div class="empty">Carregando…</div>`;
   const G=ehGestao(),C=XC.compras;
+  const segC=`<div class="xseg" role="tablist"><button role="tab" aria-selected="${compAba==="ped"}" class="${compAba==="ped"?"on":""}" onclick="compAba='ped';render()">Pedidos</button><button role="tab" aria-selected="${compAba==="regiao"}" class="${compAba==="regiao"?"on":""}" onclick="compAba='regiao';render()">📍 Fornecedores na região</button></div>`;
+  if(compAba==="regiao")return `<h2>Compras</h2>${segC}${vFornRegiao()}`;
   const ab=C.filter(c=>c.status!=="rec"&&c.status!=="rej");
   const aprov=C.filter(c=>c.status==="apr");
   const mes=hoje().slice(0,7),recMes=C.filter(c=>c.status==="rec"&&(c.recEm||"").startsWith(mes));
@@ -6180,7 +6282,7 @@ function vCompras(){
       ${G&&valorCompra(c)?`<div class="xv">${brl(valorCompra(c))}</div>`:""}
       <div style="margin-top:6px">${c.status==="cot"||c.status==="sol"?`<span class="xb xb-mut">${c.cot.length} cotaç${c.cot.length===1?"ão":"ões"}</span>`:""}${c.status==="apr"?`<span class="xb xb-soon">${c.aprov.length} de ${precisa(c)} aprovaç${precisa(c)>1?"ões":"ão"}</span>`:""}${c.status==="rec"?`<span class="xb xb-ok">recebido ${c.recEm?dCurta(c.recEm):""}</span>`:""}${c.status==="ped"?`<span class="xb xb-mut">${esc(c.cot[c.esc]?.f||"")}</span>`:""}</div>
     </div>`;
-  return `<h2>Compras</h2>
+  return `<h2>Compras</h2>${segC}
   <div class="toolbar"><button class="btn" onclick="formCompra()">+ Pedido de compra</button><div class="xmini" style="margin-left:auto">${G?"Do pedido do campo até a conta a pagar, sem papel e sem pedido esquecido.":"Peça o que está faltando. A gestão cota, aprova e avisa quando chegar."}</div></div>
   ${G?`<div class="xkpis">
     <div class="kpi"><span>Em andamento</span><b>${ab.length}</b><div class="xmini">pedidos</div></div>

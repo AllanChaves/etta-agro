@@ -105,6 +105,36 @@ svg{display:block;max-width:100%}
 .rdoc .rdh{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;border-bottom:1px solid #D6E1E8;padding-bottom:8px;margin-bottom:10px}.rdoc .rdh b{font-family:var(--f-display);font-size:15px;color:#023855}.rdoc .rdh span{color:#647079;font-size:11.5px}
 .rdoc .rkp{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:10px}.rdoc .rkp div{background:#EEF4F8;border-radius:6px;padding:8px}.rdoc .rkp span{display:block;font-size:10.5px;text-transform:uppercase;letter-spacing:.05em;color:#647079}.rdoc .rkp b{font-family:var(--f-display);font-size:15px;color:#023855}
 .rdoc h4{margin:10px 0 2px;font-size:12.5px;color:#0C6FA0}.rdoc p{margin:0;color:#45515B;line-height:1.45}.rdoc .rft{margin-top:12px;padding-top:8px;border-top:1px dashed #D6E1E8;color:#8497A4;font-size:11px;text-align:right}
+.rgmap{display:block;width:100%;height:auto;max-height:520px;border-radius:14px;--rg-bg:var(--surface-2);--rg-area:var(--accent-soft);--rg-ln:var(--accent);--rg-ink:var(--ink-2);--rg-mut:var(--muted);--rg-pin:var(--surface);--rg-tip:#023855}
+.rg-bg{fill:var(--rg-bg)}.rg-area{fill:var(--rg-area);opacity:.55}.rg-ring{fill:none;stroke:var(--rg-mut);opacity:.35}.rg-lim{fill:none;stroke:var(--rg-ln)}
+.rg-rt{fill:var(--rg-mut);text-anchor:middle;font-family:var(--f-body)}.rg-rl{fill:var(--rg-ln);font-weight:700}
+.rg-cid{fill:var(--rg-mut);opacity:.6}.rg-cn{paint-order:stroke;stroke:var(--rg-bg);stroke-width:3px;stroke-linejoin:round;fill:var(--rg-mut);font-family:var(--f-body)}.rg-cn.has{fill:var(--rg-ink);font-weight:600}
+.rg-casa circle{fill:#023855;stroke:#F2C230}.rg-cl{fill:var(--ink);font-weight:700;font-family:var(--f-body)}
+.rgpin{cursor:pointer;outline:none}.rgpin circle{fill:var(--rg-pin);filter:drop-shadow(0 1px 2px rgba(2,56,85,.35))}.rgpin:hover circle,.rgpin:focus circle{stroke-width:9}
+.rg-tip rect{fill:var(--rg-tip)}.rg-tip text{fill:#fff;font-weight:700;font-family:var(--f-body)}
+.ng-ctl{display:flex;flex-direction:column;gap:4px;margin:4px 0 10px}.ng-ctl label{font-size:13px;color:var(--ink-2);display:flex;justify-content:space-between}.ng-ctl output{font-weight:700;color:var(--accent)}.ng-ctl input{width:100%}
+.ng-chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}.ng-chips button{border:1px solid var(--line);background:var(--surface);color:var(--ink);font:600 12.5px var(--f-body);padding:6px 11px;border-radius:999px;cursor:pointer}.ng-chips button[aria-pressed=true]{background:linear-gradient(135deg,#0C6FA0,#023855);border-color:transparent;color:#fff}
+.ng-list{list-style:none;margin:0;padding:0;display:grid;gap:8px;max-height:640px;overflow-y:auto;position:relative}
+.ng-list li{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border-radius:12px;background:var(--surface-2);border:1px solid var(--line);cursor:pointer;transition:box-shadow .15s,border-color .15s}
+.ng-list li.on{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent-soft)}.ng-list li.ng-empty{cursor:default;color:var(--muted);font-size:13px}
+.ng-ic{flex:none;width:36px;height:36px;border-radius:11px;display:grid;place-items:center;font-size:18px;background:var(--surface);box-shadow:inset 0 0 0 2px var(--c)}
+.ng-t{flex:1;min-width:0}.ng-t b{display:block;font-size:14px}.ng-w{display:block;font-size:12px;color:var(--muted);margin-top:1px}.ng-i{display:block;font-size:12.5px;color:var(--ink-2);margin-top:3px}
+.ng-a{flex:none;display:flex;flex-direction:column;align-items:flex-end;gap:6px}
+.ng-add,.ng-call,.ng-reset{border:0;cursor:pointer;font:600 12px var(--f-body);border-radius:999px;padding:5px 10px}
+.ng-add{color:#fff;background:linear-gradient(135deg,#0C6FA0,#023855)}.ng-call{background:var(--surface);color:var(--ink);border:1px solid var(--line)}.ng-call.wide{font-size:11px;white-space:nowrap}
+.ng-st{font:600 11px var(--f-body);padding:3px 9px;border-radius:999px;background:var(--accent-soft);color:var(--accent);white-space:nowrap}
+.ng-reset{background:var(--surface-2);color:var(--accent);border:1px solid var(--line);margin-left:6px}
+.ng-fun{display:grid;grid-template-columns:repeat(5,minmax(190px,1fr));gap:10px;overflow-x:auto;padding-bottom:6px}
+.fcol{background:var(--surface-2);border:1px dashed transparent;border-radius:14px;padding:10px;min-height:180px;transition:border-color .15s,background .15s}.fcol.over{border-color:var(--accent);background:var(--accent-soft)}
+.fcol h4{display:flex;justify-content:space-between;align-items:baseline;gap:6px;margin:0 0 10px;font-size:13.5px}.fcol .fc{font-size:11.5px;color:var(--muted);font-weight:600;white-space:nowrap}
+.fcol.fim h4 span:first-child{color:var(--accent)}
+.fcard{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 11px;margin-bottom:8px;cursor:grab;box-shadow:0 2px 6px rgba(2,56,85,.06);border-top:3px solid #0C6FA0}.fcard.drag{opacity:.45}.fcol.fim .fcard{border-top-color:#F2C230}
+.fcard .fh{display:flex;gap:6px;align-items:flex-start}.fcard .fh b{font-size:13px;line-height:1.3}
+.fcard .fo{font-size:12.5px;color:var(--ink-2);margin-top:4px}.fcard .fv{font:700 14px var(--f-display);color:var(--accent);margin-top:6px}.fcard .fp{font-size:11.5px;color:var(--muted);margin-top:3px}
+.fcard .fmv{display:flex;justify-content:space-between;margin-top:6px}.fcard .fmv button{border:1px solid var(--line);background:var(--surface-2);color:var(--ink-2);border-radius:8px;font-size:11px;padding:2px 9px;cursor:pointer}
+.fempty{font-size:12px;color:var(--muted);text-align:center;padding:18px 6px;border:1px dashed var(--line);border-radius:10px}
+.satflow.ng4{grid-template-columns:repeat(4,minmax(0,1fr))}@media(max-width:900px){.satflow.ng4{grid-template-columns:1fr 1fr}}@media(max-width:520px){.satflow.ng4{grid-template-columns:1fr}}
+@media(max-width:700px){.ng-list{max-height:420px}.ng-fun{grid-template-columns:repeat(5,minmax(200px,78vw));scroll-snap-type:x mandatory}.fcol{scroll-snap-align:start}}
 .tablewrap{overflow-x:auto}
 table{border-collapse:collapse;width:100%;font-size:14px}
 th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line);white-space:nowrap}
@@ -404,6 +434,7 @@ html.slides body:not([data-tab="socio"]) .demo{display:none}
     <button role="tab" id="t-fazendas" aria-selected="false" data-tab="fazendas"><i aria-hidden="true">🗺</i>Fazendas lado a lado</button>
     <button role="tab" id="t-sim" aria-selected="false" data-tab="sim"><i aria-hidden="true">📈</i>E se...?</button>
     <button role="tab" id="t-vender" aria-selected="false" data-tab="vender"><i aria-hidden="true">🐂</i>Vender ou segurar</button>
+    <button role="tab" id="t-negocios" aria-selected="false" data-tab="negocios"><i aria-hidden="true">📍</i>Negócios na região</button>
     <button role="tab" id="t-limao" aria-selected="false" data-tab="limao"><i aria-hidden="true">🍋</i>Pomar de limão</button>
     <button role="tab" id="t-pass" aria-selected="false" data-tab="pass"><i aria-hidden="true">🐄</i>Passaporte do animal</button>
     <button role="tab" id="t-pastos" aria-selected="false" data-tab="pastos"><i aria-hidden="true">🛰</i>Pastos por satélite</button>
@@ -585,6 +616,40 @@ html.slides body:not([data-tab="socio"]) .demo{display:none}
         <div class="legend"><span><i style="background:var(--s1)"></i>Lucro extra do lote se segurar até o dia</span><span><i style="background:var(--good);border-radius:50%"></i>Melhor dia para vender</span></div>
         <div class="chart" id="ch-sell"></div>
         <div class="lotefacts" id="lotefacts"></div>
+        <button type="button" class="go kgo" data-go="negocios" style="margin-top:12px;font-size:13.5px">Ver quem compra gado na região →</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- NEGÓCIOS NA REGIÃO -->
+  <section id="negocios" class="tabpanel" hidden>
+    <div class="who">Para os donos e o gerente · quem compra o que as fazendas produzem, num raio a partir da porteira</div>
+    <div class="grid">
+      <div class="panel kpi c3"><div class="lab">Negócios no raio</div><div class="val" id="ng-k1"></div><div class="det">até <span id="ng-k1d"></span> das fazendas</div></div>
+      <div class="panel kpi c3"><div class="lab">Compram gado</div><div class="val" id="ng-k2"></div><div class="det">frigoríficos, leilões e confinamentos</div></div>
+      <div class="panel kpi c3"><div class="lab">Compram limão</div><div class="val" id="ng-k3"></div><div class="det">packing, Ceasa e supermercados</div></div>
+      <div class="panel kpi c3"><div class="lab">Em negociação</div><div class="val" id="ng-k4"></div><div class="det" id="ng-k4d"></div></div>
+      <div class="panel c7">
+        <h2>Mapa da região<span class="new">Novo</span></h2>
+        <p class="hint">Escolha o raio e o tipo de negócio. Toque num ponto para ver quem é.</p>
+        <div class="ng-ctl"><label for="ng-r">Raio a partir das fazendas <output id="ng-r-o"></output></label><input id="ng-r" type="range" min="50" max="400" step="25" value="200"></div>
+        <div class="ng-chips" id="ng-chips"></div>
+        <div class="ng-map" id="ng-map"></div>
+      </div>
+      <div class="panel c5">
+        <h2>Quem está no raio</h2>
+        <p class="hint">Do mais perto para o mais longe. "+ Funil" leva o negócio para o funil de negociações.</p>
+        <ul class="ng-list" id="ng-list"></ul>
+      </div>
+      <div class="panel c12">
+        <h2>Funil de negociações<span class="new">CRM</span></h2>
+        <p class="hint">Arraste os cards entre as etapas. No celular, use as setas. O valor de cada etapa soma sozinho. <button type="button" class="ng-reset" id="ng-reset">Restaurar exemplo</button></p>
+        <div class="ng-fun" id="ng-fun"></div>
+      </div>
+      <div class="panel c12">
+        <h2>Como funciona no sistema real</h2>
+        <ol class="satflow ng4"><li><span class="fi">📍</span><em>1</em><b>Raio e tipo de negócio</b><span>O ETTA busca no Google Maps quem está no raio escolhido: frigoríficos, laticínios, packing, Ceasa, leilões.</span></li><li><span class="fi">🏛</span><em>2</em><b>Dados públicos completam</b><span>Cruza com o CNPJ da Receita e com a lista de frigoríficos com inspeção federal (SIF), para trazer endereço, telefone e porte.</span></li><li><span class="fi">🤝</span><em>3</em><b>Funil de negociações</b><span>Cada contato vira um card: ligou, mandou proposta, negociou, fechou. Tudo com data e responsável.</span></li><li><span class="fi">💰</span><em>4</em><b>Preço vai para a decisão</b><span>A proposta recebida entra no Vender ou segurar e, quando fecha, vira conta a receber no financeiro.</span></li></ol>
+        <p class="hint" style="margin:12px 0 0">Nesta demonstração os nomes das empresas são fictícios. As cidades e as distâncias são reais.</p>
       </div>
     </div>
   </section>
@@ -1225,10 +1290,10 @@ function drawClima(){
   el("path",{d:avg.map((v,i)=>`${i?"L":"M"}${cx(i)},${iy(v)}`).join(""),fill:"none",stroke:css("--ink-2"),"stroke-width":2.5,"stroke-dasharray":"6 4","stroke-linejoin":"round"},svg);
 }
 
-document.querySelectorAll("#mercado .go[data-go],#comparativo .go[data-go],#socio .go[data-go]").forEach(b=>b.addEventListener("click",()=>{openTab(b.dataset.go);try{history.replaceState(null,"","#"+b.dataset.go)}catch(e){}scrollTo({top:0,behavior:"smooth"})}));
+document.querySelectorAll("#mercado .go[data-go],#comparativo .go[data-go],#socio .go[data-go],#vender .go[data-go]").forEach(b=>b.addEventListener("click",()=>{openTab(b.dataset.go);try{history.replaceState(null,"","#"+b.dataset.go)}catch(e){}scrollTo({top:0,behavior:"smooth"})}));
 
 /* ---------- menu do celular ---------- */
-const ICONS={"socio": ["🏠", "#01A2D9", "#023855"], "financeiro": ["💰", "#F2C230", "#B8860B"], "relatorios": ["📑", "#01A2D9", "#023855"], "fazendas": ["🗺", "#38B6E6", "#0C6FA0"], "sim": ["📈", "#F2C230", "#B8860B"], "vender": ["🐂", "#5CC6EE", "#0A5A85"], "limao": ["🍋", "#38B6E6", "#0C6FA0"], "pass": ["🐄", "#01A2D9", "#023855"], "pastos": ["🛰", "#0C6FA0", "#022C44"], "clima": ["🌦", "#5CC6EE", "#0A5A85"], "equipe": ["👷", "#38B6E6", "#0C6FA0"], "comparativo": ["🧩", "#0C6FA0", "#022C44"], "mercado": ["🌎", "#F2C230", "#B8860B"]};
+const ICONS={"socio": ["🏠", "#01A2D9", "#023855"], "financeiro": ["💰", "#F2C230", "#B8860B"], "relatorios": ["📑", "#01A2D9", "#023855"], "fazendas": ["🗺", "#38B6E6", "#0C6FA0"], "sim": ["📈", "#F2C230", "#B8860B"], "vender": ["🐂", "#5CC6EE", "#0A5A85"], "negocios": ["📍", "#0C6FA0", "#022C44"], "limao": ["🍋", "#38B6E6", "#0C6FA0"], "pass": ["🐄", "#01A2D9", "#023855"], "pastos": ["🛰", "#0C6FA0", "#022C44"], "clima": ["🌦", "#5CC6EE", "#0A5A85"], "equipe": ["👷", "#38B6E6", "#0C6FA0"], "comparativo": ["🧩", "#0C6FA0", "#022C44"], "mercado": ["🌎", "#F2C230", "#B8860B"]};
 const gridm=$("#gridm"),sheet=$("#msheet");
 gridm.innerHTML=tabs.map(b=>{const k=b.dataset.tab,[ic,g1,g2]=ICONS[k];return `<button type="button" data-go="${k}" style="--g1:${g1};--g2:${g2}"><i>${ic}</i>${b.textContent.replace(ic,"").trim()}</button>`}).join("");
 function goTab(k){if(k==="menu"){sheet.classList.add("on");return}sheet.classList.remove("on");openTab(k);try{history.replaceState(null,"","#"+k)}catch(e){}scrollTo({top:0})}
@@ -1286,6 +1351,115 @@ document.querySelectorAll("#fin-apr .finbtn button").forEach(b=>b.addEventListen
   ch.className="chip good";ch.textContent=ok?"Aprovada":"Devolvida";
   li.querySelector(".finbtn").outerHTML=`<div class="d"><b>${ok?"Você aprovou. Falta 1 sócio para liberar o pedido.":"Pedido devolvido ao Matheus para nova cotação."}</b> Fica registrado no histórico.</div>`}));
 document.querySelectorAll(".rgen").forEach(b=>b.addEventListener("click",()=>{if(b.classList.contains("done"))return;b.textContent="Gerando...";setTimeout(()=>{b.classList.add("done");b.textContent="✓ Pronto"},700)}));
+/* ---------- mapa da região (raio a partir da fazenda) ---------- */
+const REG={c0:[-13.00,-40.53],
+  cid:{"Itaberaba":[-12.527,-40.307],"Iaçu":[-12.767,-40.212],"Boa Vista do Tupim":[-12.65,-40.61],"Milagres":[-12.87,-39.86],"Maracás":[-13.44,-40.43],"Jequié":[-13.857,-40.083],"Feira de Santana":[-12.266,-38.966],"Santo Estêvão":[-12.43,-39.25],"Jaguaquara":[-13.53,-39.97],"Ruy Barbosa":[-12.28,-40.49],"Andaraí":[-12.80,-41.33],"Seabra":[-12.42,-41.77],"Vitória da Conquista":[-14.86,-40.84],"Salvador":[-12.97,-38.50],"Amargosa":[-13.03,-39.60],"Santo Antônio de Jesus":[-12.97,-39.26],"Cruz das Almas":[-12.67,-39.10],"Ipirá":[-12.16,-39.74],"Irecê":[-11.30,-41.86],"Livramento de Nossa Senhora":[-13.64,-41.84],"Brumado":[-14.20,-41.66],"Itiruçu":[-13.53,-40.15]},
+  km(a,b){const t=Math.PI/180,x=Math.sin((b[0]-a[0])*t/2)**2+Math.cos(a[0]*t)*Math.cos(b[0]*t)*Math.sin((b[1]-a[1])*t/2)**2;return 2*6371*Math.asin(Math.sqrt(x))},
+  dist(c){return Math.round(REG.km(REG.c0,REG.cid[c]))},
+  xy(p){return[(p[1]-REG.c0[1])*111.32*Math.cos(REG.c0[0]*Math.PI/180),-(p[0]-REG.c0[0])*110.57]},
+  /* pts: [{id,cid,ic,cor,nome}] → SVG em texto, escala em km */
+  svg(pts,R,sel,casa){
+    const m=R*1.12,f=R*.05,e=s=>String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;");
+    let s=`<svg class="rgmap" viewBox="${-m} ${-m} ${2*m} ${2*m}" role="img" aria-label="Mapa com ${pts.length} locais num raio de ${R} km da fazenda">`;
+    s+=`<rect class="rg-bg" x="${-m}" y="${-m}" width="${2*m}" height="${2*m}"/><circle class="rg-area" r="${R}"/>`;
+    [50,100,200,300].filter(r=>r<R*.92).forEach(r=>{s+=`<circle class="rg-ring" r="${r}" stroke-width="${f*.06}"/><text class="rg-rt" x="0" y="${-r-f*.3}" font-size="${f*.8}">${r} km</text>`});
+    s+=`<circle class="rg-lim" r="${R}" stroke-width="${f*.12}" stroke-dasharray="${f*.5} ${f*.35}"/><text class="rg-rt rg-rl" x="0" y="${-R-f*.35}" font-size="${f*.95}">${R} km</text>`;
+    let lab="";const grp={};pts.forEach(p=>(grp[p.cid]=grp[p.cid]||[]).push(p));
+    Object.entries(REG.cid).forEach(([c,ll])=>{const [x,y]=REG.xy(ll);if(Math.abs(x)>m||Math.abs(y)>m)return;
+      const has=grp[c],big=["Salvador","Feira de Santana","Jequié","Vitória da Conquista","Itaberaba"].includes(c),rrc=n=>n>1?f*(n>6?3.1:n>4?2.5:1.55):0,dy=has?(has.length>4?f*.3:rrc(has.length)+f*2.3):f*1.2;
+      s+=`<circle class="rg-cid" cx="${x}" cy="${y}" r="${f*.22}"/>`;lab+=(has||big?`<text class="rg-cn${has?" has":""}" x="${x}" y="${y+dy}" font-size="${f*.8}" text-anchor="middle">${e(c)}</text>`:"")});
+    s+=`<g class="rg-casa"><circle r="${f*1.2}" stroke-width="${f*.18}"/><text font-size="${f*1.2}" text-anchor="middle" dy=".35em">🏠</text><text class="rg-cl" y="${f*2.6}" font-size="${f*.9}" text-anchor="middle">${e(casa)}</text></g>`;
+    let selP=null;
+    Object.entries(grp).forEach(([c,ls])=>{const [cx,cy]=REG.xy(REG.cid[c]);ls.forEach((p,k)=>{
+      const n=ls.length,a=-Math.PI/2+2*Math.PI*k/n,rr=n>1?f*(n>6?3.1:n>4?2.5:1.55):0,x=cx+rr*Math.cos(a),y=cy+rr*Math.sin(a),on=p.id===sel;
+      if(on)selP=[x,y,p];
+      s+=`<g class="rgpin${on?" on":""}" data-id="${p.id}" transform="translate(${x.toFixed(1)} ${y.toFixed(1)})" tabindex="0" role="button" aria-label="${e(p.nome)}"><circle r="${f*(on?1.25:1)}" stroke="${p.cor}" stroke-width="${f*(on?.26:.18)}"/><text font-size="${f*(on?1.2:1)}" text-anchor="middle" dy=".36em">${p.ic}</text></g>`})});
+    s+=lab;
+    if(selP){const [x,y,p]=selP,w=Math.min(R*1.2,p.nome.length*f*.62+f*1.4),bx=Math.max(-m+f*.3,Math.min(m-w-f*.3,x-w/2)),by=y-f*4.1;
+      s+=`<g class="rg-tip" pointer-events="none"><rect x="${bx}" y="${by}" width="${w}" height="${f*2}" rx="${f*.5}"/><text x="${bx+w/2}" y="${by+f*1.35}" font-size="${f*.95}" text-anchor="middle">${e(p.nome)}</text></g>`}
+    return s+`</svg>`;
+  }
+};
+/* ---------- negócios na região + funil ---------- */
+const NCAT={boi:["🐂","Frigoríficos","#0C6FA0"],leilao:["🔨","Leilões e corretores","#023855"],conf:["🌾","Confinamento e recria","#0A5A85"],leite:["🥛","Laticínios","#01A2D9"],limao:["🍋","Limão: packing e exportação","#F2C230"],atac:["🏬","Ceasa e atacado","#38B6E6"],merc:["🛒","Supermercados","#B8860B"]};
+const NEG=[
+ {id:"n1",cat:"boi",nome:"Frigorífico Vale do Paraguaçu",cid:"Itaberaba",info:"SIF · abate 450 cabeças por dia · paga em 30 dias"},
+ {id:"n2",cat:"boi",nome:"Frigorífico Sertão Carnes",cid:"Feira de Santana",info:"SIF · exporta · bônus de R$ 5/@ para boi rastreado"},
+ {id:"n3",cat:"boi",nome:"Matadouro Regional de Jequié",cid:"Jequié",info:"Inspeção estadual · compra vaca de descarte"},
+ {id:"n4",cat:"boi",nome:"Frigorífico Conquista Bovinos",cid:"Vitória da Conquista",info:"SIF · paga prêmio por novilha precoce"},
+ {id:"n5",cat:"leilao",nome:"Leilões Paraguaçu",cid:"Itaberaba",info:"Leilão de gado de corte toda quinta-feira"},
+ {id:"n6",cat:"leilao",nome:"Corretora Boi Bahia",cid:"Iaçu",info:"Corretor de boi gordo e de reposição"},
+ {id:"n7",cat:"leilao",nome:"Parque de Leilões de Feira",cid:"Feira de Santana",info:"Leilão de reposição a cada 15 dias"},
+ {id:"n8",cat:"conf",nome:"Confinamento Boa Vista",cid:"Boa Vista do Tupim",info:"Compra garrote de 12 @ e silagem"},
+ {id:"n9",cat:"conf",nome:"Agropecuária Milagres",cid:"Milagres",info:"Recria · compra bezerro desmamado"},
+ {id:"n10",cat:"leite",nome:"Laticínio Chapada Leite",cid:"Ruy Barbosa",info:"Coleta na fazenda · paga por qualidade"},
+ {id:"n11",cat:"leite",nome:"Laticínios do Recôncavo",cid:"Santo Antônio de Jesus",info:"Paga R$ 0,12/L a mais acima de 1.000 L/dia"},
+ {id:"n12",cat:"leite",nome:"Queijaria Maracás",cid:"Maracás",info:"Compra leite de Jersey para queijo"},
+ {id:"n13",cat:"limao",nome:"Packing Citrus Livramento",cid:"Livramento de Nossa Senhora",info:"Classifica e exporta Tahiti para a Europa"},
+ {id:"n14",cat:"limao",nome:"Citros do Recôncavo",cid:"Cruz das Almas",info:"Compra limão no pé e busca na fazenda"},
+ {id:"n15",cat:"limao",nome:"Exporta Lima Bahia",cid:"Salvador",info:"Exportador · exige certificação GlobalG.A.P."},
+ {id:"n16",cat:"atac",nome:"Ceasa de Feira de Santana",cid:"Feira de Santana",info:"Boxes de frutas · limão no atacado"},
+ {id:"n17",cat:"atac",nome:"Atacado de Frutas Jequié",cid:"Jequié",info:"Distribui para o sul da Bahia"},
+ {id:"n18",cat:"atac",nome:"Ceasa de Salvador",cid:"Salvador",info:"Maior mercado de frutas do estado"},
+ {id:"n19",cat:"merc",nome:"Rede Mercado Sertanejo",cid:"Itaberaba",info:"12 lojas · compra limão direto do produtor"},
+ {id:"n20",cat:"merc",nome:"Rede Mais Sertão",cid:"Jequié",info:"8 lojas · açougue próprio"}
+];
+const FUN_ET=[["map","Mapeado"],["con","Contatado"],["pro","Proposta"],["neg","Negociando"],["fec","Fechado"]];
+const FUN0=[
+ {n:"n5",et:"map",o:"Vacas de descarte do B-14",v:520000,p:"Ver o próximo leilão"},
+ {n:"n19",et:"map",o:"Limão direto para 12 lojas",v:90000,p:"Valor por ano"},
+ {n:"n11",et:"con",o:"Leite da Rio Bonito com bônus",v:52000,p:"Visita marcada para terça"},
+ {n:"n13",et:"con",o:"Limão de exportação na entressafra",v:300000,p:"Mandar análise de resíduo"},
+ {n:"n2",et:"pro",o:"Lote R-03 · 240 bois a R$ 318/@",v:1410000,p:"Responder até sexta"},
+ {n:"n14",et:"pro",o:"66 t de Tahiti a R$ 2.800/t",v:184800,p:"Esperando sua aprovação"},
+ {n:"n8",et:"neg",o:"300 t de silagem a R$ 240/t",v:72000,p:"Pediu prazo de 60 dias"},
+ {n:"n1",et:"fec",o:"Lote B-07 · 240 bois a R$ 312/@",v:1350000,p:"Pago em 30/09"}
+];
+let FUN;try{FUN=JSON.parse(localStorage.getItem("etta-funil"))}catch(e){}
+if(!Array.isArray(FUN))FUN=JSON.parse(JSON.stringify(FUN0));
+const saveFun=()=>{try{localStorage.setItem("etta-funil",JSON.stringify(FUN))}catch(e){}};
+let ngR=200,ngCat="todos",ngSel=null;
+const ngMil=v=>v>=1e6?"R$ "+brl(v/1e6,1)+" mi":"R$ "+brl(v/1e3)+" mil";
+function drawNeg(){
+  const noR=NEG.filter(n=>REG.dist(n.cid)<=ngR);
+  const vis=noR.filter(n=>ngCat==="todos"||n.cat===ngCat).sort((a,b)=>REG.dist(a.cid)-REG.dist(b.cid));
+  $("#ng-r-o").textContent=ngR+" km";
+  $("#ng-chips").innerHTML=[["todos","Todos"],...Object.entries(NCAT).map(([k,v])=>[k,v[0]+" "+v[1]])].map(([k,t])=>`<button type="button" data-c="${k}" aria-pressed="${ngCat===k}">${t}</button>`).join("");
+  $("#ng-map").innerHTML=REG.svg(vis.map(n=>({id:n.id,cid:n.cid,ic:NCAT[n.cat][0],cor:NCAT[n.cat][2],nome:n.nome})),ngR,ngSel,"Bugalhau · Rio Bonito");
+  $("#ng-list").innerHTML=vis.map(n=>{const d=FUN.find(x=>x.n===n.id),c=NCAT[n.cat];
+    return `<li data-id="${n.id}" class="${n.id===ngSel?"on":""}"><span class="ng-ic" style="--c:${c[2]}">${c[0]}</span><div class="ng-t"><b>${n.nome}</b><span class="ng-w">${n.cid} · ${REG.dist(n.cid)} km · ${c[1]}</span><span class="ng-i">${n.info}</span></div><div class="ng-a">${d?`<span class="ng-st">${FUN_ET.find(e=>e[0]===d.et)[1]}</span>`:`<button type="button" class="ng-add" data-add="${n.id}">+ Funil</button>`}<button type="button" class="ng-call" aria-label="Ligar">📞</button></div></li>`}).join("")||`<li class="ng-empty">Nenhum negócio desse tipo no raio. Aumente o raio.</li>`;
+  const ab=FUN.filter(d=>d.et==="pro"||d.et==="neg");
+  $("#ng-k1").textContent=noR.length;$("#ng-k1d").textContent=ngR+" km";
+  $("#ng-k2").textContent=noR.filter(n=>["boi","leilao","conf"].includes(n.cat)).length;
+  $("#ng-k3").textContent=noR.filter(n=>["limao","atac","merc"].includes(n.cat)).length;
+  $("#ng-k4").textContent=ngMil(ab.reduce((s,d)=>s+d.v,0));$("#ng-k4d").textContent=ab.length+" propostas e negociações abertas";
+  drawFun();
+}
+function drawFun(){
+  $("#ng-fun").innerHTML=FUN_ET.map(([k,t],i)=>{const ds=FUN.filter(d=>d.et===k),tot=ds.reduce((s,d)=>s+(d.v||0),0);
+    return `<div class="fcol${k==="fec"?" fim":""}" data-et="${k}"><h4><span>${t}</span><span class="fc">${ds.length}${tot?" · "+ngMil(tot):""}</span></h4>${ds.map(d=>{const n=NEG.find(x=>x.id===d.n);
+      return `<div class="fcard" draggable="true" data-n="${d.n}"><div class="fh"><span>${NCAT[n.cat][0]}</span><b>${n.nome}</b></div><div class="fo">${d.o}</div>${d.v?`<div class="fv">${ngMil(d.v)}</div>`:""}<div class="fp">${d.p||n.cid+" · "+REG.dist(n.cid)+" km"}</div><div class="fmv">${i>0?`<button type="button" data-mv="-1" aria-label="Voltar uma etapa">◀</button>`:"<span></span>"}${i<FUN_ET.length-1?`<button type="button" data-mv="1" aria-label="Avançar uma etapa">▶</button>`:""}</div></div>`}).join("")||`<div class="fempty">Arraste um card para cá</div>`}</div>`}).join("");
+}
+function moveFun(n,et){const d=FUN.find(x=>x.n===n);if(!d||d.et===et)return;d.et=et;if(et==="fec")d.p="Fechado agora";saveFun();drawNeg()}
+$("#ng-r").addEventListener("input",e=>{ngR=+e.target.value;drawNeg()});
+$("#ng-chips").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;ngCat=b.dataset.c;drawNeg()});
+const ngPick=id=>{ngSel=ngSel===id?null:id;drawNeg();const li=document.querySelector(`#ng-list li[data-id="${id}"]`),ul=$("#ng-list");if(li&&ngSel)ul.scrollTop=li.offsetTop-8};
+$("#ng-map").addEventListener("click",e=>{const g=e.target.closest(".rgpin");if(g)ngPick(g.dataset.id)});
+$("#ng-map").addEventListener("keydown",e=>{const g=e.target.closest(".rgpin");if(g&&e.key==="Enter")ngPick(g.dataset.id)});
+$("#ng-list").addEventListener("click",e=>{
+  const a=e.target.closest(".ng-add"),c=e.target.closest(".ng-call"),li=e.target.closest("li[data-id]");
+  if(a){const n=NEG.find(x=>x.id===a.dataset.add);FUN.push({n:n.id,et:"map",o:n.info.split(" · ")[0],v:0,p:""});saveFun();ngSel=n.id;drawNeg();return}
+  if(c){const t=c.textContent;c.textContent="Na versão real, liga daqui";c.classList.add("wide");setTimeout(()=>{c.textContent=t;c.classList.remove("wide")},1800);return}
+  if(li){ngSel=ngSel===li.dataset.id?null:li.dataset.id;drawNeg()}
+});
+const fun=$("#ng-fun");let ngDrag=null;
+fun.addEventListener("dragstart",e=>{const c=e.target.closest(".fcard");if(!c)return;ngDrag=c.dataset.n;c.classList.add("drag");try{e.dataTransfer.setData("text/plain",ngDrag);e.dataTransfer.effectAllowed="move"}catch(x){}});
+fun.addEventListener("dragend",()=>{ngDrag=null;fun.querySelectorAll(".drag,.over").forEach(x=>x.classList.remove("drag","over"))});
+fun.addEventListener("dragover",e=>{const col=e.target.closest(".fcol");if(!col||!ngDrag)return;e.preventDefault();fun.querySelectorAll(".fcol.over").forEach(x=>x!==col&&x.classList.remove("over"));col.classList.add("over")});
+fun.addEventListener("drop",e=>{const col=e.target.closest(".fcol");if(!col||!ngDrag)return;e.preventDefault();moveFun(ngDrag,col.dataset.et)});
+fun.addEventListener("click",e=>{const b=e.target.closest("[data-mv]");if(!b)return;const n=b.closest(".fcard").dataset.n,d=FUN.find(x=>x.n===n),i=FUN_ET.findIndex(x=>x[0]===d.et)+ +b.dataset.mv;moveFun(n,FUN_ET[i][0])});
+$("#ng-reset").addEventListener("click",()=>{FUN=JSON.parse(JSON.stringify(FUN0));saveFun();drawNeg()});
+drawNeg();
 function renderAll(){drawCash();drawWhere();drawAct();drawSim();drawLim();drawPass();drawQuotes();drawClima();drawHerd();drawBudget();drawFarms();drawSell();drawPads();drawTasks();drawMatrix()}
 let rt;window.addEventListener("resize",()=>{clearTimeout(rt);rt=setTimeout(renderAll,120)});
 try{matchMedia("(prefers-color-scheme: dark)").addEventListener("change",renderAll)}catch(e){}
