@@ -139,6 +139,7 @@ svg{display:block;max-width:100%}
 .fempty{font-size:12px;color:var(--muted);text-align:center;padding:18px 6px;border:1px dashed var(--line);border-radius:10px}
 .satflow.ng4{grid-template-columns:repeat(4,minmax(0,1fr))}@media(max-width:900px){.satflow.ng4{grid-template-columns:1fr 1fr}}@media(max-width:520px){.satflow.ng4{grid-template-columns:1fr}}
 @media(max-width:700px){.ng-list{max-height:420px}.ng-fun{grid-template-columns:repeat(5,minmax(200px,78vw));scroll-snap-type:x mandatory}.fcol{scroll-snap-align:start}}
+#sim .controls label{display:block;min-height:2.9em}#sim .simout .o .d{min-height:2.7em}@media(max-width:700px){#sim .simout .o{min-height:108px}}
 .tablewrap{overflow-x:auto}
 table{border-collapse:collapse;width:100%;font-size:14px}
 th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line);white-space:nowrap}
@@ -967,7 +968,7 @@ tabs.forEach(b=>b.addEventListener("click",()=>{openTab(b.dataset.tab);try{histo
 const months=["out/25","nov/25","dez/25","jan/26","fev/26","mar/26","abr/26","mai/26","jun/26","jul/26","ago/26","set/26"];
 const herd=[15.9,16.1,16.0,16.4,16.8,17.0,16.7,17.2,17.6,17.9,18.1,18.4];
 function drawHerd(){
-  const box=$("#ch-herd");if(!box.offsetWidth)return;box.innerHTML="";
+  const box=$("#ch-herd");if(!box.offsetWidth)return;box.style.minHeight=box.offsetHeight+"px";box.innerHTML="";
   const W=box.clientWidth,H=230,m={l:44,r:26,t:14,b:26};
   const svg=el("svg",{viewBox:`0 0 ${W} ${H}`,width:W,height:H,role:"img","aria-label":"Valor do rebanho de out/25 a set/26, de R$ 15,9 mi a R$ 18,4 mi"},box);
   const y0=15,y1=19,ix=i=>m.l+i*(W-m.l-m.r)/(herd.length-1),iy=v=>m.t+(1-(v-y0)/(y1-y0))*(H-m.t-m.b);
@@ -990,7 +991,7 @@ function drawHerd(){
 /* ---------- orçado x realizado ---------- */
 const budget=[["Nutrição",420,452],["Pessoal",260,262],["Máquinas",140,171],["Sanidade",85,79],["Reprodução",60,55],["Administrativo",48,44]];
 function drawBudget(){
-  const box=$("#ch-budget");if(!box.offsetWidth)return;box.innerHTML="";
+  const box=$("#ch-budget");if(!box.offsetWidth)return;box.style.minHeight=box.offsetHeight+"px";box.innerHTML="";
   const W=box.clientWidth,rowH=34,m={l:100,r:64,t:4,b:4},H=m.t+m.b+budget.length*rowH;
   const svg=el("svg",{viewBox:`0 0 ${W} ${H}`,width:W,height:H,role:"img","aria-label":"Orçado e realizado por categoria de custo"},box);
   const max=480,sx=v=>m.l+v/max*(W-m.l-m.r);
@@ -1027,7 +1028,7 @@ function drawFarms(){
   const tc=$("#tb-cost");
   const rows=[["Nutrição e suplementação",71,82],["Pessoal",38,41],["Máquinas e combustível",22,25],["Sanidade",14,13],["Reprodução",9,10],["Rateio da sede e administrativo",22,20]];
   tc.innerHTML="<thead><tr><th>Componente</th><th class='n'>Bugalhau</th><th class='n'>Rio Bonito</th></tr></thead><tbody>"+rows.map(r=>`<tr><td>${r[0]}</td><td class="n">${r[1]}</td><td class="n">${r[2]}</td></tr>`).join("")+`<tr><td><b>Total por arroba</b></td><td class="n"><b>176</b></td><td class="n"><b>191</b></td></tr></tbody>`;
-  const box=$("#ch-farms");if(!box.offsetWidth)return;box.innerHTML="";
+  const box=$("#ch-farms");if(!box.offsetWidth)return;box.style.minHeight=box.offsetHeight+"px";box.innerHTML="";
   const q=["4T/25","1T/26","2T/26","3T/26"],A=[1080,1150,1210,1240],B=[1380,1450,1540,1610];
   const W=box.clientWidth,H=220,m={l:52,r:16,t:16,b:26};
   const svg=el("svg",{viewBox:`0 0 ${W} ${H}`,width:W,height:H,role:"img","aria-label":"Margem por hectare por trimestre nas duas fazendas"},box);
@@ -1068,7 +1069,7 @@ function drawSell(){
   else{$("#v-big").textContent=`Segurar ${best} dias`;$("#v-sm").textContent=`Vender daqui a ${best} dias rende +R$ ${brl(gain/1000,0)} mil no lote (R$ ${brl(gain/l.n,0)} por cabeça) em relação a vender hoje. Passar 30 dias desse ponto ${late>=0?`reduz o ganho para R$ ${brl(late/1000,0)} mil`:`vira prejuízo de R$ ${brl(Math.abs(late)/1000,0)} mil`}.`}
   const box=$("#ch-sell");
   $("#lotefacts").innerHTML=`<span>Peso médio hoje <b>${l.w} kg</b></span><span>Ganho de peso atual <b>${brl(l.gmd,2)} kg/dia</b></span><span>Rendimento de carcaça <b>${REND*100}%</b></span><span>Cabeças <b>${l.n}</b></span>`;
-  if(!box.offsetWidth)return;box.innerHTML="";
+  if(!box.offsetWidth)return;box.style.minHeight=box.offsetHeight+"px";box.innerHTML="";
   const W=box.clientWidth,H=260,m={l:60,r:20,t:16,b:30};
   const svg=el("svg",{viewBox:`0 0 ${W} ${H}`,width:W,height:H,role:"img","aria-label":`Lucro extra do lote conforme os dias até a venda. Melhor dia: ${best}`},box);
   const vals=s.map(v=>v/1000);let lo=Math.min(0,...vals),hi=Math.max(...vals,10);const pad=(hi-lo)*.08;lo-=pad;hi+=pad;
@@ -1180,7 +1181,7 @@ function drawSim(){
   const worst=parts.slice().sort((a,b)=>a[1]-b[1])[0], best=parts.slice().sort((a,b)=>b[1]-a[1])[0];
   $("#sim-say").innerHTML=Math.abs(d)<.05?"Este é o plano aprovado para o ano. Mexa nos valores para ver o efeito de cada fator.":
     `${d<0?"O que mais pesa contra é":"O que mais ajuda é"} <b>${(d<0?worst:best)[0].toLowerCase()}</b> (${sgn((d<0?worst:best)[1])}R$ ${brl(Math.abs((d<0?worst:best)[1]),0)} mil).`+(cx<.8?" <b>O caixa fica apertado</b>: vale antecipar a venda do R-03 ou negociar prazo com fornecedores.":"");
-  const box=$("#ch-sim");if(!box.offsetWidth)return;box.innerHTML="";
+  const box=$("#ch-sim");if(!box.offsetWidth)return;box.style.minHeight=box.offsetHeight+"px";box.innerHTML="";
   const rows=[["Plano",BASE.res*1e3,"base"],...parts.map(p=>[p[0],p[1],"d"]),["Novo resultado",res*1e3,"end"]];
   const W=box.clientWidth,rowH=34,m={l:W<500?104:130,r:80,t:4,b:4},H=m.t+m.b+rows.length*rowH;
   const svg=el("svg",{viewBox:`0 0 ${W} ${H}`,width:W,height:H,role:"img","aria-label":"Contribuição de cada fator para o resultado"},box);
@@ -1212,7 +1213,7 @@ function drawLim(){
   $("#tb-tal").innerHTML="<thead><tr><th>Talhão</th><th class='n'>ha</th><th class='n'>t/ha</th><th>Agora</th></tr></thead><tbody>"+
    [["T1 · Tahiti, 6 anos",18,34,"<span class='chip crit'>Colheita</span>"],["T2 · Tahiti, 4 anos",14,24,"<span class='chip warn'>Ácaro</span>"],["T3 · Siciliano, 3 anos",10,14,"<span class='chip good'>Florada</span>"]]
    .map(r=>`<tr><td>${r[0]}</td><td class="n">${r[1]}</td><td class="n">${r[2]}</td><td>${r[3]}</td></tr>`).join("")+"</tbody>";
-  const box=$("#ch-lim");if(!box.offsetWidth)return;box.innerHTML="";
+  const box=$("#ch-lim");if(!box.offsetWidth)return;box.style.minHeight=box.offsetHeight+"px";box.innerHTML="";
   const W=box.clientWidth,H=240,m={l:40,r:52,t:16,b:26};
   const svg=el("svg",{viewBox:`0 0 ${W} ${H}`,width:W,height:H,role:"img","aria-label":"Toneladas vendidas por mês e preço do limão Tahiti"},box);
   const n=limT.length,bw=(W-m.l-m.r)/n,cx=i=>m.l+bw*(i+.5),iyT=v=>m.t+(1-v/150)*(H-m.t-m.b),iyP=v=>m.t+(1-(v-1000)/2500)*(H-m.t-m.b);
@@ -1247,7 +1248,7 @@ function drawPass(){
   $("#idcard").innerHTML=`<div class="tag">${a.id.slice(-9).replace(" ","<br>")}</div><div><div class="nm">${a.nome}</div><div class="fx"><span>Nascido em <b>${a.nasc}</b></span><span>Peso <b>${a.peso} kg</b></span><span>Lote <b>${a.lote}</b></span><span>Fazendas <b>${a.tl.some(t=>t[3])?"2":"1"}</b></span></div></div>`;
   $("#tl").innerHTML=a.tl.map(([d,t,dd,c])=>`<li class="${c}"><div class="dt">${d}</div><div class="tt">${t}</div><div class="dd">${dd}</div></li>`).join("");
   $("#qr").innerHTML=qrSvg(+sb.value*7919+31);$("#qr-id").textContent=a.id;$("#t-dos").textContent="";
-  const box=$("#ch-peso");if(!box.offsetWidth)return;box.innerHTML="";
+  const box=$("#ch-peso");if(!box.offsetWidth)return;box.style.minHeight=box.offsetHeight+"px";box.innerHTML="";
   const W=box.clientWidth,H=200,m={l:44,r:12,t:12,b:26},dmax=a.pes[a.pes.length-1][0],wmax=Math.ceil(a.peso/100)*100+50;
   const svg=el("svg",{viewBox:`0 0 ${W} ${H}`,width:W,height:H,role:"img","aria-label":"Curva de peso do animal"},box);
   const ix=d=>m.l+d/dmax*(W-m.l-m.r),iy=v=>m.t+(1-v/wmax)*(H-m.t-m.b);const g=el("g",{class:"axis"},svg);
