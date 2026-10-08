@@ -93,6 +93,18 @@ svg{display:block;max-width:100%}
 @media (max-width:900px){.satflow{grid-template-columns:1fr 1fr}.satflow li::after{display:none}}@media (max-width:520px){.satflow{grid-template-columns:1fr}}
 .sat{display:flex;gap:20px;align-items:center;justify-content:space-between;flex-wrap:wrap}.sat>div{flex:1 1 420px}.satsteps{margin:0;padding-left:20px;font-size:13.5px;color:var(--ink-2);display:grid;gap:4px}
 .satbtn{flex:none;display:inline-flex;align-items:center;gap:8px;text-decoration:none;font:600 14px var(--f-body);color:#fff;padding:12px 18px;border-radius:999px;background:linear-gradient(135deg,#01A2D9,#0C6FA0);box-shadow:0 8px 18px rgba(2,56,85,.22);transition:transform .2s}.satbtn:hover{transform:translateY(-2px)}
+.rlist{list-style:none;margin:0;padding:0;display:grid;gap:10px}.rlist.two{grid-template-columns:repeat(2,minmax(0,1fr))}@media(max-width:900px){.rlist.two{grid-template-columns:1fr}}
+.rlist li{display:flex;gap:12px;align-items:flex-start;padding:12px 14px;border-radius:12px;background:var(--surface-2);border:1px solid var(--line)}
+.rlist .ri{flex:none;width:40px;height:40px;border-radius:12px;display:grid;place-items:center;font-size:20px;background:linear-gradient(150deg,#38B6E6,#0C6FA0)}
+.rlist .rt{flex:1;min-width:0}.rlist .rt b{display:block;font-size:14.5px}.rlist .rt>span{display:block;font-size:13px;color:var(--ink-2);margin-top:2px}
+.rlist .rm{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}.rlist .rm .chip{font-size:11px;padding:2px 8px;background:var(--surface)}
+.rgen{flex:none;align-self:center;border:0;cursor:pointer;font:600 13px var(--f-body);color:#fff;padding:8px 14px;border-radius:999px;background:linear-gradient(135deg,#0C6FA0,#023855);box-shadow:0 4px 10px rgba(2,56,85,.18)}
+.rgen.done{background:var(--accent-soft);color:var(--accent);box-shadow:none}
+@media(max-width:520px){.rlist li{flex-wrap:wrap}.rgen{margin-left:52px}}
+.rdoc{background:#fff;color:#1B222A;border-radius:6px;padding:18px 18px 12px;box-shadow:0 1px 2px rgba(0,0,0,.08),0 14px 30px rgba(2,56,85,.16);font-size:12.5px;border-top:4px solid #023855}
+.rdoc .rdh{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;border-bottom:1px solid #D6E1E8;padding-bottom:8px;margin-bottom:10px}.rdoc .rdh b{font-family:var(--f-display);font-size:15px;color:#023855}.rdoc .rdh span{color:#647079;font-size:11.5px}
+.rdoc .rkp{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:10px}.rdoc .rkp div{background:#EEF4F8;border-radius:6px;padding:8px}.rdoc .rkp span{display:block;font-size:10.5px;text-transform:uppercase;letter-spacing:.05em;color:#647079}.rdoc .rkp b{font-family:var(--f-display);font-size:15px;color:#023855}
+.rdoc h4{margin:10px 0 2px;font-size:12.5px;color:#0C6FA0}.rdoc p{margin:0;color:#45515B;line-height:1.45}.rdoc .rft{margin-top:12px;padding-top:8px;border-top:1px dashed #D6E1E8;color:#8497A4;font-size:11px;text-align:right}
 .tablewrap{overflow-x:auto}
 table{border-collapse:collapse;width:100%;font-size:14px}
 th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line);white-space:nowrap}
@@ -388,6 +400,7 @@ html.slides body:not([data-tab="socio"]) .demo{display:none}
   <nav class="tabs" role="tablist" aria-label="Telas">
     <button role="tab" id="t-socio" aria-selected="true" data-tab="socio"><i aria-hidden="true">🏠</i>Dashboard</button>
     <button role="tab" id="t-financeiro" aria-selected="false" data-tab="financeiro"><i aria-hidden="true">💰</i>Financeiro</button>
+    <button role="tab" id="t-relatorios" aria-selected="false" data-tab="relatorios"><i aria-hidden="true">📑</i>Relatórios</button>
     <button role="tab" id="t-fazendas" aria-selected="false" data-tab="fazendas"><i aria-hidden="true">🗺</i>Fazendas lado a lado</button>
     <button role="tab" id="t-sim" aria-selected="false" data-tab="sim"><i aria-hidden="true">📈</i>E se...?</button>
     <button role="tab" id="t-vender" aria-selected="false" data-tab="vender"><i aria-hidden="true">🐂</i>Vender ou segurar</button>
@@ -499,6 +512,36 @@ html.slides body:not([data-tab="socio"]) .demo{display:none}
         <div class="chart" id="ch-act"></div>
       </div>
 
+    </div>
+  </section>
+
+  <!-- RELATÓRIOS -->
+  <section id="relatorios" class="tabpanel" hidden>
+    <div class="who">Para os donos, o conselho e o contador · relatórios prontos, sem montar planilha</div>
+    <div class="grid">
+      <div class="panel c7">
+        <h2>Estratégicos<span class="new">Donos e conselho</span></h2>
+        <p class="hint">Para decidir o rumo das fazendas. Os mensais chegam sozinhos no app dos sócios.</p>
+        <ul class="rlist"><li><span class="ri">📊</span><div class="rt"><b>Relatório mensal dos donos</b><span>Resultado, caixa, valor do rebanho, o que saiu do plano e as decisões do mês, escrito em linguagem simples.</span><div class="rm"><span class="chip neutral">Mensal · dia 1</span><span class="chip neutral">Sócios no app</span><span class="chip neutral">PDF</span></div></div><button type="button" class="rgen">Gerar</button></li><li><span class="ri">🗓</span><div class="rt"><b>Fechamento do ano e orçamento</b><span>Como o ano fechou contra o orçado e a proposta de orçamento do próximo ano, por atividade.</span><div class="rm"><span class="chip neutral">Anual</span><span class="chip neutral">Sócios e conselho</span><span class="chip neutral">PDF e Excel</span></div></div><button type="button" class="rgen">Gerar</button></li><li><span class="ri">🧭</span><div class="rt"><b>Resultado por atividade e fazenda</b><span>Pecuária, limão e silagem, Bugalhau e Rio Bonito lado a lado, com margem e tendência.</span><div class="rm"><span class="chip neutral">Trimestral</span><span class="chip neutral">Sócios e conselho</span><span class="chip neutral">PDF</span></div></div><button type="button" class="rgen">Gerar</button></li><li><span class="ri">🏦</span><div class="rt"><b>Patrimônio da fazenda</b><span>Valor do rebanho a preço de mercado, estoque de silagem, máquinas e benfeitorias.</span><div class="rm"><span class="chip neutral">Trimestral</span><span class="chip neutral">Sócios</span><span class="chip neutral">PDF</span></div></div><button type="button" class="rgen">Gerar</button></li><li><span class="ri">📁</span><div class="rt"><b>Dossiê para o banco</b><span>Histórico de produção, resultado, rebanho e documentação para pedir crédito rural.</span><div class="rm"><span class="chip neutral">Quando precisar</span><span class="chip neutral">Banco</span><span class="chip neutral">PDF</span></div></div><button type="button" class="rgen">Gerar</button></li><li><span class="ri">🔮</span><div class="rt"><b>Cenários simulados</b><span>Os cenários do "E se...?" salvos, com o impacto no resultado e no caixa.</span><div class="rm"><span class="chip neutral">Quando precisar</span><span class="chip neutral">Sócios</span><span class="chip neutral">PDF</span></div></div><button type="button" class="rgen">Gerar</button></li></ul>
+      </div>
+      <div class="panel c5">
+        <h2>Prévia · relatório de setembro</h2>
+        <p class="hint">Gerado em 01/10 às 7h e enviado aos 4 sócios.</p>
+        <div class="rdoc">
+          <div class="rdh"><b>Fazendas Reunidas</b><span>Relatório mensal · setembro de 2026</span></div>
+          <div class="rkp"><div><span>Resultado</span><b>R$ 641 mil</b></div><div><span>Caixa</span><b>R$ 2,3 mi</b></div><div><span>Rebanho</span><b>R$ 18,4 mi</b></div></div>
+          <h4>1. Resumo do mês</h4><p>Resultado 9% acima do orçado, puxado pela venda do lote B-07 a R$ 312 por arroba.</p>
+          <h4>2. Resultado por atividade</h4><p>Pecuária R$ 412 mil · Limão R$ 168 mil · Silagem R$ 61 mil.</p>
+          <h4>3. O que saiu do plano</h4><p>Máquinas e diesel 22% acima do orçado, pela colheita antecipada da silagem.</p>
+          <h4>4. Decisões para outubro</h4><p>Negociar o lote R-03 com o frigorífico e mover o lote B-11 do pasto P07 para o P09.</p>
+          <div class="rft">5 páginas · gráficos, DRE e anexos</div>
+        </div>
+      </div>
+      <div class="panel c12">
+        <h2>Gerenciais<span class="new">Gerente e contador</span></h2>
+        <p class="hint">Para tocar a operação e fechar o mês com o contador. Todos saem em PDF ou planilha, do mês ou do período que escolher.</p>
+        <ul class="rlist two"><li><span class="ri">📒</span><div class="rt"><b>DRE e fluxo de caixa completos</b><span>Por atividade, com rateio, contas a pagar e a receber e projeção de 90 dias.</span><div class="rm"><span class="chip neutral">Mensal</span><span class="chip neutral">Gerente e contador</span><span class="chip neutral">PDF e Excel</span></div></div><button type="button" class="rgen">Gerar</button></li><li><span class="ri">🧾</span><div class="rt"><b>Livro caixa do produtor (LCDPR)</b><span>Receitas e despesas no formato que o contador entrega à Receita.</span><div class="rm"><span class="chip neutral">Mensal e anual</span><span class="chip neutral">Contador</span><span class="chip neutral">Excel</span></div></div><button type="button" class="rgen">Gerar</button></li><li><span class="ri">⚖️</span><div class="rt"><b>Custo da arroba e do litro</b><span>Quanto custa produzir cada arroba e cada litro de leite, e para onde vai o custo.</span><div class="rm"><span class="chip neutral">Mensal</span><span class="chip neutral">Gerente e sócios</span><span class="chip neutral">PDF</span></div></div><button type="button" class="rgen">Gerar</button></li><li><span class="ri">🐄</span><div class="rt"><b>Rebanho e reprodução</b><span>Nascimentos, mortes, ganho de peso, prenhez e lotes prontos para venda.</span><div class="rm"><span class="chip neutral">Mensal</span><span class="chip neutral">Gerente e veterinário</span><span class="chip neutral">PDF e Excel</span></div></div><button type="button" class="rgen">Gerar</button></li><li><span class="ri">🍋</span><div class="rt"><b>Pomar por talhão</b><span>Produtividade, aplicações, carências e custo por caixa de limão.</span><div class="rm"><span class="chip neutral">Por safra</span><span class="chip neutral">Gerente e agrônomo</span><span class="chip neutral">PDF</span></div></div><button type="button" class="rgen">Gerar</button></li><li><span class="ri">🛒</span><div class="rt"><b>Compras e estoque</b><span>O que foi comprado, de quem, quanto se economizou nas cotações e o que está acabando.</span><div class="rm"><span class="chip neutral">Mensal</span><span class="chip neutral">Gerente</span><span class="chip neutral">Excel</span></div></div><button type="button" class="rgen">Gerar</button></li><li><span class="ri">👷</span><div class="rt"><b>Equipe e tarefas</b><span>Tarefas feitas com foto e localização, atrasos e horas por pessoa.</span><div class="rm"><span class="chip neutral">Semanal</span><span class="chip neutral">Gerente</span><span class="chip neutral">PDF</span></div></div><button type="button" class="rgen">Gerar</button></li><li><span class="ri">🚜</span><div class="rt"><b>Máquinas e combustível</b><span>Horas de uso por atividade, diesel por hora e manutenções.</span><div class="rm"><span class="chip neutral">Mensal</span><span class="chip neutral">Gerente</span><span class="chip neutral">Excel</span></div></div><button type="button" class="rgen">Gerar</button></li></ul>
+      </div>
     </div>
   </section>
 
@@ -1185,7 +1228,7 @@ function drawClima(){
 document.querySelectorAll("#mercado .go[data-go],#comparativo .go[data-go],#socio .go[data-go]").forEach(b=>b.addEventListener("click",()=>{openTab(b.dataset.go);try{history.replaceState(null,"","#"+b.dataset.go)}catch(e){}scrollTo({top:0,behavior:"smooth"})}));
 
 /* ---------- menu do celular ---------- */
-const ICONS={"socio": ["🏠", "#01A2D9", "#023855"], "financeiro": ["💰", "#F2C230", "#B8860B"], "fazendas": ["🗺", "#38B6E6", "#0C6FA0"], "sim": ["📈", "#F2C230", "#B8860B"], "vender": ["🐂", "#5CC6EE", "#0A5A85"], "limao": ["🍋", "#38B6E6", "#0C6FA0"], "pass": ["🐄", "#01A2D9", "#023855"], "pastos": ["🛰", "#0C6FA0", "#022C44"], "clima": ["🌦", "#5CC6EE", "#0A5A85"], "equipe": ["👷", "#38B6E6", "#0C6FA0"], "comparativo": ["🧩", "#0C6FA0", "#022C44"], "mercado": ["🌎", "#F2C230", "#B8860B"]};
+const ICONS={"socio": ["🏠", "#01A2D9", "#023855"], "financeiro": ["💰", "#F2C230", "#B8860B"], "relatorios": ["📑", "#01A2D9", "#023855"], "fazendas": ["🗺", "#38B6E6", "#0C6FA0"], "sim": ["📈", "#F2C230", "#B8860B"], "vender": ["🐂", "#5CC6EE", "#0A5A85"], "limao": ["🍋", "#38B6E6", "#0C6FA0"], "pass": ["🐄", "#01A2D9", "#023855"], "pastos": ["🛰", "#0C6FA0", "#022C44"], "clima": ["🌦", "#5CC6EE", "#0A5A85"], "equipe": ["👷", "#38B6E6", "#0C6FA0"], "comparativo": ["🧩", "#0C6FA0", "#022C44"], "mercado": ["🌎", "#F2C230", "#B8860B"]};
 const gridm=$("#gridm"),sheet=$("#msheet");
 gridm.innerHTML=tabs.map(b=>{const k=b.dataset.tab,[ic,g1,g2]=ICONS[k];return `<button type="button" data-go="${k}" style="--g1:${g1};--g2:${g2}"><i>${ic}</i>${b.textContent.replace(ic,"").trim()}</button>`}).join("");
 function goTab(k){if(k==="menu"){sheet.classList.add("on");return}sheet.classList.remove("on");openTab(k);try{history.replaceState(null,"","#"+k)}catch(e){}scrollTo({top:0})}
@@ -1242,6 +1285,7 @@ function drawAct(){
 document.querySelectorAll("#fin-apr .finbtn button").forEach(b=>b.addEventListener("click",()=>{const li=b.closest("li"),ok=b.dataset.a==="ok",ch=li.querySelector(".chip");
   ch.className="chip good";ch.textContent=ok?"Aprovada":"Devolvida";
   li.querySelector(".finbtn").outerHTML=`<div class="d"><b>${ok?"Você aprovou. Falta 1 sócio para liberar o pedido.":"Pedido devolvido ao Matheus para nova cotação."}</b> Fica registrado no histórico.</div>`}));
+document.querySelectorAll(".rgen").forEach(b=>b.addEventListener("click",()=>{if(b.classList.contains("done"))return;b.textContent="Gerando...";setTimeout(()=>{b.classList.add("done");b.textContent="✓ Pronto"},700)}));
 function renderAll(){drawCash();drawWhere();drawAct();drawSim();drawLim();drawPass();drawQuotes();drawClima();drawHerd();drawBudget();drawFarms();drawSell();drawPads();drawTasks();drawMatrix()}
 let rt;window.addEventListener("resize",()=>{clearTimeout(rt);rt=setTimeout(renderAll,120)});
 try{matchMedia("(prefers-color-scheme: dark)").addEventListener("change",renderAll)}catch(e){}
