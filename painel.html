@@ -157,7 +157,7 @@ input[type=range]{accent-color:var(--accent)}
 .idea p{margin:0;font-size:14px;color:var(--ink-2)}
 
 /* ===== acabamento rico: degradês e curvas de nível ===== */
-:root{--grad-hero:linear-gradient(125deg,#023855 0%,#04507A 55%,#0C6FA0 100%);--grad-line:linear-gradient(90deg,#0C6FA0,#F2C230);--shadow:0 1px 2px rgba(2,56,85,.06),0 10px 28px rgba(2,56,85,.08);--topo:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='240' viewBox='0 0 600 240'%3E%3Cg fill='none' stroke='%23ffffff' stroke-opacity='.07' stroke-width='1.2'%3E%3Cpath d='M-20 200 C 80 150 160 230 260 180 S 460 120 620 170'/%3E%3Cpath d='M-20 170 C 90 120 170 200 270 150 S 470 90 620 140'/%3E%3Cpath d='M-20 140 C 100 90 180 170 280 120 S 480 60 620 110'/%3E%3Cpath d='M-20 110 C 110 60 190 140 290 90 S 490 30 620 80'/%3E%3Cpath d='M-20 80 C 120 30 200 110 300 60 S 500 0 620 50'/%3E%3Cpath d='M-20 50 C 130 0 210 80 310 30 S 510 -30 620 20'/%3E%3Cellipse cx='470' cy='190' rx='60' ry='26'/%3E%3Cellipse cx='470' cy='190' rx='34' ry='14'/%3E%3C/g%3E%3C/svg%3E")}
+:root{--grad-hero:linear-gradient(125deg,#023855 0%,#04507A 55%,#0C6FA0 100%);--grad-line:linear-gradient(90deg,#023855,#0C6FA0 55%,#01A2D9);--shadow:0 1px 2px rgba(2,56,85,.06),0 10px 28px rgba(2,56,85,.08);--topo:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='240' viewBox='0 0 600 240'%3E%3Cg fill='none' stroke='%23ffffff' stroke-opacity='.07' stroke-width='1.2'%3E%3Cpath d='M-20 200 C 80 150 160 230 260 180 S 460 120 620 170'/%3E%3Cpath d='M-20 170 C 90 120 170 200 270 150 S 470 90 620 140'/%3E%3Cpath d='M-20 140 C 100 90 180 170 280 120 S 480 60 620 110'/%3E%3Cpath d='M-20 110 C 110 60 190 140 290 90 S 490 30 620 80'/%3E%3Cpath d='M-20 80 C 120 30 200 110 300 60 S 500 0 620 50'/%3E%3Cpath d='M-20 50 C 130 0 210 80 310 30 S 510 -30 620 20'/%3E%3Cellipse cx='470' cy='190' rx='60' ry='26'/%3E%3Cellipse cx='470' cy='190' rx='34' ry='14'/%3E%3C/g%3E%3C/svg%3E")}
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--shadow:0 1px 2px rgba(0,0,0,.4),0 10px 28px rgba(0,0,0,.35)}}
 :root[data-theme="dark"]{--shadow:0 1px 2px rgba(0,0,0,.4),0 10px 28px rgba(0,0,0,.35)}
 body{background:radial-gradient(1200px 500px at 85% -10%,color-mix(in srgb,var(--accent) 14%,transparent),transparent 70%),var(--bg);background-attachment:fixed}
@@ -185,7 +185,7 @@ nav.tabs button[aria-selected="true"]{background:linear-gradient(180deg,transpar
 .verdict .sm{color:rgba(255,255,255,.85)}
 .stack .etta{background:var(--grad-hero);box-shadow:0 8px 20px rgba(2,56,85,.3);color:#fff}
 .matrix td.etta,.matrix th.etta{background:linear-gradient(180deg,color-mix(in srgb,#F2C230 18%,transparent),color-mix(in srgb,var(--accent-soft) 70%,transparent))}
-.idea{box-shadow:var(--shadow);border-top:3px solid transparent;border-image:var(--grad-line) 1;border-image-slice:1}
+.idea{position:relative;overflow:hidden;box-shadow:var(--shadow)}.idea::before{content:"";position:absolute;left:0;right:0;top:0;height:3px;background:var(--grad-line)}
 
 .owner{display:flex;align-items:center;gap:14px}
 .avatar{flex:0 0 auto;width:58px;height:58px;border-radius:50%;display:grid;place-items:center;font:800 26px var(--f-display);color:#023855;background:linear-gradient(135deg,#FFE27A,#F2C230 55%,#F2C230);box-shadow:0 0 0 3px rgba(255,255,255,.35),0 8px 20px rgba(0,0,0,.25)}
@@ -284,12 +284,14 @@ nav.tabs button[aria-selected="true"]{background:linear-gradient(180deg,transpar
 .world .c .hd{display:flex;flex-direction:column-reverse;gap:4px}
 .world .c .hd .pa{margin-left:auto;align-self:flex-end;display:inline-flex;align-items:center;gap:6px;white-space:nowrap;padding-top:2px}
 .world .c .hd .pa .flag{flex:none;width:21px;height:14px;border-radius:2px;box-shadow:0 0 0 1px rgba(0,0,0,.15);overflow:hidden}.world .c .hd b{min-width:0}.world .c .hd .pa{font-size:10.5px}
+.st.pa2{background:var(--surface-2);color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent-soft)}.st.fx{background:var(--surface-2);color:var(--muted);box-shadow:inset 0 0 0 1px var(--line)}.wleg .st:not(:first-child){margin-left:10px}
+.idea .st{margin:2px 0 8px}.idea .fase{margin-top:10px;font-size:12.5px;color:var(--muted);border-top:1px dashed var(--line);padding-top:8px}.idea .go{display:block;margin-top:12px;font:600 13px var(--f-body);color:var(--accent);background:none;border:0;padding:0;cursor:pointer;text-decoration:underline;text-underline-offset:3px;text-align:left}
 .wleg{display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px;font-size:12.5px;color:var(--muted);margin:-4px 0 12px}.wleg .st.hw{margin-left:10px}
 .world .c b{font-family:var(--f-display);font-size:15px}
 .world .c .pa{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-left:6px}
 .world .c p{margin:4px 0 0;font-size:13px;color:var(--ink-2)}
 .only{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px}
-.only .c{position:relative;border-radius:12px;padding:14px 16px 46px;background:var(--surface);box-shadow:var(--shadow);border-top:3px solid transparent;border-image:var(--grad-line) 1}
+.only .c{position:relative;border-radius:12px;padding:14px 16px 46px;background:var(--surface);box-shadow:var(--shadow);overflow:hidden}.only .c::before{content:"";position:absolute;left:0;right:0;top:0;height:3px;background:var(--grad-line)}
 .only .c h3{font-size:16px;margin-bottom:4px}
 .only .c p{margin:0;font-size:13px;color:var(--ink-2)}
 .only .c .go{position:absolute;left:16px;bottom:12px;font:600 13px var(--f-body);color:var(--accent);background:none;border:0;padding:0;cursor:pointer;text-decoration:underline;text-underline-offset:3px}
@@ -815,12 +817,13 @@ html.slides body:not([data-tab="socio"]) .demo{display:none}
       <div class="panel c12">
         <h2>Mais ideias de fora do Brasil</h2>
         <p class="hint">Recursos que vimos lá fora e que não encontramos integrados a um software de gestão brasileiro.</p>
+        <div class="wleg"><span class="st ok">✓ No protótipo</span> já tem tela <span class="st pa2">◐ Em parte</span> uma parte já está <span class="st fx">○ Fases seguintes</span> pode ser feito depois <span class="st hw">⚙ Depende de equipamento</span> entra por parceria</div>
         <div class="ideas">
-          <div class="idea"><h3>Vitrine do lote para venda</h3><div class="from">Inspiração: AuctionsPlus, Austrália</div><p>O lote é anunciado direto do sistema com peso, sanidade, GTA, histórico e fotos. Frigorífico e comprador veem dados conferidos, e a venda volta para o financeiro sozinha.</p></div>
-          <div class="idea"><h3>Alerta de estresse por calor</h3><div class="from">Inspiração: apps de ITU nos EUA</div><p>Cruza a previsão do tempo com temperatura e umidade e avisa um dia antes para mudar o horário de ordenha, de trato e de manejo. Importante no calor da Bahia.</p></div>
-          <div class="idea"><h3>Acesso para veterinário, consultor e banco</h3><div class="from">Inspiração: AgriWebb e Figured</div><p>Cada um entra só no que precisa ver. O veterinário vê a sanidade, o consultor vê os índices e o banco vê o dossiê de crédito, sem mandar planilha.</p></div>
-          <div class="idea"><h3>Escore corporal e peso pela câmera</h3><div class="from">Inspiração: CattleEye (Reino Unido) e Olho do Dono (Brasil)</div><p>Câmera no corredor ou no bebedouro mede escore corporal, claudicação e peso sem passar o animal na balança. Entraria por parceria.</p></div>
-          <div class="idea"><h3>Registro falado no campo</h3><div class="from">Inspiração: Herd Advisor, EUA</div><p>O vaqueiro fala "vacinei o lote 4, 42 cabeças, aftosa" e o sistema monta o registro para ele só confirmar, mesmo sem sinal.</p></div>
+          <div class="idea"><h3>Vitrine do lote para venda</h3><span class="st ok">✓ No protótipo</span><div class="from">Inspiração: AuctionsPlus, Austrália</div><p>O lote é anunciado direto do sistema com peso, sanidade, GTA, histórico e fotos. Frigorífico e comprador veem dados conferidos, e a venda volta para o financeiro sozinha.</p><button type='button' class='go' data-go='pass'>Ver na tela Passaporte do animal →</button></div>
+          <div class="idea"><h3>Alerta de estresse por calor</h3><span class="st ok">✓ No protótipo</span><div class="from">Inspiração: apps de ITU nos EUA</div><p>Cruza a previsão do tempo com temperatura e umidade e avisa um dia antes para mudar o horário de ordenha, de trato e de manejo. Importante no calor da Bahia.</p><button type='button' class='go' data-go='clima'>Ver na tela Clima e calor →</button></div>
+          <div class="idea"><h3>Acesso para veterinário, consultor e banco</h3><span class="st pa2">◐ Em parte</span><div class="from">Inspiração: AgriWebb e Figured</div><p>Cada um entra só no que precisa ver. O veterinário vê a sanidade, o consultor vê os índices e o banco vê o dossiê de crédito, sem mandar planilha.</p><div class="fase">Hoje: perfis de dono, gerente, operador e contador no sistema do gerente. Veterinário, consultor e banco entram nas fases seguintes.</div></div>
+          <div class="idea"><h3>Escore corporal e peso pela câmera</h3><span class="st hw">⚙ Depende de equipamento</span><div class="from">Inspiração: CattleEye (Reino Unido) e Olho do Dono (Brasil)</div><p>Câmera no corredor ou no bebedouro mede escore corporal, claudicação e peso sem passar o animal na balança. Entraria por parceria.</p><div class="fase">Precisa da câmera instalada. Entra por parceria numa fase seguinte.</div></div>
+          <div class="idea"><h3>Registro falado no campo</h3><span class="st fx">○ Fases seguintes</span><div class="from">Inspiração: Herd Advisor, EUA</div><p>O vaqueiro fala "vacinei o lote 4, 42 cabeças, aftosa" e o sistema monta o registro para ele só confirmar, mesmo sem sinal.</p><div class="fase">Ainda não está no protótipo. Pode ser feito nas fases seguintes, no app do vaqueiro.</div></div>
         </div>
       </div>
     </div>
@@ -1178,7 +1181,7 @@ function drawClima(){
   el("path",{d:avg.map((v,i)=>`${i?"L":"M"}${cx(i)},${iy(v)}`).join(""),fill:"none",stroke:css("--ink-2"),"stroke-width":2.5,"stroke-dasharray":"6 4","stroke-linejoin":"round"},svg);
 }
 
-document.querySelectorAll("#mercado .go[data-go]").forEach(b=>b.addEventListener("click",()=>{openTab(b.dataset.go);try{history.replaceState(null,"","#"+b.dataset.go)}catch(e){}scrollTo({top:0,behavior:"smooth"})}));
+document.querySelectorAll("#mercado .go[data-go],#comparativo .go[data-go]").forEach(b=>b.addEventListener("click",()=>{openTab(b.dataset.go);try{history.replaceState(null,"","#"+b.dataset.go)}catch(e){}scrollTo({top:0,behavior:"smooth"})}));
 
 /* ---------- menu do celular ---------- */
 const ICONS={"socio": ["🏠", "#01A2D9", "#023855"], "financeiro": ["💰", "#F2C230", "#B8860B"], "fazendas": ["🗺", "#38B6E6", "#0C6FA0"], "sim": ["📈", "#F2C230", "#B8860B"], "vender": ["🐂", "#5CC6EE", "#0A5A85"], "limao": ["🍋", "#38B6E6", "#0C6FA0"], "pass": ["🐄", "#01A2D9", "#023855"], "pastos": ["🛰", "#0C6FA0", "#022C44"], "clima": ["🌦", "#5CC6EE", "#0A5A85"], "equipe": ["👷", "#38B6E6", "#0C6FA0"], "comparativo": ["🧩", "#0C6FA0", "#022C44"], "mercado": ["🌎", "#F2C230", "#B8860B"]};
