@@ -285,7 +285,8 @@ nav.tabs button[aria-selected="true"]{background:linear-gradient(180deg,transpar
 .world .c .hd .pa{margin-left:auto;align-self:flex-end;display:inline-flex;align-items:center;gap:6px;white-space:nowrap;padding-top:2px}
 .world .c .hd .pa .flag{flex:none;width:21px;height:14px;border-radius:2px;box-shadow:0 0 0 1px rgba(0,0,0,.15);overflow:hidden}.world .c .hd b{min-width:0}.world .c .hd .pa{font-size:10.5px}
 .st.pa2{background:var(--surface-2);color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent-soft)}.st.fx{background:var(--surface-2);color:var(--muted);box-shadow:inset 0 0 0 1px var(--line)}.wleg .st:not(:first-child){margin-left:10px}
-.idea .st{margin:2px 0 8px}.idea .fase{margin-top:10px;font-size:12.5px;color:var(--muted);border-top:1px dashed var(--line);padding-top:8px}.idea .go{display:block;margin-top:12px;font:600 13px var(--f-body);color:var(--accent);background:none;border:0;padding:0;cursor:pointer;text-decoration:underline;text-underline-offset:3px;text-align:left}
+.idea .st{margin:2px 0 8px}.idea .fase{margin-top:10px;font-size:12.5px;color:var(--muted);border-top:1px dashed var(--line);padding-top:8px}.kgo{margin-top:6px;font:600 12.5px var(--f-body);color:var(--accent);background:none;border:0;padding:0;cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+.idea .go{display:block;margin-top:12px;font:600 13px var(--f-body);color:var(--accent);background:none;border:0;padding:0;cursor:pointer;text-decoration:underline;text-underline-offset:3px;text-align:left}
 .wleg{display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px;font-size:12.5px;color:var(--muted);margin:-4px 0 12px}.wleg .st.hw{margin-left:10px}
 .world .c b{font-family:var(--f-display);font-size:15px}
 .world .c .pa{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-left:6px}
@@ -404,7 +405,7 @@ html.slides body:not([data-tab="socio"]) .demo{display:none}
     <div class="who">Para os donos · tudo no app, na palma da mão</div>
     <div class="grid">
       <div class="panel kpi c3"><div class="lab">Valor do rebanho hoje</div><div class="val">R$ 18,4 mi</div><div class="det"><span class="delta up">+R$ 310 mil no mês</span><br>4.150 cabeças × arroba a R$ 310</div></div>
-      <div class="panel kpi c3"><div class="lab">Resultado de setembro</div><div class="val">R$ 641 mil</div><div class="det"><span class="delta up">+9% vs orçado</span><br>Acumulado no ano R$ 4,3 mi</div></div>
+      <div class="panel kpi c3"><div class="lab">Resultado de setembro</div><div class="val">R$ 641 mil</div><div class="det"><span class="delta up">+9% vs orçado</span><br>Acumulado no ano R$ 4,3 mi<br><button type="button" class="go kgo" data-go="financeiro">Ver o DRE →</button></div></div>
       <div class="panel kpi c3"><div class="lab">Caixa disponível</div><div class="val">R$ 2,3 mi</div><div class="det"><span class="delta mid">Mínimo de R$ 1,4 mi em nov</span><br>Projeção dos próximos 90 dias</div></div>
       <div class="panel kpi c3"><div class="lab">Margem por arroba</div><div class="val">R$ 123</div><div class="det">Vendida a R$ 305 · produzida a R$ 182</div></div>
 
@@ -452,6 +453,21 @@ html.slides body:not([data-tab="socio"]) .demo{display:none}
       <div class="panel kpi c3"><div class="lab">A receber em 30 dias</div><div class="val">R$ 1,9 mi</div><div class="det">Leite, limão e venda do lote B-09<br>Nenhuma conta atrasada</div></div>
       <div class="panel kpi c3"><div class="lab">A pagar em 30 dias</div><div class="val">R$ 1,2 mi</div><div class="det">Folha, ração, diesel e adubo<br>1 compra esperando sua aprovação</div></div>
 
+      <div class="panel c12">
+        <h2>DRE · resultado do mês e do ano</h2>
+        <p class="hint">Demonstração do resultado, resumida. O contador recebe a versão completa pronta todo mês, e o gerente vê por atividade.</p>
+        <div class="tablewrap"><table class="dre">
+          <thead><tr><th></th><th class="r">Setembro</th><th class="r">Ano até setembro</th><th class="r">% da receita</th></tr></thead>
+          <tbody>
+            <tr><td>Vendas de gado, leite, limão e silagem</td><td class="r">R$ 1.812 mil</td><td class="r">R$ 15,60 mi</td><td class="r">100%</td></tr>
+            <tr><td>(−) Funrural sobre as vendas</td><td class="r">R$ 27 mil</td><td class="r">R$ 0,23 mi</td><td class="r">1,5%</td></tr>
+            <tr><td>(−) Custos de produção</td><td class="r">R$ 1.002 mil</td><td class="r">R$ 9,60 mi</td><td class="r">61,5%</td></tr>
+            <tr><td>(−) Administração, contador e sede</td><td class="r">R$ 142 mil</td><td class="r">R$ 1,47 mi</td><td class="r">9,4%</td></tr>
+            <tr class="tot"><td>Resultado</td><td class="r">R$ 641 mil</td><td class="r">R$ 4,30 mi</td><td class="r">27,6%</td></tr>
+            <tr class="sub"><td>Investimentos (cerca, curral, trator)</td><td class="r">R$ 95 mil</td><td class="r">R$ 0,82 mi</td><td class="r">fora do resultado</td></tr>
+          </tbody>
+        </table></div>
+      </div>
       <div class="panel c7">
         <h2>Caixa nos próximos 90 dias</h2>
         <p class="hint">Saldo previsto a cada semana com o que já está lançado: contas a pagar, a receber, leite e custos do dia a dia.</p>
@@ -483,21 +499,6 @@ html.slides body:not([data-tab="socio"]) .demo{display:none}
         <div class="chart" id="ch-act"></div>
       </div>
 
-      <div class="panel c12">
-        <h2>Resultado do mês e do ano</h2>
-        <p class="hint">Versão resumida do DRE que o contador recebe pronto todo mês.</p>
-        <div class="tablewrap"><table class="dre">
-          <thead><tr><th></th><th class="r">Setembro</th><th class="r">Ano até setembro</th><th class="r">% da receita</th></tr></thead>
-          <tbody>
-            <tr><td>Vendas de gado, leite, limão e silagem</td><td class="r">R$ 1.812 mil</td><td class="r">R$ 15,60 mi</td><td class="r">100%</td></tr>
-            <tr><td>(−) Funrural sobre as vendas</td><td class="r">R$ 27 mil</td><td class="r">R$ 0,23 mi</td><td class="r">1,5%</td></tr>
-            <tr><td>(−) Custos de produção</td><td class="r">R$ 1.002 mil</td><td class="r">R$ 9,60 mi</td><td class="r">61,5%</td></tr>
-            <tr><td>(−) Administração, contador e sede</td><td class="r">R$ 142 mil</td><td class="r">R$ 1,47 mi</td><td class="r">9,4%</td></tr>
-            <tr class="tot"><td>Resultado</td><td class="r">R$ 641 mil</td><td class="r">R$ 4,30 mi</td><td class="r">27,6%</td></tr>
-            <tr class="sub"><td>Investimentos (cerca, curral, trator)</td><td class="r">R$ 95 mil</td><td class="r">R$ 0,82 mi</td><td class="r">fora do resultado</td></tr>
-          </tbody>
-        </table></div>
-      </div>
     </div>
   </section>
 
@@ -1181,7 +1182,7 @@ function drawClima(){
   el("path",{d:avg.map((v,i)=>`${i?"L":"M"}${cx(i)},${iy(v)}`).join(""),fill:"none",stroke:css("--ink-2"),"stroke-width":2.5,"stroke-dasharray":"6 4","stroke-linejoin":"round"},svg);
 }
 
-document.querySelectorAll("#mercado .go[data-go],#comparativo .go[data-go]").forEach(b=>b.addEventListener("click",()=>{openTab(b.dataset.go);try{history.replaceState(null,"","#"+b.dataset.go)}catch(e){}scrollTo({top:0,behavior:"smooth"})}));
+document.querySelectorAll("#mercado .go[data-go],#comparativo .go[data-go],#socio .go[data-go]").forEach(b=>b.addEventListener("click",()=>{openTab(b.dataset.go);try{history.replaceState(null,"","#"+b.dataset.go)}catch(e){}scrollTo({top:0,behavior:"smooth"})}));
 
 /* ---------- menu do celular ---------- */
 const ICONS={"socio": ["🏠", "#01A2D9", "#023855"], "financeiro": ["💰", "#F2C230", "#B8860B"], "fazendas": ["🗺", "#38B6E6", "#0C6FA0"], "sim": ["📈", "#F2C230", "#B8860B"], "vender": ["🐂", "#5CC6EE", "#0A5A85"], "limao": ["🍋", "#38B6E6", "#0C6FA0"], "pass": ["🐄", "#01A2D9", "#023855"], "pastos": ["🛰", "#0C6FA0", "#022C44"], "clima": ["🌦", "#5CC6EE", "#0A5A85"], "equipe": ["👷", "#38B6E6", "#0C6FA0"], "comparativo": ["🧩", "#0C6FA0", "#022C44"], "mercado": ["🌎", "#F2C230", "#B8860B"]};
