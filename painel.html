@@ -154,6 +154,16 @@ th.n{text-align:right}
 .controls select{font:inherit;padding:6px 8px;border-radius:6px;border:1px solid var(--line);background:var(--surface);color:var(--ink)}
 .controls output{font-family:var(--f-mono);font-size:13px;color:var(--ink)}
 input[type=range]{accent-color:var(--accent)}
+.casa{display:flex;gap:14px;align-items:center;padding:12px 16px;border-radius:12px;border:1px solid rgba(242,194,48,.75);background:linear-gradient(90deg,rgba(242,194,48,.16),rgba(242,194,48,.04));margin:0 0 12px}
+.casa-i{flex:none;width:42px;height:42px;border-radius:12px;display:grid;place-items:center;font-size:22px;background:#023855;box-shadow:inset 0 0 0 2px #F2C230}
+.casa-t{min-width:0}.casa-l{font:700 11.5px var(--f-body);letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.casa-v{font-family:var(--f-display);font-weight:800;font-size:clamp(20px,2.6vw,25px);color:var(--ink);line-height:1.15}.casa-d{font-size:13px;color:var(--ink-2);max-width:72ch}
+.casa-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:10px}@media(max-width:900px){.casa-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:480px){.casa-grid{grid-template-columns:1fr}}
+.casa-it{text-align:left;border:1px solid var(--line);background:var(--surface);border-radius:12px;padding:12px 14px;cursor:pointer;font:inherit;color:inherit;display:flex;flex-direction:column;gap:3px}.casa-it:hover,.casa-it:focus-visible{border-color:#F2C230}
+.casa-it b{font-family:var(--f-display);font-size:20px;color:var(--ink)}.casa-it span{font-size:12.5px;color:var(--ink-2)}.casa-it em{font-style:normal;font:600 12px var(--f-body);color:var(--accent);margin-top:auto;padding-top:6px}
+#sc .casa-d{min-height:3.9em}#vc .casa-d{min-height:2.7em}
+.casa-grid.g3{grid-template-columns:repeat(3,minmax(0,1fr))}@media(max-width:900px){.casa-grid.g3{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:480px){.casa-grid.g3{grid-template-columns:1fr}}div.casa-it{cursor:default}div.casa-it:hover{border-color:var(--line)}
+.casa-tot{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:baseline}.casa-tot .casa-v{font-size:clamp(24px,3vw,30px)}
 .verdict{display:flex;gap:16px;flex-wrap:wrap;align-items:center;padding:14px 16px;border-radius:10px;background:var(--accent-soft);margin-bottom:12px}
 .verdict .big{font-family:var(--f-display);font-weight:800;font-size:clamp(20px,3vw,26px)}
 .verdict .sm{font-size:13px;color:var(--ink-2);max-width:60ch}
@@ -256,7 +266,7 @@ nav.tabs button[aria-selected="true"]{background:linear-gradient(180deg,transpar
 .simout .d{font-size:12px;font-family:var(--f-mono)}
 .flow{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
 @media (max-width:700px){.flow{grid-template-columns:repeat(2,minmax(0,1fr))}}
-.flow .st{position:relative;border-radius:10px;padding:12px 14px;background:var(--surface-2)}
+.flow .st{white-space:normal;display:block;font:inherit;position:relative;border-radius:10px;padding:12px 14px;background:var(--surface-2)}
 .flow .st:last-child{background:var(--grad-hero);color:#fff}
 .flow .st .k{font-size:12px;text-transform:uppercase;letter-spacing:.05em;opacity:.75}
 .flow .st .v{font:800 22px var(--f-display);font-variant-numeric:tabular-nums}
@@ -455,6 +465,19 @@ html.slides body:not([data-tab="socio"]) .demo{display:none}
       <div class="panel kpi c3"><div class="lab">Caixa disponível</div><div class="val">R$ 2,3 mi</div><div class="det"><span class="delta mid">Mínimo de R$ 1,4 mi em nov</span><br>Projeção dos próximos 90 dias</div></div>
       <div class="panel kpi c3"><div class="lab">Margem por arroba</div><div class="val">R$ 123</div><div class="det">Vendida a R$ 305 · produzida a R$ 182</div></div>
 
+      <div class="panel c12">
+        <h2>Decisões fora da curva<span class="new">ETTA</span></h2>
+        <p class="hint">O que o ETTA mostra cruzando os dados das duas fazendas, e que não dá para ver de cabeça nem na planilha. Toque num cartão para ver a tela.</p>
+        <div class="casa-grid g3">
+          <button type="button" class="casa-it go" data-go="fazendas"><span>🏡 Uma fazenda ensinando a outra</span><b>R$ 15 por arroba</b><span>O Bugalhau produz a arroba a R$ 176 e o Rio Bonito a R$ 191. Saber de onde vem a diferença vale dinheiro todo ano.</span><em>Fazendas lado a lado →</em></button>
+          <button type="button" class="casa-it go" data-go="limao"><span>🧭 Onde colocar o próximo hectare</span><b>R$ 25 mil/ha no limão</b><span>Contra R$ 5 a 6 mil/ha no gado. Antes de expandir, o retorno e o capital que cada atividade pede, lado a lado.</span><em>Pomar de limão →</em></button>
+          <button type="button" class="casa-it go" data-go="sim"><span>🛡️ Proteger o ano antes de ele acontecer</span><b>R$ 2,7 mi em jogo</b><span>É o que uma seca forte tira do resultado. Vendo com meses de antecedência, dá para travar preço e ajustar o caixa.</span><em>E se...? →</em></button>
+          <button type="button" class="casa-it go" data-go="negocios"><span>🤝 Mais compradores na disputa</span><b>+R$ 22 mil num lote</b><span>R$ 5 a mais por arroba no R-03 com mais frigoríficos da região cotando o mesmo boi.</span><em>Negócios na região →</em></button>
+          <button type="button" class="casa-it go" data-go="pass"><span>🏷️ Prêmio pela origem</span><b>Boi rastreado</b><span>O passaporte de cada animal abre a venda para frigoríficos de exportação, que pagam ágio por arroba.</span><em>Passaporte do animal →</em></button>
+          <div class="casa-it"><span>✨ A IA de olho no que escapa</span><b>Só as exceções</b><span>Diesel que não bate com as horas de máquina, compra acima do preço de sempre, mortalidade fora do normal. Aviso no celular.</span><em>Abaixo, em "Só o que saiu do esperado"</em></div>
+        </div>
+      </div>
+
       <div class="panel ai c7">
         <h2>Relatório do mês<span class="new">IA</span></h2>
         <div class="meta"><span class="chip neutral">Enviado em 01/10 às 7h</span><span class="chip neutral">No app dos 4 sócios</span></div>
@@ -615,6 +638,7 @@ html.slides body:not([data-tab="socio"]) .demo{display:none}
           <div><label for="custo">Custo por cabeça/dia <output id="o-custo"></output></label><input id="custo" type="range" min="3" max="14" step="0.1"></div>
         </div>
         <div class="verdict"><div class="big" id="v-big"></div><div class="sm" id="v-sm"></div></div>
+        <div class="casa" id="vc"><span class="casa-i" aria-hidden="true">💰</span><div class="casa-t"><div class="casa-l" id="vc-l">Dinheiro que fica na casa</div><div class="casa-v" id="vc-v"></div><div class="casa-d" id="vc-d"></div></div></div>
         <div class="legend"><span><i style="background:var(--s1)"></i>Lucro extra do lote se segurar até o dia</span><span><i style="background:var(--good);border-radius:50%"></i>Melhor dia para vender</span></div>
         <div class="chart" id="ch-sell"></div>
         <div class="lotefacts" id="lotefacts"></div>
@@ -631,6 +655,7 @@ html.slides body:not([data-tab="socio"]) .demo{display:none}
       <div class="panel kpi c3"><div class="lab">Compram gado</div><div class="val" id="ng-k2"></div><div class="det">frigoríficos, leilões e confinamentos</div></div>
       <div class="panel kpi c3"><div class="lab">Compram limão</div><div class="val" id="ng-k3"></div><div class="det">packing, Ceasa e supermercados</div></div>
       <div class="panel kpi c3"><div class="lab">Em negociação</div><div class="val" id="ng-k4"></div><div class="det" id="ng-k4d"></div></div>
+      <div class="panel c12" style="padding:0;background:none;border:0;box-shadow:none"><div class="casa" id="nc"><span class="casa-i" aria-hidden="true">💰</span><div class="casa-t"><div class="casa-l" id="nc-l">Dinheiro que fica na casa</div><div class="casa-v" id="nc-v"></div><div class="casa-d" id="nc-d"></div></div></div></div>
       <div class="panel c7">
         <h2>Mapa da região<span class="new">Novo</span></h2>
         <p class="hint">Escolha o raio e o tipo de negócio. Toque num ponto para ver quem é.</p>
@@ -748,6 +773,7 @@ html.slides body:not([data-tab="socio"]) .demo{display:none}
         <p class="hint">Quanto cada fator soma ou tira do resultado do plano (R$ mil).</p>
         <div class="chart" id="ch-sim"></div>
         <p class="hint" id="sim-say" style="margin-top:10px;color:var(--ink-2)"></p>
+        <div class="casa" id="sc"><span class="casa-i" aria-hidden="true">💰</span><div class="casa-t"><div class="casa-l" id="sc-l">Dinheiro em jogo</div><div class="casa-v" id="sc-v"></div><div class="casa-d" id="sc-d"></div></div></div>
       </div>
     </div>
   </section>
@@ -761,6 +787,7 @@ html.slides body:not([data-tab="socio"]) .demo{display:none}
       <div class="panel kpi c3"><div class="lab">Custo por tonelada</div><div class="val">R$ 1.180</div><div class="det">Adubo, defensivo, irrigação, colheita e frete</div></div>
       <div class="panel kpi c3"><div class="lab">Margem do pomar</div><div class="val" id="k-mg"></div><div class="det">Nos últimos 12 meses</div></div>
 
+      <div class="panel c12" style="padding:0;background:none;border:0;box-shadow:none"><div class="casa" id="lc"><span class="casa-i" aria-hidden="true">💰</span><div class="casa-t"><div class="casa-l" id="lc-l">Dinheiro que fica na casa</div><div class="casa-v" id="lc-v"></div><div class="casa-d" id="lc-d"></div></div></div></div>
       <div class="panel c7">
         <h2>Quando vendemos x quanto pagava<span class="new">Novo</span></h2>
         <p class="hint">Toneladas vendidas por mês e preço do Tahiti no mercado. A entressafra paga mais, então vale guardar mais fruta no pé para esses meses.</p>
@@ -1067,6 +1094,8 @@ function drawSell(){
   const gain=s[best],late=s[Math.min(DMAX,best+30)];
   if(best<=3||gain<l.n*10){$("#v-big").textContent="Vender agora";$("#v-sm").textContent=`Cada dia a mais custa R$ ${brl(custo,2)} por cabeça e o ganho de peso não paga mais esse custo. Segurar 30 dias deixaria o lote com ${late>=0?"+":"−"}R$ ${brl(Math.abs(late)/1000,0)} mil.`}
   else{$("#v-big").textContent=`Segurar ${best} dias`;$("#v-sm").textContent=`Vender daqui a ${best} dias rende +R$ ${brl(gain/1000,0)} mil no lote (R$ ${brl(gain/l.n,0)} por cabeça) em relação a vender hoje. Passar 30 dias desse ponto ${late>=0?`reduz o ganho para R$ ${brl(late/1000,0)} mil`:`vira prejuízo de R$ ${brl(Math.abs(late)/1000,0)} mil`}.`}
+  if(best<=3||gain<l.n*10){const ev=Math.max(0,-late);$("#vc-v").textContent=ev>500?`R$ ${brl(ev/1000,0)} mil que deixam de sair`:"Sem perda por esperar demais";$("#vc-d").textContent=`O lote já não engorda o bastante para pagar o custo do dia. Segurar mais 30 dias custaria isso em ração e manejo.`}
+  else{$("#vc-v").textContent=`+R$ ${brl(gain/1000,0)} mil no lote`;$("#vc-d").textContent=`Cruzando o ganho de peso, o custo do dia e a cotação, a conta mostra quanto vale escolher o dia: o lote ${l.id} vendido no dia ${best} rende isso a mais do que hoje.`}
   const box=$("#ch-sell");
   $("#lotefacts").innerHTML=`<span>Peso médio hoje <b>${l.w} kg</b></span><span>Ganho de peso atual <b>${brl(l.gmd,2)} kg/dia</b></span><span>Rendimento de carcaça <b>${REND*100}%</b></span><span>Cabeças <b>${l.n}</b></span>`;
   if(!box.offsetWidth)return;box.style.minHeight=box.offsetHeight+"px";box.innerHTML="";
@@ -1181,6 +1210,9 @@ function drawSim(){
   const worst=parts.slice().sort((a,b)=>a[1]-b[1])[0], best=parts.slice().sort((a,b)=>b[1]-a[1])[0];
   $("#sim-say").innerHTML=Math.abs(d)<.05?"Este é o plano aprovado para o ano. Mexa nos valores para ver o efeito de cada fator.":
     `${d<0?"O que mais pesa contra é":"O que mais ajuda é"} <b>${(d<0?worst:best)[0].toLowerCase()}</b> (${sgn((d<0?worst:best)[1])}R$ ${brl(Math.abs((d<0?worst:best)[1]),0)} mil).`+(cx<.8?" <b>O caixa fica apertado</b>: vale antecipar a venda do R-03 ou negociar prazo com fornecedores.":"");
+  if(Math.abs(d)<.05){$("#sc-l").textContent="Dinheiro em jogo";$("#sc-v").textContent="Plano do ano";$("#sc-d").textContent="Mexa num fator para ver quanto dinheiro está em jogo e o que fazer antes."}
+  else if(d<0){$("#sc-l").textContent="Dinheiro em jogo";$("#sc-v").textContent=`R$ ${brl(-d,1)} mi a proteger`;$("#sc-d").textContent=`Vendo isso com meses de antecedência, dá para vender lotes antes da queda, travar preço e renegociar compras. Cada decisão tomada antes segura parte desse valor na casa.`}
+  else{$("#sc-l").textContent="Dinheiro que pode ficar na casa";$("#sc-v").textContent=`+R$ ${brl(d,1)} mi de oportunidade`;$("#sc-d").textContent=`Com o cenário favorável à vista, dá para segurar lotes, guardar limão para a alta e reforçar o caixa no momento certo.`}
   const box=$("#ch-sim");if(!box.offsetWidth)return;box.style.minHeight=box.offsetHeight+"px";box.innerHTML="";
   const rows=[["Plano",BASE.res*1e3,"base"],...parts.map(p=>[p[0],p[1],"d"]),["Novo resultado",res*1e3,"end"]];
   const W=box.clientWidth,rowH=34,m={l:W<500?104:130,r:80,t:4,b:4},H=m.t+m.b+rows.length*rowH;
@@ -1209,6 +1241,7 @@ $("#k-pm").textContent="R$ "+brl(limRec/limTot);
 $("#k-mg").textContent="R$ "+brl((limRec-1180*limTot)/1e6,2).replace(/0$/,"")+" mi";
 $("#f-vend").textContent=brl(limTot)+" t";
 $("#f-rec").textContent="R$ "+brl(limRec/1e6,2)+" mi";
+{const lo=(limP[2]+limP[3]+limP[4])/3,hi=(limP[8]+limP[9]+limP[10])/3;$("#lc-v").textContent="+R$ 100 mil por ano";$("#lc-d").textContent=`Vender 100 t na entressafra (R$ ${brl(hi)}/t) em vez da safra (R$ ${brl(lo)}/t). Mesmo descontando o custo de manter a fruta no pé, sobram uns R$ 1.000 por tonelada.`}
 function drawLim(){
   $("#tb-tal").innerHTML="<thead><tr><th>Talhão</th><th class='n'>ha</th><th class='n'>t/ha</th><th>Agora</th></tr></thead><tbody>"+
    [["T1 · Tahiti, 6 anos",18,34,"<span class='chip crit'>Colheita</span>"],["T2 · Tahiti, 4 anos",14,24,"<span class='chip warn'>Ácaro</span>"],["T3 · Siciliano, 3 anos",10,14,"<span class='chip good'>Florada</span>"]]
@@ -1477,6 +1510,7 @@ fun.addEventListener("dragover",e=>{const col=e.target.closest(".fcol");if(!col|
 fun.addEventListener("drop",e=>{const col=e.target.closest(".fcol");if(!col||!ngDrag)return;e.preventDefault();moveFun(ngDrag,col.dataset.et)});
 fun.addEventListener("click",e=>{const b=e.target.closest("[data-mv]");if(!b)return;const n=b.closest(".fcard").dataset.n,d=FUN.find(x=>x.n===n),i=FUN_ET.findIndex(x=>x[0]===d.et)+ +b.dataset.mv;moveFun(n,FUN_ET[i][0])});
 $("#ng-tog").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;ngSat=b.dataset.v==="sat";drawNeg()});
+{const at=Math.round(240*498*REND/15);$("#nc-v").textContent=`+R$ ${brl(at*5/1000,0)} mil só no R-03`;$("#nc-d").textContent=`Mais frigoríficos cotando o mesmo boi é mais poder de negociação: R$ 5 a mais por arroba nas ${brl(at)} arrobas do lote.`}
 $("#ng-reset").addEventListener("click",()=>{FUN=JSON.parse(JSON.stringify(FUN0));saveFun();drawNeg()});
 drawNeg();
 function renderAll(){drawCash();drawWhere();drawAct();drawSim();drawLim();drawPass();drawQuotes();drawClima();drawHerd();drawBudget();drawFarms();drawSell();drawPads();drawTasks();drawMatrix()}
