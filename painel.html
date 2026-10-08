@@ -364,6 +364,12 @@ nav.tabs button[aria-selected="true"]{background:linear-gradient(180deg,transpar
 /* ===== menu de telas: pílulas no computador, barra flutuante + cartões no celular ===== */
 nav.tabs{flex-wrap:wrap;gap:8px;overflow:visible;border-bottom:0;margin-bottom:22px}
 nav.tabs button{display:inline-flex;align-items:center;gap:7px;padding:8px 14px 8px 10px!important;border-radius:999px!important;border:1px solid var(--line)!important;background:var(--surface)!important;color:var(--ink-2);font-size:13.5px;box-shadow:0 1px 2px rgba(2,56,85,.05);transition:background .2s,color .2s,transform .2s}
+nav.tabs{flex-direction:column;align-items:stretch;gap:8px}
+nav.tabs .tgrp{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+nav.tabs .tlab{flex:0 0 150px;font:700 10.5px var(--f-body);letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+nav.tabs button.dif{border-color:#F2C230!important;box-shadow:0 0 0 1px rgba(242,194,48,.35),0 4px 12px rgba(242,194,48,.18)}
+nav.tabs .dleg{font-size:11.5px;color:var(--muted);margin-left:4px}nav.tabs .dstar{font-size:11px;color:#C9A21A;margin-left:1px}nav.tabs button[aria-selected="true"] .dstar{color:#F2C230}
+@media(max-width:700px){nav.tabs .tlab{flex-basis:100%;margin-top:4px}}
 nav.tabs button i{font-style:normal;font-size:16px;line-height:1}
 nav.tabs button:hover{transform:translateY(-1px);color:var(--ink)}
 nav.tabs button[aria-selected="true"]{background:var(--grad-hero)!important;color:#fff!important;border-color:transparent!important;box-shadow:0 8px 18px rgba(2,56,85,.25)}
@@ -432,20 +438,10 @@ html.slides body:not([data-tab="socio"]) .demo{display:none}
   </header>
 
   <nav class="tabs" role="tablist" aria-label="Telas">
-    <button role="tab" id="t-socio" aria-selected="true" data-tab="socio"><i aria-hidden="true">🏠</i>Dashboard</button>
-    <button role="tab" id="t-financeiro" aria-selected="false" data-tab="financeiro"><i aria-hidden="true">💰</i>Financeiro</button>
-    <button role="tab" id="t-relatorios" aria-selected="false" data-tab="relatorios"><i aria-hidden="true">📑</i>Relatórios</button>
-    <button role="tab" id="t-fazendas" aria-selected="false" data-tab="fazendas"><i aria-hidden="true">🗺</i>Fazendas lado a lado</button>
-    <button role="tab" id="t-sim" aria-selected="false" data-tab="sim"><i aria-hidden="true">📈</i>E se...?</button>
-    <button role="tab" id="t-vender" aria-selected="false" data-tab="vender"><i aria-hidden="true">🐂</i>Vender ou segurar</button>
-    <button role="tab" id="t-negocios" aria-selected="false" data-tab="negocios"><i aria-hidden="true">📍</i>Negócios na região</button>
-    <button role="tab" id="t-limao" aria-selected="false" data-tab="limao"><i aria-hidden="true">🍋</i>Pomar de limão</button>
-    <button role="tab" id="t-pass" aria-selected="false" data-tab="pass"><i aria-hidden="true">🐄</i>Passaporte do animal</button>
-    <button role="tab" id="t-pastos" aria-selected="false" data-tab="pastos"><i aria-hidden="true">🛰</i>Pastos por satélite</button>
-    <button role="tab" id="t-clima" aria-selected="false" data-tab="clima"><i aria-hidden="true">🌦</i>Clima e calor</button>
-    <button role="tab" id="t-equipe" aria-selected="false" data-tab="equipe"><i aria-hidden="true">👷</i>Equipe em campo</button>
-    <button role="tab" id="t-comparativo" aria-selected="false" data-tab="comparativo"><i aria-hidden="true">🧩</i>Tudo num só</button>
-    <button role="tab" id="t-mercado" aria-selected="false" data-tab="mercado"><i aria-hidden="true">🌎</i>Mapa do mercado</button>
+    <div class="tgrp" role="presentation"><span class="tlab" aria-hidden="true">Estratégico · decidir</span><button role="tab" id="t-socio" aria-selected="true" data-tab="socio"><i aria-hidden="true">🏠</i>Dashboard</button><button role="tab" id="t-fazendas" aria-selected="false" data-tab="fazendas"><i aria-hidden="true">🗺</i>Fazendas lado a lado</button><button class="dif" role="tab" id="t-sim" aria-selected="false" data-tab="sim"><i aria-hidden="true">📈</i>E se...?<span class="dstar" title="Diferencial do ETTA">★</span></button><button class="dif" role="tab" id="t-vender" aria-selected="false" data-tab="vender"><i aria-hidden="true">🐂</i>Vender ou segurar<span class="dstar" title="Diferencial do ETTA">★</span></button><button class="dif" role="tab" id="t-negocios" aria-selected="false" data-tab="negocios"><i aria-hidden="true">📍</i>Negócios na região<span class="dstar" title="Diferencial do ETTA">★</span></button><span class="dleg" aria-hidden="true">★ diferenciais do ETTA</span></div>
+    <div class="tgrp" role="presentation"><span class="tlab" aria-hidden="true">Gestão · acompanhar</span><button role="tab" id="t-financeiro" aria-selected="false" data-tab="financeiro"><i aria-hidden="true">💰</i>Financeiro</button><button role="tab" id="t-relatorios" aria-selected="false" data-tab="relatorios"><i aria-hidden="true">📑</i>Relatórios</button><button role="tab" id="t-limao" aria-selected="false" data-tab="limao"><i aria-hidden="true">🍋</i>Pomar de limão</button><button role="tab" id="t-pass" aria-selected="false" data-tab="pass"><i aria-hidden="true">🐄</i>Passaporte do animal</button></div>
+    <div class="tgrp" role="presentation"><span class="tlab" aria-hidden="true">Operação · campo</span><button role="tab" id="t-pastos" aria-selected="false" data-tab="pastos"><i aria-hidden="true">🛰</i>Pastos por satélite</button><button role="tab" id="t-clima" aria-selected="false" data-tab="clima"><i aria-hidden="true">🌦</i>Clima e calor</button><button role="tab" id="t-equipe" aria-selected="false" data-tab="equipe"><i aria-hidden="true">👷</i>Equipe em campo</button></div>
+    <div class="tgrp" role="presentation"><span class="tlab" aria-hidden="true">Mercado</span><button role="tab" id="t-comparativo" aria-selected="false" data-tab="comparativo"><i aria-hidden="true">🧩</i>Tudo num só</button><button role="tab" id="t-mercado" aria-selected="false" data-tab="mercado"><i aria-hidden="true">🌎</i>Mapa do mercado</button></div>
   </nav>
 
   <!-- VISÃO DO SÓCIO -->
@@ -963,7 +959,7 @@ function niceTicks(min,max,n){const span=max-min,step0=span/n,mag=Math.pow(10,Ma
 
 /* ---------- tabs ---------- */
 const tabs=[...document.querySelectorAll("nav.tabs button")];
-function openTab(id){document.body.dataset.tab=id;const tb=tabs.find(b=>b.dataset.tab===id),lab=tb?tb.lastChild.textContent.trim():"";document.getElementById("mini").textContent="ETTA Agro · "+lab;document.querySelectorAll(".mdock button").forEach(b=>b.classList.toggle("on",b.dataset.go===id||(b.dataset.go==="menu"&&!["socio","sim","financeiro"].includes(id))));document.querySelectorAll("#gridm button").forEach(b=>b.classList.toggle("on",b.dataset.go===id));const first=id==="socio",last=id==="mercado";document.getElementById("hero").style.display=first?"":"none";document.getElementById("mini").style.display=first?"none":"block";document.getElementById("sig").style.display=last?"":"none";document.getElementById("foot").style.display=last?"":"none";tabs.forEach(b=>b.setAttribute("aria-selected",b.dataset.tab===id));document.querySelectorAll(".tabpanel").forEach(p=>p.hidden=p.id!==id);renderAll();try{localStorage.setItem("etta-tab",id)}catch(e){}}
+function openTab(id){document.body.dataset.tab=id;const tb=tabs.find(b=>b.dataset.tab===id),lab=tb?tb.textContent.replace("★","").replace((tb.querySelector("i")||{}).textContent||"","").trim():"";document.getElementById("mini").textContent="ETTA Agro · "+lab;document.querySelectorAll(".mdock button").forEach(b=>b.classList.toggle("on",b.dataset.go===id||(b.dataset.go==="menu"&&!["socio","sim","financeiro"].includes(id))));document.querySelectorAll("#gridm button").forEach(b=>b.classList.toggle("on",b.dataset.go===id));const first=id==="socio",last=id==="mercado";document.getElementById("hero").style.display=first?"":"none";document.getElementById("mini").style.display=first?"none":"block";document.getElementById("sig").style.display=last?"":"none";document.getElementById("foot").style.display=last?"":"none";tabs.forEach(b=>b.setAttribute("aria-selected",b.dataset.tab===id));document.querySelectorAll(".tabpanel").forEach(p=>p.hidden=p.id!==id);renderAll();try{localStorage.setItem("etta-tab",id)}catch(e){}}
 tabs.forEach(b=>b.addEventListener("click",()=>{openTab(b.dataset.tab);try{history.replaceState(null,"","#"+b.dataset.tab)}catch(e){}}));
 
 /* ---------- valor do rebanho (área) ---------- */
@@ -1300,7 +1296,7 @@ document.querySelectorAll("#mercado .go[data-go],#comparativo .go[data-go],#soci
 /* ---------- menu do celular ---------- */
 const ICONS={"socio": ["🏠", "#01A2D9", "#023855"], "financeiro": ["💰", "#F2C230", "#B8860B"], "relatorios": ["📑", "#01A2D9", "#023855"], "fazendas": ["🗺", "#38B6E6", "#0C6FA0"], "sim": ["📈", "#F2C230", "#B8860B"], "vender": ["🐂", "#5CC6EE", "#0A5A85"], "negocios": ["📍", "#0C6FA0", "#022C44"], "limao": ["🍋", "#38B6E6", "#0C6FA0"], "pass": ["🐄", "#01A2D9", "#023855"], "pastos": ["🛰", "#0C6FA0", "#022C44"], "clima": ["🌦", "#5CC6EE", "#0A5A85"], "equipe": ["👷", "#38B6E6", "#0C6FA0"], "comparativo": ["🧩", "#0C6FA0", "#022C44"], "mercado": ["🌎", "#F2C230", "#B8860B"]};
 const gridm=$("#gridm"),sheet=$("#msheet");
-gridm.innerHTML=tabs.map(b=>{const k=b.dataset.tab,[ic,g1,g2]=ICONS[k];return `<button type="button" data-go="${k}" style="--g1:${g1};--g2:${g2}"><i>${ic}</i>${b.textContent.replace(ic,"").trim()}</button>`}).join("");
+gridm.innerHTML=tabs.map(b=>{const k=b.dataset.tab,[ic,g1,g2]=ICONS[k];return `<button type="button" data-go="${k}" style="--g1:${g1};--g2:${g2}"><i>${ic}</i>${b.textContent.replace(ic,"").replace("★","").trim()}${b.classList.contains("dif")?" ★":""}</button>`}).join("");
 function goTab(k){if(k==="menu"){sheet.classList.add("on");return}sheet.classList.remove("on");openTab(k);try{history.replaceState(null,"","#"+k)}catch(e){}scrollTo({top:0})}
 document.querySelectorAll(".mdock button,#gridm button").forEach(b=>b.addEventListener("click",()=>goTab(b.dataset.go)));
 sheet.querySelector(".x").addEventListener("click",()=>sheet.classList.remove("on"));
