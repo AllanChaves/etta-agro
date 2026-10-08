@@ -375,6 +375,13 @@ html[data-tema] .inv-sec{border-color:transparent}
 .inv-foot{font-size:11.5px;color:var(--muted);text-align:center;margin:6px 0 20px}
 @media(max-width:380px){.inv-hero .v{font-size:34px}.inv-k b{font-size:21px}}
 
+@media(min-width:761px){
+nav#nav{position:static;flex-wrap:wrap;justify-content:center;overflow:visible;gap:8px;padding:16px max(16px,calc((100% - 1160px)/2)) 6px;background:transparent;backdrop-filter:none;-webkit-backdrop-filter:none;border-bottom:0}
+nav#nav button{flex:0 0 auto;min-width:0;display:inline-flex;align-items:center;gap:7px;background:var(--panel);border:1px solid var(--line);color:var(--ink);padding:8px 15px;border-radius:999px;font-size:14px;font-weight:600;box-shadow:0 1px 2px rgba(2,56,85,.06);cursor:pointer;transition:border-color .15s,transform .15s}
+nav#nav button:hover{border-color:var(--green);transform:translateY(-1px)}
+nav#nav button.on{background:linear-gradient(135deg,#0C6FA0,#023855);color:#fff;border-color:transparent;box-shadow:0 6px 16px rgba(12,111,160,.3)}
+nav#nav .nico{font-style:normal;font-size:15px;line-height:1}
+}
 /* ===================== MENU MOBILE ===================== */
 #dock,#lancador{display:none}
 @media(max-width:760px){
@@ -4470,7 +4477,7 @@ async function init(){
     LT=Object.assign({med:[],lact:[],vendas:[]},await stGet(KEYS.L)||{});
     USR=Object.assign({perfil:null,nome:"",funcId:""},await stGet(KEYS.U)||{});
   }
-  if(!semStorage&&((!A.length&&!E.length&&!F.length&&!CFG.demoRecusada)||(CFG.demo&&CFG.demoVer!==4)||/[?&#]demo\b/.test(location.search+location.hash)))aplicarDados(gerarDemo());
+  if(!semStorage&&(!A.length||(CFG.demo&&CFG.demoVer!==4)||/[?&#]demo\b/.test(location.search+location.hash)))aplicarDados(gerarDemo());
   migrar();
   if(!CFG.acesso)CFG.acesso={pin:""};
   if(!CFG.suplementos)CFG.suplementos=[];
@@ -6500,6 +6507,13 @@ function exportarLog(){
   };
   /* registra entrada e saída de perfil */
   const entrarBase=typeof entrarPerfil==="function"?entrarPerfil:null;
+})();
+
+/* ---------- menu do computador em linhas, com ícone de cada tela ---------- */
+(function(){
+  const base=montarNav;
+  montarNav=function(){base();document.querySelectorAll("#nav button[data-t]").forEach(b=>{const i=typeof ABA_INFO!=="undefined"&&ABA_INFO[b.dataset.t];if(i&&b.dataset.t!=="ia"&&!b.querySelector(".nico"))b.insertAdjacentHTML("afterbegin",`<i class="nico" aria-hidden="true">${i.ico}</i>`)})};
+  if(USR.perfil)render();
 })();
 </script>
 
