@@ -125,6 +125,7 @@ svg{display:block;max-width:100%}
 .ng-a{flex:none;display:flex;flex-direction:column;align-items:flex-end;gap:6px}
 .ng-add,.ng-call,.ng-reset{border:0;cursor:pointer;font:600 12px var(--f-body);border-radius:999px;padding:5px 10px}
 .ng-add{color:#fff;background:linear-gradient(135deg,#0C6FA0,#023855)}.ng-call{background:var(--surface);color:var(--ink);border:1px solid var(--line)}.ng-call.wide{font-size:11px;white-space:nowrap}
+.ng-end{display:block;font-size:12px;color:var(--muted);margin-top:4px;line-height:1.45}.ng-a .ng-call,.ng-rota{min-width:72px;text-align:center}.ng-rota{font:600 12px var(--f-body);border-radius:999px;padding:5px 10px;background:var(--surface);color:var(--accent);border:1px solid var(--line);text-decoration:none;white-space:nowrap}.ng-rota:hover{border-color:var(--accent)}
 .ng-st{font:600 11px var(--f-body);padding:3px 9px;border-radius:999px;background:var(--accent-soft);color:var(--accent);white-space:nowrap}
 .ng-reset{background:var(--surface-2);color:var(--accent);border:1px solid var(--line);margin-left:6px}
 .ng-fun{display:grid;grid-template-columns:repeat(5,minmax(190px,1fr));gap:10px;overflow-x:auto;padding-bottom:6px}
@@ -1400,26 +1401,26 @@ const REG={c0:[-13.00,-40.53],
 /* ---------- negócios na região + funil ---------- */
 const NCAT={boi:["🐂","Frigoríficos","#0C6FA0"],leilao:["🔨","Leilões e corretores","#023855"],conf:["🌾","Confinamento e recria","#0A5A85"],leite:["🥛","Laticínios","#01A2D9"],limao:["🍋","Limão: packing e exportação","#F2C230"],atac:["🏬","Ceasa e atacado","#38B6E6"],merc:["🛒","Supermercados","#B8860B"]};
 const NEG=[
- {id:"n1",cat:"boi",nome:"Frigorífico Vale do Paraguaçu",cid:"Itaberaba",info:"SIF · abate 450 cabeças por dia · paga em 30 dias"},
- {id:"n2",cat:"boi",nome:"Frigorífico Sertão Carnes",cid:"Feira de Santana",info:"SIF · exporta · bônus de R$ 5/@ para boi rastreado"},
- {id:"n3",cat:"boi",nome:"Matadouro Regional de Jequié",cid:"Jequié",info:"Inspeção estadual · compra vaca de descarte"},
- {id:"n4",cat:"boi",nome:"Frigorífico Conquista Bovinos",cid:"Vitória da Conquista",info:"SIF · paga prêmio por novilha precoce"},
- {id:"n5",cat:"leilao",nome:"Leilões Paraguaçu",cid:"Itaberaba",info:"Leilão de gado de corte toda quinta-feira"},
- {id:"n6",cat:"leilao",nome:"Corretora Boi Bahia",cid:"Iaçu",info:"Corretor de boi gordo e de reposição"},
- {id:"n7",cat:"leilao",nome:"Parque de Leilões de Feira",cid:"Feira de Santana",info:"Leilão de reposição a cada 15 dias"},
- {id:"n8",cat:"conf",nome:"Confinamento Boa Vista",cid:"Boa Vista do Tupim",info:"Compra garrote de 12 @ e silagem"},
- {id:"n9",cat:"conf",nome:"Agropecuária Milagres",cid:"Milagres",info:"Recria · compra bezerro desmamado"},
- {id:"n10",cat:"leite",nome:"Laticínio Chapada Leite",cid:"Ruy Barbosa",info:"Coleta na fazenda · paga por qualidade"},
- {id:"n11",cat:"leite",nome:"Laticínios do Recôncavo",cid:"Santo Antônio de Jesus",info:"Paga R$ 0,12/L a mais acima de 1.000 L/dia"},
- {id:"n12",cat:"leite",nome:"Queijaria Maracás",cid:"Maracás",info:"Compra leite de Jersey para queijo"},
- {id:"n13",cat:"limao",nome:"Packing Citrus Livramento",cid:"Livramento de Nossa Senhora",info:"Classifica e exporta Tahiti para a Europa"},
- {id:"n14",cat:"limao",nome:"Citros do Recôncavo",cid:"Cruz das Almas",info:"Compra limão no pé e busca na fazenda"},
- {id:"n15",cat:"limao",nome:"Exporta Lima Bahia",cid:"Salvador",info:"Exportador · exige certificação GlobalG.A.P."},
- {id:"n16",cat:"atac",nome:"Ceasa de Feira de Santana",cid:"Feira de Santana",info:"Boxes de frutas · limão no atacado"},
- {id:"n17",cat:"atac",nome:"Atacado de Frutas Jequié",cid:"Jequié",info:"Distribui para o sul da Bahia"},
- {id:"n18",cat:"atac",nome:"Ceasa de Salvador",cid:"Salvador",info:"Maior mercado de frutas do estado"},
- {id:"n19",cat:"merc",nome:"Rede Mercado Sertanejo",cid:"Itaberaba",info:"12 lojas · compra limão direto do produtor"},
- {id:"n20",cat:"merc",nome:"Rede Mais Sertão",cid:"Jequié",info:"8 lojas · açougue próprio"}
+ {id:"n1",cat:"boi",nome:"Frigorífico Vale do Paraguaçu",cid:"Itaberaba",end:"Rod. BA-046, km 3 · Distrito Industrial",tel:"(75) 3237-••••",info:"SIF · abate 450 cabeças por dia · paga em 30 dias"},
+ {id:"n2",cat:"boi",nome:"Frigorífico Sertão Carnes",cid:"Feira de Santana",end:"Av. Eduardo Fróes da Mota, 4.200 · Centro Industrial",tel:"(75) 3374-••••",info:"SIF · exporta · bônus de R$ 5/@ para boi rastreado"},
+ {id:"n3",cat:"boi",nome:"Matadouro Regional de Jequié",cid:"Jequié",end:"Rod. BR-116, km 642 · Zona Rural",tel:"(73) 3511-••••",info:"Inspeção estadual · compra vaca de descarte"},
+ {id:"n4",cat:"boi",nome:"Frigorífico Conquista Bovinos",cid:"Vitória da Conquista",end:"Rod. BR-116, km 830 · Distrito Industrial",tel:"(77) 3648-••••",info:"SIF · paga prêmio por novilha precoce"},
+ {id:"n5",cat:"leilao",nome:"Leilões Paraguaçu",cid:"Itaberaba",end:"Parque de Exposições · Av. Rio Branco",tel:"(75) 3785-••••",info:"Leilão de gado de corte toda quinta-feira"},
+ {id:"n6",cat:"leilao",nome:"Corretora Boi Bahia",cid:"Iaçu",end:"Rua Sete de Setembro, 112 · Centro",tel:"(75) 3922-••••",info:"Corretor de boi gordo e de reposição"},
+ {id:"n7",cat:"leilao",nome:"Parque de Leilões de Feira",cid:"Feira de Santana",end:"Parque de Exposições · BR-324",tel:"(75) 3159-••••",info:"Leilão de reposição a cada 15 dias"},
+ {id:"n8",cat:"conf",nome:"Confinamento Boa Vista",cid:"Boa Vista do Tupim",end:"Estrada do Tupim, km 18 · Zona Rural",tel:"(75) 3296-••••",info:"Compra garrote de 12 @ e silagem"},
+ {id:"n9",cat:"conf",nome:"Agropecuária Milagres",cid:"Milagres",end:"BR-116, km 456 · Zona Rural",tel:"(75) 3433-••••",info:"Recria · compra bezerro desmamado"},
+ {id:"n10",cat:"leite",nome:"Laticínio Chapada Leite",cid:"Ruy Barbosa",end:"Av. Ruy Barbosa, 980 · Centro",tel:"(75) 3570-••••",info:"Coleta na fazenda · paga por qualidade"},
+ {id:"n11",cat:"leite",nome:"Laticínios do Recôncavo",cid:"Santo Antônio de Jesus",end:"Rod. BA-026, km 2 · Zona Industrial",tel:"(75) 3707-••••",info:"Paga R$ 0,12/L a mais acima de 1.000 L/dia"},
+ {id:"n12",cat:"leite",nome:"Queijaria Maracás",cid:"Maracás",end:"Rua da Matriz, 45 · Centro",tel:"(73) 3844-••••",info:"Compra leite de Jersey para queijo"},
+ {id:"n13",cat:"limao",nome:"Packing Citrus Livramento",cid:"Livramento de Nossa Senhora",end:"Perímetro Irrigado, Lote 12 · Zona Rural",tel:"(77) 3981-••••",info:"Classifica e exporta Tahiti para a Europa"},
+ {id:"n14",cat:"limao",nome:"Citros do Recôncavo",cid:"Cruz das Almas",end:"Rod. BR-101, km 210 · Zona Rural",tel:"(75) 3218-••••",info:"Compra limão no pé e busca na fazenda"},
+ {id:"n15",cat:"limao",nome:"Exporta Lima Bahia",cid:"Salvador",end:"Av. da França, 1.500 · Comércio",tel:"(71) 3355-••••",info:"Exportador · exige certificação GlobalG.A.P."},
+ {id:"n16",cat:"atac",nome:"Ceasa de Feira de Santana",cid:"Feira de Santana",end:"Ceasa · Av. Fraga Maia, boxe 214",tel:"(75) 3492-••••",info:"Boxes de frutas · limão no atacado"},
+ {id:"n17",cat:"atac",nome:"Atacado de Frutas Jequié",cid:"Jequié",end:"Av. Rio Branco, 1.330 · Joaquim Romão",tel:"(73) 3629-••••",info:"Distribui para o sul da Bahia"},
+ {id:"n18",cat:"atac",nome:"Ceasa de Salvador",cid:"Salvador",end:"Ceasa · BR-324, km 13, boxe 88",tel:"(71) 3766-••••",info:"Maior mercado de frutas do estado"},
+ {id:"n19",cat:"merc",nome:"Rede Mercado Sertanejo",cid:"Itaberaba",end:"Praça Rio Branco, 20 · Centro",tel:"(75) 3903-••••",info:"12 lojas · compra limão direto do produtor"},
+ {id:"n20",cat:"merc",nome:"Rede Mais Sertão",cid:"Jequié",end:"Av. César Borges, 600 · Centro",tel:"(73) 3140-••••",info:"8 lojas · açougue próprio"}
 ];
 const FUN_ET=[["map","Mapeado"],["con","Contatado"],["pro","Proposta"],["neg","Negociando"],["fec","Fechado"]];
 const FUN0=[
@@ -1436,6 +1437,7 @@ let FUN;try{FUN=JSON.parse(localStorage.getItem("etta-funil"))}catch(e){}
 if(!Array.isArray(FUN))FUN=JSON.parse(JSON.stringify(FUN0));
 const saveFun=()=>{try{localStorage.setItem("etta-funil",JSON.stringify(FUN))}catch(e){}};
 let ngR=200,ngCat="todos",ngSel=null,ngSat=true;
+const rotaURL=c=>"https://www.google.com/maps/dir/?api=1&origin="+REG.c0.join(",")+"&destination="+encodeURIComponent(c+", BA")+"&travelmode=driving";
 const ngMil=v=>v>=1e6?"R$ "+brl(v/1e6,1)+" mi":"R$ "+brl(v/1e3)+" mil";
 function drawNeg(){
   const noR=NEG.filter(n=>REG.dist(n.cid)<=ngR);
@@ -1445,7 +1447,7 @@ function drawNeg(){
   $("#ng-map").innerHTML=REG.svg(vis.map(n=>({id:n.id,cid:n.cid,ic:NCAT[n.cat][0],cor:NCAT[n.cat][2],nome:n.nome})),ngR,ngSel,"Bugalhau · Rio Bonito",ngSat);
   document.querySelectorAll("#ng-tog button").forEach(b=>b.classList.toggle("on",(b.dataset.v==="sat")===ngSat));
   $("#ng-list").innerHTML=vis.map(n=>{const d=FUN.find(x=>x.n===n.id),c=NCAT[n.cat];
-    return `<li data-id="${n.id}" class="${n.id===ngSel?"on":""}"><span class="ng-ic" style="--c:${c[2]}">${c[0]}</span><div class="ng-t"><b>${n.nome}</b><span class="ng-w">${n.cid} · ${REG.dist(n.cid)} km · ${c[1]}</span><span class="ng-i">${n.info}</span></div><div class="ng-a">${d?`<span class="ng-st">${FUN_ET.find(e=>e[0]===d.et)[1]}</span>`:`<button type="button" class="ng-add" data-add="${n.id}">+ Funil</button>`}<button type="button" class="ng-call" aria-label="Ligar">📞</button></div></li>`}).join("")||`<li class="ng-empty">Nenhum negócio desse tipo no raio. Aumente o raio.</li>`;
+    return `<li data-id="${n.id}" class="${n.id===ngSel?"on":""}"><span class="ng-ic" style="--c:${c[2]}">${c[0]}</span><div class="ng-t"><b>${n.nome}</b><span class="ng-w">${n.cid} · ${REG.dist(n.cid)} km · ${c[1]}</span><span class="ng-i">${n.info}</span><span class="ng-end">📍 ${n.end}<br>📞 ${n.tel}</span></div><div class="ng-a">${d?`<span class="ng-st">${FUN_ET.find(e=>e[0]===d.et)[1]}</span>`:`<button type="button" class="ng-add" data-add="${n.id}">+ Funil</button>`}<button type="button" class="ng-call">📞 Ligar</button><a class="ng-rota" href="${rotaURL(n.cid)}" target="_blank" rel="noopener">🧭 Rota</a></div></li>`}).join("")||`<li class="ng-empty">Nenhum negócio desse tipo no raio. Aumente o raio.</li>`;
   const ab=FUN.filter(d=>d.et==="pro"||d.et==="neg");
   $("#ng-k1").textContent=noR.length;$("#ng-k1d").textContent=ngR+" km";
   $("#ng-k2").textContent=noR.filter(n=>["boi","leilao","conf"].includes(n.cat)).length;
@@ -1467,7 +1469,7 @@ $("#ng-map").addEventListener("keydown",e=>{const g=e.target.closest(".rgpin");i
 $("#ng-list").addEventListener("click",e=>{
   const a=e.target.closest(".ng-add"),c=e.target.closest(".ng-call"),li=e.target.closest("li[data-id]");
   if(a){const n=NEG.find(x=>x.id===a.dataset.add);FUN.push({n:n.id,et:"map",o:n.info.split(" · ")[0],v:0,p:""});saveFun();ngSel=n.id;drawNeg();return}
-  if(c){const t=c.textContent;c.textContent="Na versão real, liga daqui";c.classList.add("wide");setTimeout(()=>{c.textContent=t;c.classList.remove("wide")},1800);return}
+  if(c){const t=c.textContent;c.textContent="Na versão real, liga direto";c.classList.add("wide");setTimeout(()=>{c.textContent=t;c.classList.remove("wide")},1800);return}
   if(li){ngSel=ngSel===li.dataset.id?null:li.dataset.id;drawNeg()}
 });
 const fun=$("#ng-fun");let ngDrag=null;

@@ -5782,10 +5782,10 @@ init();
 .fn-chips{flex-wrap:wrap;overflow:visible}.fn-chips button{font-size:12.5px;padding:6px 11px}
 .fn-list{display:grid;gap:8px;max-height:620px;overflow-y:auto}
 .fn-it{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border-radius:12px;background:var(--paper);border:1px solid var(--line);cursor:pointer}.fn-it.on{border-color:var(--green);box-shadow:0 0 0 2px var(--green-soft)}
-.fn-it .btn{flex:none;align-self:center}
+.fn-act{flex:none;display:flex;flex-direction:column;gap:6px;align-self:center}.fn-act .btn{text-align:center;text-decoration:none;justify-content:center}.fn-end{display:block;font-size:12px;color:var(--muted);margin-top:4px;line-height:1.45}
 .fn-ic{flex:none;width:36px;height:36px;border-radius:11px;display:grid;place-items:center;font-size:18px;background:var(--panel);box-shadow:inset 0 0 0 2px var(--c)}
 .fn-t{flex:1;min-width:0}.fn-t b{display:block;font-size:14px}.fn-t .xmini{display:block}.fn-i{display:block;font-size:12.5px;margin-top:3px}
-@media(max-width:520px){.fn-it{flex-wrap:wrap}.fn-it .btn{margin-left:46px}.fn-list{max-height:none}}
+@media(max-width:520px){.fn-it{flex-wrap:wrap}.fn-act{flex-direction:row;flex-wrap:wrap;margin-left:46px}.fn-list{max-height:none}}
 .xseg{display:flex;gap:6px;overflow-x:auto;padding:2px 2px 6px;margin:0 0 14px;scrollbar-width:none}
 .xseg::-webkit-scrollbar{display:none}
 .xseg button{flex:none;border:1px solid var(--line);background:var(--panel);color:var(--ink);font-weight:600;font-size:13px;padding:8px 14px;border-radius:999px;cursor:pointer;white-space:nowrap}
@@ -6232,27 +6232,28 @@ const REG={c0:[-13.00,-40.53],
 /* ---------- fornecedores na região (Compras) ---------- */
 const FCAT={diesel:["⛽","Diesel e combustível","#0C6FA0"],oficina:["🔧","Oficina de caminhão e trator","#023855"],maq:["🚜","Máquinas e peças","#0A5A85"],quim:["🧪","Defensivos e químicos","#01A2D9"],adubo:["🌱","Adubo e calcário","#38B6E6"],racao:["🧂","Ração e sal mineral","#B8860B"],vet:["💉","Veterinária","#5CC6EE"],irr:["💧","Irrigação e bombas","#01A2D9"],frete:["🚚","Frete e boiadeiro","#F2C230"]};
 const FORN=[
- {id:"f1",cat:"diesel",nome:"TRR Paraguaçu Combustíveis",cid:"Itaberaba",info:"Diesel S10 entregue na fazenda · pedido mínimo 3.000 L",ref:"R$ 6,19/L",atual:1},
- {id:"f2",cat:"diesel",nome:"Distribuidora Sertão Diesel",cid:"Jequié",info:"Diesel S10 e S500 · entrega em 48 h",ref:"R$ 6,05/L"},
- {id:"f3",cat:"diesel",nome:"Auto Posto BR-242",cid:"Iaçu",info:"Abastecimento de caminhão e galão",ref:"R$ 6,29/L"},
- {id:"f4",cat:"oficina",nome:"Oficina Diesel Itaberaba",cid:"Itaberaba",info:"Caminhão e trator · socorro na fazenda",atual:1},
- {id:"f5",cat:"oficina",nome:"Retífica e Mecânica Jequié",cid:"Jequié",info:"Motor, bomba injetora e câmbio"},
- {id:"f6",cat:"maq",nome:"Agro Máquinas Feira",cid:"Feira de Santana",info:"Tratores e implementos · técnico vai à fazenda"},
- {id:"f7",cat:"maq",nome:"Peças Agrícolas Maracás",cid:"Maracás",info:"Peças de trator, plantadeira e ensiladeira",atual:1},
- {id:"f8",cat:"quim",nome:"Agro Defensivos Bahia",cid:"Feira de Santana",info:"Inseticida, acaricida e herbicida · com receituário",ref:"Acaricida 12% abaixo"},
- {id:"f9",cat:"quim",nome:"Casa do Fazendeiro Maracás",cid:"Maracás",info:"Defensivos, arame, ferramentas e EPI",atual:1},
- {id:"f10",cat:"adubo",nome:"Cooperativa Agro Sertão",cid:"Itaberaba",info:"Adubo, calcário e sementes · preço de cooperado"},
- {id:"f11",cat:"adubo",nome:"Calcário Chapada",cid:"Seabra",info:"Calcário e gesso agrícola a granel"},
- {id:"f12",cat:"racao",nome:"Nutri Gado Nordeste",cid:"Feira de Santana",info:"Sal mineral, núcleo e ração em big bag",ref:"Sal mineral R$ 98/saco"},
- {id:"f13",cat:"racao",nome:"Rações Iaçu",cid:"Iaçu",info:"Ração, farelo e milho moído",atual:1},
- {id:"f14",cat:"vet",nome:"Vet Agro Itaberaba",cid:"Itaberaba",info:"Vacinas, vermífugos e protocolo de IATF",atual:1},
- {id:"f15",cat:"vet",nome:"Genética Sertão",cid:"Jequié",info:"Sêmen, hormônios e botijão de nitrogênio"},
- {id:"f16",cat:"irr",nome:"Irriga Sertão",cid:"Livramento de Nossa Senhora",info:"Gotejamento e microaspersão para pomar"},
- {id:"f17",cat:"irr",nome:"Bombas e Poços Paraguaçu",cid:"Itaberaba",info:"Bomba, poço artesiano e reparo"},
- {id:"f18",cat:"frete",nome:"Transportadora Boiadeira Paraguaçu",cid:"Itaberaba",info:"Caminhão boiadeiro · frete de gado com GTA"},
- {id:"f19",cat:"frete",nome:"Fretes Feira",cid:"Feira de Santana",info:"Carreta para limão e silagem"}
+ {id:"f1",cat:"diesel",nome:"TRR Paraguaçu Combustíveis",cid:"Itaberaba",end:"BR-242, km 302 · saída para Iaçu",tel:"(75) 3237-••••",info:"Diesel S10 entregue na fazenda · pedido mínimo 3.000 L",ref:"R$ 6,19/L",atual:1},
+ {id:"f2",cat:"diesel",nome:"Distribuidora Sertão Diesel",cid:"Jequié",end:"BR-330, km 4 · Distrito Industrial",tel:"(73) 3374-••••",info:"Diesel S10 e S500 · entrega em 48 h",ref:"R$ 6,05/L"},
+ {id:"f3",cat:"diesel",nome:"Auto Posto BR-242",cid:"Iaçu",end:"BR-242, km 330 · trevo de Iaçu",tel:"(75) 3511-••••",info:"Abastecimento de caminhão e galão",ref:"R$ 6,29/L"},
+ {id:"f4",cat:"oficina",nome:"Oficina Diesel Itaberaba",cid:"Itaberaba",end:"Av. Getúlio Vargas, 1.540 · Centro",tel:"(75) 3648-••••",info:"Caminhão e trator · socorro na fazenda",atual:1},
+ {id:"f5",cat:"oficina",nome:"Retífica e Mecânica Jequié",cid:"Jequié",end:"Rua Itabuna, 230 · Jequiezinho",tel:"(73) 3785-••••",info:"Motor, bomba injetora e câmbio"},
+ {id:"f6",cat:"maq",nome:"Agro Máquinas Feira",cid:"Feira de Santana",end:"Av. Eduardo Fróes da Mota, 7.500 · Centro Industrial",tel:"(75) 3922-••••",info:"Tratores e implementos · técnico vai à fazenda"},
+ {id:"f7",cat:"maq",nome:"Peças Agrícolas Maracás",cid:"Maracás",end:"Av. Juracy Magalhães, 310 · Centro",tel:"(73) 3159-••••",info:"Peças de trator, plantadeira e ensiladeira",atual:1},
+ {id:"f8",cat:"quim",nome:"Agro Defensivos Bahia",cid:"Feira de Santana",end:"Av. Getúlio Vargas, 3.800 · Centro",tel:"(75) 3296-••••",info:"Inseticida, acaricida e herbicida · com receituário",ref:"Acaricida 12% abaixo"},
+ {id:"f9",cat:"quim",nome:"Casa do Fazendeiro Maracás",cid:"Maracás",end:"Praça da Bandeira, 12 · Centro",tel:"(73) 3433-••••",info:"Defensivos, arame, ferramentas e EPI",atual:1},
+ {id:"f10",cat:"adubo",nome:"Cooperativa Agro Sertão",cid:"Itaberaba",end:"Rod. BA-046, km 1 · Bairro Industrial",tel:"(75) 3570-••••",info:"Adubo, calcário e sementes · preço de cooperado"},
+ {id:"f11",cat:"adubo",nome:"Calcário Chapada",cid:"Seabra",end:"BR-242, km 450 · Zona Rural",tel:"(75) 3707-••••",info:"Calcário e gesso agrícola a granel"},
+ {id:"f12",cat:"racao",nome:"Nutri Gado Nordeste",cid:"Feira de Santana",end:"Rua do Atacado, 88 · Centro Industrial",tel:"(75) 3844-••••",info:"Sal mineral, núcleo e ração em big bag",ref:"Sal mineral R$ 98/saco"},
+ {id:"f13",cat:"racao",nome:"Rações Iaçu",cid:"Iaçu",end:"Rua da Estação, 51 · Centro",tel:"(75) 3981-••••",info:"Ração, farelo e milho moído",atual:1},
+ {id:"f14",cat:"vet",nome:"Vet Agro Itaberaba",cid:"Itaberaba",end:"Rua J. J. Seabra, 402 · Centro",tel:"(75) 3218-••••",info:"Vacinas, vermífugos e protocolo de IATF",atual:1},
+ {id:"f15",cat:"vet",nome:"Genética Sertão",cid:"Jequié",end:"Av. Otávio Mangabeira, 210 · Centro",tel:"(73) 3355-••••",info:"Sêmen, hormônios e botijão de nitrogênio"},
+ {id:"f16",cat:"irr",nome:"Irriga Sertão",cid:"Livramento de Nossa Senhora",end:"Rua do Perímetro Irrigado, 300 · Centro",tel:"(77) 3492-••••",info:"Gotejamento e microaspersão para pomar"},
+ {id:"f17",cat:"irr",nome:"Bombas e Poços Paraguaçu",cid:"Itaberaba",end:"Rua Castro Alves, 77 · Centro",tel:"(75) 3629-••••",info:"Bomba, poço artesiano e reparo"},
+ {id:"f18",cat:"frete",nome:"Transportadora Boiadeira Paraguaçu",cid:"Itaberaba",end:"BR-242, km 305 · pátio de caminhões",tel:"(75) 3766-••••",info:"Caminhão boiadeiro · frete de gado com GTA"},
+ {id:"f19",cat:"frete",nome:"Fretes Feira",cid:"Feira de Santana",end:"Av. Contorno, 2.100 · Tomba",tel:"(75) 3903-••••",info:"Carreta para limão e silagem"}
 ];
 let compAba="ped",fnR=150,fnCat="todos",fnSel=null,fnSat=true;
+const rotaURL=c=>"https://www.google.com/maps/dir/?api=1&origin="+REG.c0.join(",")+"&destination="+encodeURIComponent(c+", BA")+"&travelmode=driving";
 function vFornRegiao(){
   const noR=FORN.filter(f=>REG.dist(f.cid)<=fnR);
   const vis=noR.filter(f=>fnCat==="todos"||f.cat===fnCat).sort((a,b)=>REG.dist(a.cid)-REG.dist(b.cid));
@@ -6271,7 +6272,7 @@ function vFornRegiao(){
       <div class="fn-map" onclick="const g=event.target.closest('.rgpin');if(g){fnSel=fnSel===g.dataset.id?null:g.dataset.id;render()}">${REG.svg(vis.map(f=>({id:f.id,cid:f.cid,ic:FCAT[f.cat][0],cor:FCAT[f.cat][2],nome:f.nome})),fnR,fnSel,"Bugalhau · Rio Bonito",fnSat)}</div>
     </div>
     <div class="fn-box"><h3 style="margin:0 0 4px;font-size:15px">Quem está no raio</h3><div class="xmini" style="margin-bottom:10px">Do mais perto para o mais longe. "Pedir cotação" leva o fornecedor para um pedido de compra.</div>
-      <div class="fn-list">${vis.map(f=>{const c=FCAT[f.cat];return `<div class="fn-it${f.id===fnSel?" on":""}" onclick="if(!event.target.closest('button')){fnSel=fnSel==='${f.id}'?null:'${f.id}';render()}"><span class="fn-ic" style="--c:${c[2]}">${c[0]}</span><div class="fn-t"><b>${esc(f.nome)}</b><span class="xmini">${esc(f.cid)} · ${REG.dist(f.cid)} km · ${c[1]}</span><span class="fn-i">${esc(f.info)}</span>${f.ref||f.atual?`<div style="margin-top:5px">${f.atual?`<span class="xb xb-ok">Já compramos</span> `:""}${f.ref?`<span class="xb xb-mut">${esc(f.ref)}</span>`:""}</div>`:""}</div><button class="btn sm sec" onclick="fnCotar('${f.id}')">Pedir cotação</button></div>`}).join("")||`<div class="empty">Nenhum fornecedor desse tipo no raio. Aumente o raio.</div>`}</div>
+      <div class="fn-list">${vis.map(f=>{const c=FCAT[f.cat];return `<div class="fn-it${f.id===fnSel?" on":""}" onclick="if(!event.target.closest('button')){fnSel=fnSel==='${f.id}'?null:'${f.id}';render()}"><span class="fn-ic" style="--c:${c[2]}">${c[0]}</span><div class="fn-t"><b>${esc(f.nome)}</b><span class="xmini">${esc(f.cid)} · ${REG.dist(f.cid)} km · ${c[1]}</span><span class="fn-i">${esc(f.info)}</span><span class="fn-end">📍 ${esc(f.end)}<br>📞 ${esc(f.tel)}</span>${f.ref||f.atual?`<div style="margin-top:5px">${f.atual?`<span class="xb xb-ok">Já compramos</span> `:""}${f.ref?`<span class="xb xb-mut">${esc(f.ref)}</span>`:""}</div>`:""}</div><div class="fn-act"><button class="btn sm" onclick="fnCotar('${f.id}')">Pedir cotação</button><button class="btn sm sec" onclick="toast('Na versão real, liga direto para ${esc(f.tel)}')">📞 Ligar</button><a class="btn sm sec" href="${rotaURL(f.cid)}" target="_blank" rel="noopener">🧭 Rota</a></div></div>`}).join("")||`<div class="empty">Nenhum fornecedor desse tipo no raio. Aumente o raio.</div>`}</div>
     </div>
   </div>
   <div class="criterio">No sistema real: o ETTA busca no Google Maps quem está no raio escolhido, completa com o CNPJ da Receita e guarda o histórico de preço de cada fornecedor. Nesta demonstração os nomes das empresas são fictícios; as cidades e as distâncias são reais.</div>`;
@@ -6283,7 +6284,8 @@ function fnCotar(id){
   ${ab.map(c=>`<button class="xcard" style="display:block;width:100%;text-align:left;margin-bottom:8px;cursor:pointer" onclick="fnUsar('${c.id}','${id}')"><span class="xmini">#${c.num} · ${dBR(c.data)} · ${esc(c.cc)}</span><b style="display:block">${esc(resumoItens(c))}</b><span class="xmini">${c.cot.length} cotaç${c.cot.length===1?"ão":"ões"} até agora</span></button>`).join("")||`<div class="empty">Nenhum pedido esperando cotação.</div>`}
   <div class="m-actions"><button class="btn sec" onclick="fecharModal()">Fechar</button><button class="btn" onclick="formCompra()">+ Novo pedido de compra</button></div>`);
 }
-function fnUsar(cid,fid){formCotacao(cid);const f=FORN.find(x=>x.id===fid),i=document.getElementById("q-f");if(i)i.value=f.nome}
+function fnUsar(cid,fid){formCotacao(cid);const f=FORN.find(x=>x.id===fid),c=XC.compras.find(x=>x.id===cid),i=document.getElementById("q-f");if(i)i.value=f.nome;
+  const m=(f.ref||"").match(/R\$ ([\d.,]+)\/(L|saco)/);if(m&&c){const it=c.itens[0],un=(it.u||"").toLowerCase();if((m[2]==="L"&&/^l/.test(un))||(m[2]==="saco"&&/saco/.test(un))){const v=document.getElementById("q-v");if(v)v.value=(+it.q*parseFloat(m[1].replace(/\./g,"").replace(",","."))).toFixed(2);toast("Preço de referência do fornecedor já preenchido.")}}}
 function vCompras(){
   if(!ensureX())return `<h2>Compras</h2><div class="empty">Carregando…</div>`;
   const G=ehGestao(),C=XC.compras;
@@ -6308,7 +6310,7 @@ function vCompras(){
     <div class="kpi"><span>Economia nas cotações</span><b class="pos">${brl(eco)}</b><div class="xmini">mais cara × escolhida</div></div>
   </div>`:""}
   <div class="xkan">${ETAPAS.map(([k,n])=>{const ls=C.filter(c=>c.status===k).sort((a,b)=>a.num<b.num?1:-1);return `<div class="xcol"><h4><span>${n}</span><span class="xmini">${ls.length}</span></h4>${ls.map(card).join("")||`<div class="xmini" style="padding:6px">Nenhum</div>`}</div>`}).join("")}</div>
-  <div class="criterio">Fluxo: o campo pede → a gestão cota com fornecedores → ${XC.regras?.find(r=>r.k==="apr2")?.on?"acima de R$ 50 mil, 2 sócios aprovam":"a gestão aprova"} → o pedido é feito → ao receber, o item entra no estoque e a conta a pagar é criada sozinha.</div>`;
+  <div class="criterio">Fluxo: o campo pede → a gestão cota com fornecedores → ${XC.regras?.find(r=>r.k==="apr2")?.on?"acima de R$ 50 mil, 2 sócios aprovam":"a gestão aprova"} → ao aprovar, a conta a pagar é criada sozinha no financeiro → ao receber, o item entra no estoque.</div>`;
 }
 function formCompra(){
   abrirModal(`${cab("Novo pedido de compra")}
@@ -6340,6 +6342,7 @@ function verCompra(id){
   <div class="xmini">Pedido por ${esc(c.solic)} em ${dBR(c.data)} · ${esc(c.cc)} · ${esc(c.cat)}${c.obs?" · "+esc(c.obs):""}</div>
   ${G?(c.cot.length?`<div class="tbl-wrap" style="margin-top:12px"><table class="xtbl"><thead><tr><th></th><th>Fornecedor</th><th class="r">Valor</th><th>Entrega</th><th>Pagamento</th></tr></thead><tbody>${c.cot.map((q,j)=>{const menor=+q.v===Math.min(...c.cot.map(x=>+x.v));return `<tr><td><input type="radio" name="c-esc" ${c.esc===j?"checked":""} ${c.status==="sol"||c.status==="cot"?"":"disabled"} onchange="escolherCot('${c.id}',${j})" aria-label="Escolher ${esc(q.f)}"></td><td><b>${esc(q.f)}</b>${menor&&c.cot.length>1?` <span class="xb xb-ok">menor preço</span>`:""}</td><td class="r">${brl(+q.v)}</td><td>${esc(q.prazo)}</td><td>${esc(q.pg)}</td></tr>`}).join("")}</tbody></table></div>`:`<div class="xnote">Ainda sem cotação. Adicione pelo menos uma para enviar para aprovação.</div>`):`<div class="xnote">Situação: <b>${ETAPAS[i]?.[1]||"Recusado"}</b>. A gestão avisa quando chegar.</div>`}
   ${c.status==="apr"?`<div class="xnote">${nec>1?"Acima de R$ 50 mil: precisa do sim de 2 sócios.":"Precisa de 1 aprovação."} ${c.aprov.length?"Já aprovou: "+c.aprov.map(esc).join(", ")+".":""}</div>`:""}
+  ${c.status==="ped"&&c.lancId?`<div class="xnote">Aprovada. A conta a pagar já está no financeiro, com vencimento em ${dBR((F.find(x=>x.id===c.lancId)||{}).venc||hoje())}. Ao receber, o item entra no estoque.</div>`:""}
   ${c.status==="rec"?`<div class="xnote">Recebido em ${dBR(c.recEm)}. ${c.lancId?"Conta a pagar criada no financeiro.":""}</div>`:""}
   ${hist.length?`<h3 style="font-size:14px;margin:14px 0 4px">Histórico</h3>${hist.map(l=>`<div class="xmini">${dBR(l.t.slice(0,10))} ${l.t.slice(11,16)} · ${esc(l.u)} · ${esc(l.a)}</div>`).join("")}`:""}
   ${acoes?`<div class="m-actions">${acoes}</div>`:""}`);
@@ -6365,25 +6368,30 @@ function enviarAprovacao(id){
 }
 function aprovarCompra(id){
   const c=XC.compras.find(x=>x.id===id);if(c.aprov.includes(quem()))return;c.aprov.push(quem());
-  const ok=c.aprov.length>=precisa(c);if(ok)c.status="ped";
-  xlog("Compras",`Aprovou compra #${c.num}`,`${esc(c.itens[0].d)} · ${brl(valorCompra(c))}${ok?" · pedido liberado":" · falta "+(precisa(c)-c.aprov.length)+" sócio"}`);
-  fecharModal();render();toast(ok?"Aprovada. O pedido pode ser feito ao fornecedor.":"Aprovação registrada. Falta mais um sócio.");
+  const ok=c.aprov.length>=precisa(c);let cp=null;if(ok){c.status="ped";cp=contaDaCompra(c)}
+  xlog("Compras",`Aprovou compra #${c.num}`,`${esc(c.itens[0].d)} · ${brl(valorCompra(c))}${ok?" · pedido liberado · conta a pagar criada para "+dBR(cp.venc):" · falta "+(precisa(c)-c.aprov.length)+" sócio"}`);
+  fecharModal();render();toast(ok?"Aprovada. Pedido liberado e conta a pagar criada no financeiro.":"Aprovação registrada. Falta mais um sócio.");
 }
 function recusarCompra(id){
   const c=XC.compras.find(x=>x.id===id);c.status="cot";c.aprov=[];
   xlog("Compras",`Devolveu compra #${c.num} para nova cotação`,c.itens[0].d);fecharModal();render();toast("Compra devolvida para cotação.");
 }
+/* conta a pagar nasce na aprovação, com o vencimento do prazo combinado na cotação */
+function contaDaCompra(c){
+  const ja=c.lancId&&F.find(x=>x.id===c.lancId);if(ja)return ja;
+  const q=c.cot[c.esc]||{f:"",v:valorCompra(c),pg:"30 dias"},dias=/à vista/.test(q.pg)?0:(+(q.pg.match(/\d+/)||[30])[0]);
+  const l={id:uid(),data:hoje(),cc:c.cc,categoria:c.cat,tipo:"Saída",valor:+q.v,descricao:`Compra #${c.num} · ${c.itens[0].d} · ${q.f}`,status:"Pendente",venc:addDias(hoje(),dias),compraId:c.id};
+  F.push(l);salvarF();c.lancId=l.id;return l;
+}
 function receberCompra(id){
   const c=XC.compras.find(x=>x.id===id),q=c.cot[c.esc]||{f:"",v:valorCompra(c),pg:"30 dias"};
-  const dias=/à vista/.test(q.pg)?0:(+(q.pg.match(/\d+/)||[30])[0]);
-  const l={id:uid(),data:hoje(),cc:c.cc,categoria:c.cat,tipo:"Saída",valor:+q.v,descricao:`Compra #${c.num} · ${c.itens[0].d} · ${q.f}`,status:dias?"Pendente":"Pago",venc:addDias(hoje(),dias),compraId:c.id};
-  F.push(l);salvarF();
+  const l=contaDaCompra(c),dias=l.venc>hoje();
   const it=c.itens[0],ex=S.find(s=>s.nome&&s.nome.toLowerCase()===it.d.toLowerCase());
   if(ex){ex.qtd=(+ex.qtd||0)+ +it.q}else{S.push({id:uid(),nome:it.d,tipo:"Outro",cc:c.cc,qtd:+it.q,preco:Math.round(+q.v/ +it.q*100)/100,min:0,obs:`Compra #${c.num}`})}
   try{stSet(KEYS.S,S)}catch(e){}
   c.status="rec";c.recEm=hoje();c.lancId=l.id;
-  xlog("Compras",`Recebeu compra #${c.num}`,`${num(it.q)} ${it.u} no estoque · conta a pagar de ${brl(+q.v)}${dias?" para "+dBR(l.venc):" paga à vista"}`);
-  fecharModal();render();toast("Recebido: estoque atualizado e conta a pagar criada.");
+  xlog("Compras",`Recebeu compra #${c.num}`,`${num(it.q)} ${it.u} no estoque · conta a pagar de ${brl(+q.v)} para ${dBR(l.venc)}`);
+  fecharModal();render();toast("Recebido: estoque atualizado. A conta a pagar já estava no financeiro.");
 }
 
 /* ---------- USUÁRIOS E PERMISSÕES ---------- */
