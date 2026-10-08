@@ -368,6 +368,7 @@ nav.tabs{flex-direction:column;align-items:stretch;gap:8px}
 nav.tabs .tgrp{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
 nav.tabs .tlab{flex:0 0 150px;font:700 10.5px var(--f-body);letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
 nav.tabs button.dif{border-color:#F2C230!important;box-shadow:0 0 0 1px rgba(242,194,48,.35),0 4px 12px rgba(242,194,48,.18)}
+#gridm i{position:relative}#gridm .gstar{position:absolute;top:-6px;right:-6px;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;background:#F2C230;color:#023855;font-size:12px;font-style:normal;box-shadow:0 2px 6px rgba(0,0,0,.3);border:2px solid #fff}
 nav.tabs .dleg{font-size:11.5px;color:var(--muted);margin-left:4px}nav.tabs .dstar{font-size:11px;color:#C9A21A;margin-left:1px}nav.tabs button[aria-selected="true"] .dstar{color:#F2C230}
 @media(max-width:700px){nav.tabs .tlab{flex-basis:100%;margin-top:4px}}
 nav.tabs button i{font-style:normal;font-size:16px;line-height:1}
@@ -1296,7 +1297,7 @@ document.querySelectorAll("#mercado .go[data-go],#comparativo .go[data-go],#soci
 /* ---------- menu do celular ---------- */
 const ICONS={"socio": ["🏠", "#01A2D9", "#023855"], "financeiro": ["💰", "#F2C230", "#B8860B"], "relatorios": ["📑", "#01A2D9", "#023855"], "fazendas": ["🗺", "#38B6E6", "#0C6FA0"], "sim": ["📈", "#F2C230", "#B8860B"], "vender": ["🐂", "#5CC6EE", "#0A5A85"], "negocios": ["📍", "#0C6FA0", "#022C44"], "limao": ["🍋", "#38B6E6", "#0C6FA0"], "pass": ["🐄", "#01A2D9", "#023855"], "pastos": ["🛰", "#0C6FA0", "#022C44"], "clima": ["🌦", "#5CC6EE", "#0A5A85"], "equipe": ["👷", "#38B6E6", "#0C6FA0"], "comparativo": ["🧩", "#0C6FA0", "#022C44"], "mercado": ["🌎", "#F2C230", "#B8860B"]};
 const gridm=$("#gridm"),sheet=$("#msheet");
-gridm.innerHTML=tabs.map(b=>{const k=b.dataset.tab,[ic,g1,g2]=ICONS[k];return `<button type="button" data-go="${k}" style="--g1:${g1};--g2:${g2}"><i>${ic}</i>${b.textContent.replace(ic,"").replace("★","").trim()}${b.classList.contains("dif")?" ★":""}</button>`}).join("");
+gridm.innerHTML=tabs.map(b=>{const k=b.dataset.tab,[ic,g1,g2]=ICONS[k];return `<button type="button" data-go="${k}" style="--g1:${g1};--g2:${g2}"><i>${ic}${b.classList.contains("dif")?'<span class="gstar" aria-hidden="true">★</span>':""}</i>${b.textContent.replace(ic,"").replace("★","").trim()}</button>`}).join("");
 function goTab(k){if(k==="menu"){sheet.classList.add("on");return}sheet.classList.remove("on");openTab(k);try{history.replaceState(null,"","#"+k)}catch(e){}scrollTo({top:0})}
 document.querySelectorAll(".mdock button,#gridm button").forEach(b=>b.addEventListener("click",()=>goTab(b.dataset.go)));
 sheet.querySelector(".x").addEventListener("click",()=>sheet.classList.remove("on"));
